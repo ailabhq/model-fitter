@@ -1,0 +1,158 @@
+{
+  "config": "ink-oq25e-omlx-guard-off-p256-nomtp-llm",
+  "runtime": "omlx",
+  "runtime_version": "omlx 0.8.3 mlx 0.32.4",
+  "model": {
+    "repo": "mlx-community/Inkling-2-Mini-oQ2.5e-mtp",
+    "revision": "d4a4f3f555fdf6f06102de1865d07e8ac5effe6d"
+  },
+  "model_bytes": 11565374660,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "guard": "off",
+    "prefill_step": 256,
+    "model_settings": {
+      "mtp_enabled": false,
+      "model_type_override": "llm"
+    }
+  },
+  "started": "2026-11-23T22:26:16+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "start_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 9.7,
+    "compressor_gib": 0.66,
+    "free_gib": 11.98,
+    "swap_used_gib": 2.09
+  },
+  "load_s": 11.77,
+  "cmdline": "~/mf-bench/omlx-venv/bin/python -c \nimport sys\nfrom omlx.settings import GlobalSettings\n_orig = GlobalSettings.to_scheduler_config\ndef _patched(self):\n    c = _orig(self)\n    c.prefill_step_size = 256\n    print(\"mf: scheduler prefill_step_size =\", c.prefill_step_size, flush=True)\n    return c\nGlobalSettings.to_scheduler_config = _patched\nfrom omlx.cli import main\nsys.argv = [\"omlx\", *sys.argv[1:]]\nsys.exit(main())\n serve --model-dir ~/mf-bench/models/mlx --port 8090 --base-path ~/mf-bench/omlx-home --memory-guard off",
+  "req_8k_cold": {
+    "wall_s": 55.14,
+    "prompt_n": 8000,
+    "ttft_s": 43.41,
+    "prompt_tps": 184.29,
+    "gen_n": 256,
+    "text_events": 1,
+    "gen_tps": null,
+    "server_usage": {
+      "time_to_first_token": 55.11,
+      "prompt_tokens_per_second": 145.16,
+      "prompt_eval_duration": 55.11,
+      "generation_tokens_per_second": 596098.77
+    },
+    "sample": ".g. `<think>\\n</think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                                          | Parser                                                                    |\n|-----------------------------------------------|----------------",
+    "prompt_s": 43.41,
+    "prompt_method": "wall minus decode time from req_8k_cached"
+  },
+  "req_8k_cached": {
+    "wall_s": 22.91,
+    "prompt_n": 8000,
+    "ttft_s": 22.9,
+    "prompt_tps": 349.27,
+    "gen_n": 256,
+    "text_events": 1,
+    "gen_tps": 21.74,
+    "server_usage": {
+      "time_to_first_token": 22.85,
+      "prompt_tokens_per_second": 81.23,
+      "prompt_eval_duration": 22.85,
+      "generation_tokens_per_second": 268425.99
+    },
+    "sample": ".g. `<think>\\n</think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                                          | Parser                                                                    |\n|-----------------------------------------------|----------------",
+    "wall_1tok_s": 11.18,
+    "gen_tps_method": "(n-1)/(wall(n)-wall(1)), prefix-cached"
+  },
+  "req_short": {
+    "wall_s": 5.77,
+    "prompt_n": 69,
+    "ttft_s": 5.77,
+    "prompt_tps": 11.96,
+    "gen_n": 128,
+    "text_events": 1,
+    "gen_tps": 22.64,
+    "server_usage": {
+      "time_to_first_token": 5.75,
+      "prompt_tokens_per_second": 11.99,
+      "prompt_eval_duration": 5.75,
+      "generation_tokens_per_second": 600938.66
+    },
+    "sample": "laration on Android devices.\n![Hardware acceleration](./android/hardware-acceleration.jpg)\n\n## Build GUI binding using Gradle\n\n```bash\n./gradlew :llama.android:assemble\n```\n\n## Build GUI binding using Gradle with hardware acceleration\n\n```bash\n./gradlew :llama.android:assemble -Pllama.android.hardwa",
+    "wall_1tok_s": 0.16,
+    "gen_tps_method": "(n-1)/(wall(n)-wall(1)), prefix-cached"
+  },
+  "memory": {
+    "baseline": {
+      "wired": 1.79,
+      "compressor": 0.6,
+      "free": 11.55,
+      "swap_used": 2.09,
+      "anonymous": 1.03,
+      "file_backed": 0.5
+    },
+    "peak_proc_rss_gib": 5.95,
+    "peak_wired_gib": 13.51,
+    "peak_compressor_gib": 10.01,
+    "min_free_gib": 0.05,
+    "peak_swap_used_gib": 3.49,
+    "swapouts_gib": 1.93,
+    "pageouts_gib": 0.01,
+    "pageins_gib": 13.93,
+    "max_pressure_level": 4,
+    "pressure": {
+      "benchmark_s": 116.1,
+      "critical_s": 2.1,
+      "critical_share": 0.018,
+      "critical_longest_s": 2.1,
+      "warning_s": 28.2
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 228,
+      "p50": 1.5,
+      "p99": 5.5,
+      "max": 158.4,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 4204,
+      "p50": 10.0,
+      "p99": 10.3,
+      "max": 241.8,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 115,
+      "p50": 5.1,
+      "p99": 24.6,
+      "max": 67.4,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "aborted": null,
+  "responsive": true,
+  "gen_tps_at_8k": 21.74,
+  "usable": true,
+  "log_excerpt": [
+    "2026-11-23 22:26:20,376 - transformers - WARNING - PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.",
+    "[transformers] You are using a model of type `inkling2_loop` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.",
+    "2026-11-23 22:26:28,949 - transformers.configuration_utils - WARNING - You are using a model of type `inkling2_loop` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating.",
+    "2026-11-23 22:26:29,742 - omlx.cache.paged_ssd_cache - INFO - SSD cache scan complete: scanned=0, indexed=0, errors=0, total_size=0 B, gdn_sidecars=0"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

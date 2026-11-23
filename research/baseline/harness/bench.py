@@ -6,11 +6,14 @@ Usage: bench.py CONFIG [CONFIG ...]     (see CONFIGS below; `bench.py list` prin
 Environment:
   MF_ROOT     scratch dir holding models/, llama.cpp/, omlx-venv/ (never inside the repo)
   MF_OUT      where result JSON goes (default: ./results)
+  MF_TEXT     prompt corpus dir (default: $MF_ROOT/llama.cpp/docs; the Baseline used llama.cpp b6d5ce4)
 
 For each config: start the runtime, time the load, send an ~8000-token prompt and
-generate 256 tokens (twice, the second time from the prompt cache), then a short
-prompt for a shallow-context reference. A sampler records system memory and two
-responsiveness probes the whole time. Results carry no paths, usernames or hostnames.
+generate 256 tokens (twice, the second time from the prompt cache where the runtime
+has one), then a short prompt for a shallow-context reference. A sampler records system
+memory and the Responsive probes (window server, sleep timer, process launch, memory
+pressure) the whole time, and the kill-switch applies the Responsive rule live.
+Results carry no paths, usernames or hostnames.
 """
 import ctypes
 import json
@@ -19,6 +22,7 @@ import platform
 import re
 import signal
 import socket
+import shutil
 import statistics
 import subprocess
 import sys
@@ -34,7 +38,7 @@ OUT = Path(os.environ.get("MF_OUT", "results"))
 MODELS = ROOT / "models"
 LLAMA = ROOT / "llama.cpp" / "build" / "bin"
 OMLX_BIN = ROOT / "omlx-venv" / "bin"
-TEXT_DIR = ROOT / "llama.cpp" / "docs"
+TEXT_DIR = Path(os.environ.get("MF_TEXT", ROOT / "llama.cpp" / "docs"))
 PROMPT_TOKENS = 8000
 GEN_TOKENS = 256
 CTX = 8704
@@ -69,6 +73,33 @@ CONFIGS = {
     "ink-oq25e-omlx-guard-off": dict(runtime="omlx", model={"repo": "mlx-community/Inkling-2-Mini-oQ2.5e-mtp", "local": "mlx/Inkling-2-Mini-oQ2.5e-mtp"}, guard="off"),
     "ink-oq3e-omlx-guard-aggressive": dict(runtime="omlx", model={"repo": "mlx-community/Inkling-2-Mini-oQ3e-mtp", "local": "mlx/Inkling-2-Mini-oQ3e-mtp"}, guard="aggressive"),
     "ink-oq3e-omlx-guard-off": dict(runtime="omlx", model={"repo": "mlx-community/Inkling-2-Mini-oQ3e-mtp", "local": "mlx/Inkling-2-Mini-oQ3e-mtp"}, guard="off"),
+}
+
+# Inkling oQ2.5e at 8K on MLX ("Can MLX hold Inkling oQ2.5e at 8K context ...", map ticket 16).
+INK25 = {"repo": "mlx-community/Inkling-2-Mini-oQ2.5e-mtp", "revision": "d4a4f3f555fdf6f06102de1865d07e8ac5effe6d",
+         "local": "mlx/Inkling-2-Mini-oQ2.5e-mtp"}
+
+
+def direct(step: int, kv_bits=None, cache_mb=None) -> tuple:
+    """mlx-lm loop: prefill step, KV bits (quantized from the first token), MLX buffer-cache limit."""
+    name = f"ink-oq25e-mlx-p{step}" + (f"-kv{kv_bits}" if kv_bits else "") + (f"-cache{cache_mb}" if cache_mb is not None else "")
+    return name, dict(runtime="mlxdirect", model=INK25, direct={"prefill_step": step, "kv_bits": kv_bits, "kv_start": 0, "cache_limit_mb": cache_mb})
+
+
+CONFIGS |= dict([direct(2048), direct(512), direct(256), direct(128), direct(256, kv_bits=4), direct(256, cache_mb=0)])
+CONFIGS |= {
+    "ink-oq25e-omlx-guard-off-p256": dict(runtime="omlx", model=INK25, guard="off", prefill_step=256),
+    "ink-oq25e-omlx-guard-12gb": dict(runtime="omlx", model=INK25, guard_gb=12),
+    "ink-oq25e-omlx-guard-13gb": dict(runtime="omlx", model=INK25, guard_gb=13),
+    "ink-oq25e-omlx-guard-12gb-nomtp": dict(runtime="omlx", model=INK25, guard_gb=12, model_settings={"mtp_enabled": False}),
+    # oMLX loads 11.78 GB (vision tower, DSpark drafter) against 10.9 GB for the bare text model
+    "ink-oq25e-omlx-guard-off-p256-nomtp": dict(runtime="omlx", model=INK25, guard="off", prefill_step=256,
+                                                model_settings={"mtp_enabled": False}),
+    "ink-oq25e-omlx-guard-off-p256-nomtp-llm": dict(runtime="omlx", model=INK25, guard="off", prefill_step=256,
+                                                    model_settings={"mtp_enabled": False, "model_type_override": "llm"}),
+    "ink-oq25e-omlx-guard-off-p256-nomtp-kv4": dict(runtime="omlx", model=INK25, guard="off", prefill_step=256,
+                                                    model_settings={"mtp_enabled": False, "turboquant_kv_enabled": True,
+                                                                    "turboquant_kv_scheme": "affine4", "turboquant_kv_bits": 4}),
 }
 
 # ---------------------------------------------------------------- sanitizing
@@ -140,11 +171,43 @@ def snapshot() -> dict:
     }
 
 
+_CG = ctypes.CDLL("/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics")
+_CF = ctypes.CDLL("/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation")
+_CG.CGWindowListCopyWindowInfo.restype = ctypes.c_void_p
+_CG.CGWindowListCopyWindowInfo.argtypes = [ctypes.c_uint32, ctypes.c_uint32]
+_CF.CFRelease.argtypes = [ctypes.c_void_p]
+
+
+def window_roundtrip() -> bool:
+    """One WindowServer round-trip (on-screen window list). False without a desktop session."""
+    info = _CG.CGWindowListCopyWindowInfo(1, 0)  # kCGWindowListOptionOnScreenOnly, kCGNullWindowID
+    if not info:
+        return False
+    _CF.CFRelease(info)
+    return True
+
+
+# The Responsive rule ("What measurable test decides that the machine stays responsive for a
+# Usable Fit?", map ticket 15). Hang/microhang are Apple's 500/250 ms; 100 ms p99 is where delay
+# becomes noticeable. The critical-pressure limits are provisional.
+RESPONSIVE = {"hang_ms": 500, "microhang_ms": 250, "p99_ms_max": 100,
+              "critical_share_max": 0.05, "critical_stretch_s_max": 10}
+# The kill-switch is the same rule, applied as soon as failure is certain. Critical time is
+# budgeted against the planned benchmark length (load + two 8K requests + short request).
+PLANNED_S = 300
+WIRED_MAX_MB = 13312
+
+
 class Monitor:
-    """Samples memory every 0.5 s and runs two responsiveness probes."""
+    """Samples memory every 0.5 s and runs the Responsive probes; SIGKILLs the runtime on failure."""
+
+    PROBES = {"window": 0.5, "timer": 0.0, "spawn": 1.0}  # probe -> pause between checks (s)
 
     def __init__(self):
-        self.samples, self.timer_late, self.spawn = [], [], []
+        self.samples = []
+        self.probe = {k: [] for k in self.PROBES}  # probe -> [(t, ms)]; timer records lateness
+        self.inflight = {k: None for k in self.PROBES}
+        self.window_checked = window_roundtrip()
         self.foreign = {}  # process name -> peak RSS of processes > 1 GiB outside the runtime under test
         self.pids_fn = lambda: []
         self.phase = "idle"
@@ -153,7 +216,7 @@ class Monitor:
         self.t0 = time.time()
 
     def _trip(self, reason: str):
-        """Kill-switch: stop the runtime before the machine becomes unusable."""
+        """Kill-switch: SIGKILL the runtime (the thrash run ignored SIGTERM)."""
         if self.tripped:
             return
         self.tripped = f"{reason} at t={time.time() - self.t0:.0f}s in phase {self.phase}"
@@ -179,43 +242,62 @@ class Monitor:
                 self.foreign[p.info["name"]] = max(self.foreign.get(p.info["name"], 0), mi.rss)
 
     def _sample(self):
-        n, critical_since = 0, None
+        n, since, critical_s, last = 0, None, 0.0, time.time()
         while not self._stop.is_set():
             s = snapshot()
-            self.samples.append({"t": round(time.time() - self.t0, 2), "phase": self.phase,
+            now = time.time()
+            self.samples.append({"t": round(now - self.t0, 2), "phase": self.phase,
                                  **s, "proc_rss": tree_rss(self.pids_fn())})
-            if s["pressure"] >= 4:
-                critical_since = critical_since or time.time()
-                if time.time() - critical_since > KILL["critical_s"]:
-                    self._trip(f"memory pressure critical for > {KILL['critical_s']} s")
+            if s["pressure"] >= 4 and self.phase != "idle":
+                critical_s += now - last
+                since = since or now
+                if now - since >= RESPONSIVE["critical_stretch_s_max"]:
+                    self._trip(f"memory pressure critical for {now - since:.0f} s in one stretch")
+                if critical_s > RESPONSIVE["critical_share_max"] * PLANNED_S:
+                    self._trip(f"memory pressure critical for {critical_s:.0f} s in total")
             else:
-                critical_since = None
+                since = None
+            last = now
             if n % 10 == 0:
                 self._foreign()
             n += 1
             self._stop.wait(0.5)
 
-    def _timer(self):  # how late a 20 ms sleep wakes up
-        while not self._stop.is_set():
-            t = time.perf_counter()
+    def _check(self, name: str):
+        if name == "window":
+            window_roundtrip()
+        elif name == "timer":
             time.sleep(0.02)
-            late = time.perf_counter() - t - 0.02
-            self.timer_late.append((time.time() - self.t0, late))
-            if late > KILL["timer_late_s"]:
-                self._trip(f"20 ms timer woke {late:.1f} s late")
+        else:
+            subprocess.run(["/usr/bin/true"])
 
-    def _spawner(self):  # how long launching a trivial process takes
+    def _late_ms(self, name: str, took_s: float) -> float:
+        return (took_s - (0.02 if name == "timer" else 0.0)) * 1e3
+
+    def _probe(self, name: str):
         while not self._stop.is_set():
             t = time.perf_counter()
-            subprocess.run(["/usr/bin/true"])
-            took = time.perf_counter() - t
-            self.spawn.append((time.time() - self.t0, took))
-            if took > KILL["spawn_s"]:
-                self._trip(f"process spawn took {took:.1f} s")
-            self._stop.wait(1.0)
+            self.inflight[name] = t
+            self._check(name)
+            self.inflight[name] = None
+            ms = self._late_ms(name, time.perf_counter() - t)
+            self.probe[name].append((round(time.time() - self.t0, 2), ms))
+            if ms >= RESPONSIVE["hang_ms"]:
+                self._trip(f"{name} check took {ms:.0f} ms")
+            if self.PROBES[name]:
+                self._stop.wait(self.PROBES[name])
+
+    def _watchdog(self):  # a check that never returns is a hang too
+        while not self._stop.is_set():
+            for name, t in list(self.inflight.items()):
+                if t is not None and self._late_ms(name, time.perf_counter() - t) >= RESPONSIVE["hang_ms"]:
+                    self._trip(f"{name} check stuck for >= {RESPONSIVE['hang_ms']} ms")
+            self._stop.wait(0.05)
 
     def __enter__(self):
-        self.threads = [threading.Thread(target=f, daemon=True) for f in (self._sample, self._timer, self._spawner)]
+        probes = [n for n in self.PROBES if n != "window" or self.window_checked]
+        self.threads = [threading.Thread(target=self._sample, daemon=True), threading.Thread(target=self._watchdog, daemon=True)]
+        self.threads += [threading.Thread(target=self._probe, args=(n,), daemon=True) for n in probes]
         for th in self.threads:
             th.start()
         return self
@@ -223,14 +305,35 @@ class Monitor:
     def __exit__(self, *a):
         self._stop.set()
         for th in self.threads:
-            th.join()
+            th.join(timeout=5)
+
+    def _pressure_time(self, s: list) -> dict:
+        """Seconds at critical / warning over the benchmark, and the longest critical stretch."""
+        crit = warn = stretch = longest = 0.0
+        for a, b in zip(s, s[1:]):
+            dt = b["t"] - a["t"]
+            if a["pressure"] >= 4:
+                crit, stretch = crit + dt, stretch + dt
+                longest = max(longest, stretch)
+            else:
+                stretch = 0.0
+                warn += dt if a["pressure"] == 2 else 0.0
+        span = (s[-1]["t"] - s[0]["t"]) if len(s) > 1 else 0.0
+        return {"benchmark_s": round(span, 1), "critical_s": round(crit, 1), "critical_share": round(crit / span, 3) if span else 0.0,
+                "critical_longest_s": round(longest, 1), "warning_s": round(warn, 1)}
 
     def summary(self, baseline: dict) -> dict:
         s = [x for x in self.samples if x["phase"] != "idle"] or self.samples
         first, last = self.samples[0], self.samples[-1]
-        late = sorted(v for _, v in self.timer_late)
-        spawn = sorted(v for _, v in self.spawn)
         pct = lambda xs, p: xs[min(len(xs) - 1, int(p * len(xs)))] if xs else None
+
+        def dist(name):
+            xs = sorted(ms for _, ms in self.probe[name])
+            if not xs:
+                return None
+            return {"n": len(xs), "p50": round(pct(xs, .5), 1), "p99": round(pct(xs, .99), 1), "max": round(xs[-1], 1),
+                    "microhangs": sum(RESPONSIVE["microhang_ms"] <= x < RESPONSIVE["hang_ms"] for x in xs)}
+
         return {
             "baseline": {k: round(baseline[k] / GiB, 2) for k in ("wired", "compressor", "free", "swap_used", "anonymous", "file_backed")},
             "peak_proc_rss_gib": round(max(x["proc_rss"] for x in s) / GiB, 2),
@@ -242,26 +345,23 @@ class Monitor:
             "pageouts_gib": round((last["pageouts"] - first["pageouts"]) / GiB, 2),
             "pageins_gib": round((last["pageins"] - first["pageins"]) / GiB, 2),
             "max_pressure_level": max(x["pressure"] for x in s),  # 1 normal, 2 warn, 4 critical
-            "timer_late_ms": {"p50": round(pct(late, .5) * 1e3, 1), "p99": round(pct(late, .99) * 1e3, 1), "max": round(late[-1] * 1e3, 1)},
-            "spawn_ms": {"p50": round(pct(spawn, .5) * 1e3, 1), "p99": round(pct(spawn, .99) * 1e3, 1), "max": round(spawn[-1] * 1e3, 1)},
+            "pressure": self._pressure_time(s),
+            "window_checked": self.window_checked,
+            "window_ms": dist("window"),
+            "timer_late_ms": dist("timer"),
+            "spawn_ms": dist("spawn"),
             "foreign_procs_over_1gib": {clean(k): round(v / GiB, 2) for k, v in self.foreign.items()},
         }
 
 
-# Provisional operational reading of "the machine stays responsive" for this
-# baseline only; the Usable definition itself is decided elsewhere on the map.
-RESPONSIVE = {"max_pressure_level_below": 4, "swapouts_gib_max": 0.25, "timer_p99_ms_max": 50, "spawn_max_ms_max": 1000}
-# Kill-switch: abort the run (kill the runtime) on any of these. A run at iogpu.wired_limit_mb=14336
-# froze WindowServer for 41 s, so this bounds the harm a config can do.
-KILL = {"critical_s": 15, "timer_late_s": 1.0, "spawn_s": 1.5}
-WIRED_MAX_MB = 13312
-
-
-def responsive(m: dict) -> bool:
-    return (m["max_pressure_level"] < RESPONSIVE["max_pressure_level_below"]
-            and m["swapouts_gib"] <= RESPONSIVE["swapouts_gib_max"]
-            and m["timer_late_ms"]["p99"] <= RESPONSIVE["timer_p99_ms_max"]
-            and m["spawn_ms"]["max"] <= RESPONSIVE["spawn_max_ms_max"])
+def responsive(m: dict, tripped) -> bool:
+    r, p = RESPONSIVE, m["pressure"]
+    for name in ("window_ms", "timer_late_ms"):
+        d = m[name]
+        if d and (d["max"] >= r["hang_ms"] or d["p99"] > r["p99_ms_max"]):
+            return False
+    return (not tripped and m["spawn_ms"]["max"] < r["hang_ms"]
+            and p["critical_share"] <= r["critical_share_max"] and p["critical_longest_s"] < r["critical_stretch_s_max"])
 
 
 # ---------------------------------------------------------------- prompt text
@@ -386,15 +486,29 @@ class OMLX:
         self.cfg, self.log = cfg, log
         self.path = MODELS / cfg["model"]["local"]
         self.url = f"http://127.0.0.1:{PORT}"
+        self.home = ROOT / "omlx-home"  # isolated oMLX base path: settings and prefix cache start empty each run
 
     def version(self):
         out = subprocess.run([OMLX_BIN / "python", "-c", "import importlib.metadata as m;print('omlx', m.version('omlx'), 'mlx', m.version('mlx'))"],
                              capture_output=True, text=True)
         return out.stdout.strip()
 
+    def _prepare_home(self):
+        shutil.rmtree(self.home, ignore_errors=True)
+        self.home.mkdir(parents=True)
+        if "model_settings" in self.cfg:
+            (self.home / "model_settings.json").write_text(json.dumps(
+                {"version": 3, "models": {self.path.name: self.cfg["model_settings"]}}))
+
     def start(self) -> float:
+        self._prepare_home()
         guard = ["--memory-guard", self.cfg["guard"]] if "guard" in self.cfg else []
-        cmd = [str(OMLX_BIN / "omlx"), "serve", "--model-dir", str(self.path.parent), "--port", str(PORT), *guard]
+        guard += ["--memory-guard-gb", str(self.cfg["guard_gb"])] if "guard_gb" in self.cfg else []
+        args = ["serve", "--model-dir", str(self.path.parent), "--port", str(PORT), "--base-path", str(self.home), *guard]
+        if "prefill_step" in self.cfg:  # oMLX has no flag for it: patch the scheduler config it builds
+            cmd = [str(OMLX_BIN / "python"), "-c", OMLX_PREFILL_PATCH.format(step=self.cfg["prefill_step"]), *args]
+        else:
+            cmd = [str(OMLX_BIN / "omlx"), *args]
         self.cmdline = clean(" ".join(cmd))
         port_free()
         self.proc = subprocess.Popen(cmd, stdout=self.log, stderr=subprocess.STDOUT)
@@ -426,8 +540,9 @@ class OMLX:
 
     def generate(self, prompt, n, cache):
         t = time.perf_counter()
-        usage, text = {}, ""
-        for line in self._complete(prompt, n).iter_lines():
+        usage, text, stamps = {}, "", []
+        # chunk_size=1: the default 512-byte reads hold SSE events back and make the stream look like one burst
+        for line in self._complete(prompt, n).iter_lines(chunk_size=1):
             if not line.startswith(b"data: ") or line == b"data: [DONE]":
                 continue
             d = json.loads(line[6:])
@@ -436,12 +551,34 @@ class OMLX:
             if d.get("usage"):
                 usage = d["usage"]
             if d.get("choices") and d["choices"][0].get("text"):
+                stamps.append(time.perf_counter())
                 text += d["choices"][0]["text"]
         rnd = lambda v: round(v, 2) if isinstance(v, (int, float)) else None
+        # Client-side token arrival times; the server's own timings are kept alongside.
+        client_tps = (len(stamps) - 1) / (stamps[-1] - stamps[0]) if len(stamps) > 1 and stamps[-1] > stamps[0] else None
         return {"wall_s": round(time.perf_counter() - t, 2), "prompt_n": usage.get("prompt_tokens"),
-                "ttft_s": rnd(usage.get("time_to_first_token")), "prompt_tps": rnd(usage.get("prompt_tokens_per_second")),
-                "prompt_s": rnd(usage.get("prompt_eval_duration")), "gen_n": usage.get("completion_tokens"),
-                "gen_tps": rnd(usage.get("generation_tokens_per_second")), "sample": text[:300]}
+                "ttft_s": rnd(stamps[0] - t) if stamps else None, "prompt_tps": rnd(usage.get("prompt_tokens") / (stamps[0] - t)) if stamps and usage.get("prompt_tokens") else None,
+                "gen_n": usage.get("completion_tokens"), "text_events": len(stamps), "gen_tps": rnd(client_tps),
+                "server_usage": {k: rnd(usage.get(k)) for k in ("time_to_first_token", "prompt_tokens_per_second", "prompt_eval_duration", "generation_tokens_per_second")},
+                "sample": text[:300]}
+
+    def derive_decode(self, prompt, res):
+        """oMLX 0.8.3 sends Inkling's text as one event at the end of the request and its usage
+        timings count the whole request as prefill, so decode speed comes from the same prompt,
+        prefix-cached, asked for 1 token: (n - 1) / (wall(n) - wall(1)). Cold prefill speed is then
+        the cold request minus that decode time."""
+        for key, p, n in (("req_8k_cached", prompt, GEN_TOKENS), ("req_short", prompt[:300], 128)):
+            r = res.get(key)
+            if not r or r.get("gen_tps"):
+                continue
+            one = self.generate(p, 1, cache=True)
+            r["wall_1tok_s"], r["gen_tps_method"] = one["wall_s"], "(n-1)/(wall(n)-wall(1)), prefix-cached"
+            r["gen_tps"] = round((n - 1) / (r["wall_s"] - one["wall_s"]), 2)
+        cold, cached = res.get("req_8k_cold"), res.get("req_8k_cached")
+        if cold and cached and cached.get("gen_tps"):
+            prompt_s = cold["wall_s"] - (GEN_TOKENS - 1) / cached["gen_tps"]
+            cold["prompt_s"], cold["prompt_tps"] = round(prompt_s, 2), round(cold["prompt_n"] / prompt_s, 2)
+            cold["ttft_s"], cold["prompt_method"] = round(prompt_s, 2), "wall minus decode time from req_8k_cached"
 
     def stop(self):
         self.proc.send_signal(signal.SIGINT)
@@ -451,7 +588,80 @@ class OMLX:
             self.proc.kill()
 
 
-RUNTIMES = {"llamacpp": LlamaCpp, "ollama": Ollama, "omlx": OMLX}
+OMLX_PREFILL_PATCH = """
+import sys
+from omlx.settings import GlobalSettings
+_orig = GlobalSettings.to_scheduler_config
+def _patched(self):
+    c = _orig(self)
+    c.prefill_step_size = {step}
+    print("mf: scheduler prefill_step_size =", c.prefill_step_size, flush=True)
+    return c
+GlobalSettings.to_scheduler_config = _patched
+from omlx.cli import main
+sys.argv = ["omlx", *sys.argv[1:]]
+sys.exit(main())
+"""
+
+
+class MLXDirect:
+    """mlx-lm's generation loop in a worker process (mlx_direct.py), no server or scheduler."""
+    name = "mlx-direct"
+
+    def __init__(self, cfg, log):
+        self.cfg, self.log = cfg, log
+        self.path = MODELS / cfg["model"]["local"]
+
+    def version(self):
+        out = subprocess.run([OMLX_BIN / "python", "-c", "import importlib.metadata as m;"
+                              "print('mlx-lm', m.version('mlx-lm'), 'mlx', m.version('mlx'), 'model code: omlx', m.version('omlx'))"],
+                             capture_output=True, text=True)
+        return out.stdout.strip()
+
+    def start(self) -> float:
+        cmd = [str(OMLX_BIN / "python"), str(Path(__file__).with_name("mlx_direct.py")), str(self.path), json.dumps(self.cfg["direct"])]
+        self.cmdline = clean(" ".join(cmd))
+        t = time.perf_counter()
+        self.proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=self.log, text=True, bufsize=1)
+        self.ready = self._read()
+        return time.perf_counter() - t
+
+    def _read(self) -> dict:
+        line = self.proc.stdout.readline()
+        if not line:
+            raise RuntimeError(f"worker exited with {self.proc.wait()}")
+        return json.loads(line)
+
+    def pids(self):
+        return [self.proc.pid] if hasattr(self, "proc") else []
+
+    def prompt(self, text):
+        return OMLX.prompt(self, text)
+
+    def _tok(self):
+        return OMLX._tok(self)
+
+    def generate(self, prompt, n, cache):
+        ids = self._tok().encode(prompt, add_special_tokens=False).ids
+        self.proc.stdin.write(json.dumps({"ids": ids, "n": n}) + "\n")
+        self.proc.stdin.flush()
+        out = self._read()
+        if "error" in out:
+            raise RuntimeError(out["error"])
+        return out
+
+    def stop(self):
+        try:
+            self.proc.stdin.close()
+        except OSError:
+            pass
+        try:
+            self.proc.wait(30)
+        except subprocess.TimeoutExpired:
+            self.proc.kill()
+
+
+RUNTIMES = {"llamacpp": LlamaCpp, "ollama": Ollama, "omlx": OMLX, "mlxdirect": MLXDirect}
 
 # ---------------------------------------------------------------- one config
 
@@ -462,22 +672,32 @@ def interesting(log_text: str) -> list:
     return [clean(l) for l in log_text.splitlines() if pat.search(l)][:80]
 
 
-QUIET = {"pressure_level": 1, "compressor_gib_max": 2.0, "cpu_percent_max": 40}
+START = {"pressure_level": 1, "cpu_percent_max": 40}
 
 
-def quiet_gate(timeout=1800) -> float:
-    """Block until the machine is quiet: normal pressure, small compressor, idle CPU, no downloads."""
+def is_runtime(argv: list) -> bool:
+    """Another model runtime (matched on its argv, not on text inside a prompt argument)."""
+    exe = os.path.basename(argv[0]) if argv else ""
+    return (exe == "llama-server" or (exe == "ollama" and "runner" in argv[1:2])
+            or ("serve" in argv and "--model-dir" in argv) or any(a.endswith("mlx_direct.py") for a in argv))
+
+
+def start_gate(timeout=1800) -> dict:
+    """Wait for normal memory pressure (the Responsive rule's only start condition), plus no other
+    runtime, download or busy CPU, so a concurrent benchmark can't skew this one. The usual
+    desktop stays open; what else holds memory is recorded by the Monitor."""
     t = time.perf_counter()
     while True:
         s = snapshot()
-        downloading = any("download" in " ".join(p.info["cmdline"] or []) and "hf" in " ".join(p.info["cmdline"] or [])
-                          for p in psutil.process_iter(["cmdline"]) if p.info["cmdline"])
+        argvs = [p.info["cmdline"] or [] for p in psutil.process_iter(["cmdline"]) if p.pid != os.getpid()]
+        downloading = any("download" in argv and any(os.path.basename(a) in ("hf", "huggingface-cli") for a in argv[:2]) for argv in argvs)
+        runtime = any(is_runtime(argv) for argv in argvs)
         cpu = psutil.cpu_percent(interval=2)
-        if (s["pressure"] == QUIET["pressure_level"] and s["compressor"] / GiB <= QUIET["compressor_gib_max"]
-                and cpu <= QUIET["cpu_percent_max"] and not downloading):
-            return {"waited_s": round(time.perf_counter() - t, 1), "cpu_percent": cpu, "compressor_gib": round(s["compressor"] / GiB, 2)}
+        if s["pressure"] == START["pressure_level"] and cpu <= START["cpu_percent_max"] and not downloading and not runtime:
+            return {"waited_s": round(time.perf_counter() - t, 1), "cpu_percent": cpu, "compressor_gib": round(s["compressor"] / GiB, 2),
+                    "free_gib": round(s["free"] / GiB, 2), "swap_used_gib": round(s["swap_used"] / GiB, 2)}
         if time.perf_counter() - t > timeout:
-            raise TimeoutError(f"machine not quiet: pressure={s['pressure']} compressor={s['compressor'] / GiB:.1f}GiB cpu={cpu}% downloading={downloading}")
+            raise TimeoutError(f"cannot start: pressure={s['pressure']} cpu={cpu}% downloading={downloading} other runtime={runtime}")
         time.sleep(10)
 
 
@@ -508,9 +728,10 @@ def _run(cfg, name, label, log_path) -> dict:
         res = {"config": label, "runtime": rt.name, "runtime_version": rt.version(), "model": {k: v for k, v in cfg["model"].items() if k != "local"},
                "model_bytes": size, "ctx": CTX, "prompt_tokens_target": PROMPT_TOKENS, "gen_tokens": GEN_TOKENS,
                "iogpu_wired_limit_mb": sysctl_int("iogpu.wired_limit_mb"),
-               "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "responsive_criteria": RESPONSIVE}
+               "settings": {k: v for k, v in cfg.items() if k not in ("runtime", "model")},
+               "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "responsive_criteria": {**RESPONSIVE, "planned_s": PLANNED_S}}
         subprocess.run(["sudo", "-n", "/usr/sbin/purge"], check=True)  # cold file cache: load_s is a cold load
-        res["quiet_gate"] = quiet_gate()
+        res["start_gate"] = start_gate()
         baseline = snapshot()
         with Monitor() as mon:
             try:
@@ -519,6 +740,8 @@ def _run(cfg, name, label, log_path) -> dict:
                 res["load_s"] = round(rt.start(), 2)
                 if hasattr(rt, "load_duration"):
                     res["load_s_reported"] = round(rt.load_duration, 2)
+                if hasattr(rt, "ready"):
+                    res["worker_ready"] = rt.ready
                 res["cmdline"] = rt.cmdline
                 prompt = rt.prompt(corpus())
                 if cfg["runtime"] == "llamacpp":
@@ -528,6 +751,8 @@ def _run(cfg, name, label, log_path) -> dict:
                 res["req_8k_cached"] = rt.generate(prompt, GEN_TOKENS, cache=True)
                 mon.phase = "gen@short"
                 res["req_short"] = rt.generate(prompt[:300], 128, cache=False)
+                if hasattr(rt, "derive_decode"):
+                    rt.derive_decode(prompt, res)
             except Exception as e:  # record the failure; it is a result too
                 res["error"] = clean(f"{type(e).__name__}: {e}")
             finally:
@@ -539,7 +764,7 @@ def _run(cfg, name, label, log_path) -> dict:
                 time.sleep(3)
         res["memory"] = mon.summary(baseline)
         res["aborted"] = mon.tripped
-        res["responsive"] = responsive(res["memory"]) and not mon.tripped
+        res["responsive"] = responsive(res["memory"], mon.tripped)
         gen8k = [r["gen_tps"] for k in ("req_8k_cold", "req_8k_cached") if (r := res.get(k)) and r.get("gen_tps")]
         res["gen_tps_at_8k"] = round(statistics.mean(gen8k), 2) if gen8k else None
         res["usable"] = bool(res["gen_tps_at_8k"] and res["gen_tps_at_8k"] >= 5 and res["responsive"])
@@ -564,7 +789,7 @@ if __name__ == "__main__":
             sys.exit(f"--wired {wired} refused: {WIRED_MAX_MB} MB is the cap (14336 froze WindowServer)")
     for n in args:
         r = run(n, wired)
-        brief = {k: r.get(k) for k in ("config", "load_s", "gen_tps_at_8k", "responsive", "usable", "error")}
-        brief |= {k: r["memory"][k] for k in ("peak_proc_rss_gib", "peak_wired_gib", "swapouts_gib", "max_pressure_level", "timer_late_ms", "spawn_ms")}
+        brief = {k: r.get(k) for k in ("config", "load_s", "gen_tps_at_8k", "responsive", "usable", "aborted", "error")}
+        brief |= {k: r["memory"][k] for k in ("peak_proc_rss_gib", "peak_wired_gib", "swapouts_gib", "pressure", "window_ms", "timer_late_ms", "spawn_ms")}
         brief |= {k: (r.get(k) or {}).get(f) for k, f in (("req_8k_cold", "prompt_tps"), ("req_8k_cold", "gen_tps"), ("req_8k_cached", "gen_tps"), ("req_short", "gen_tps"))}
         print(json.dumps(brief))

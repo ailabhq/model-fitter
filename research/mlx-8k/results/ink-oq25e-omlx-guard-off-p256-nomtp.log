@@ -1,0 +1,119 @@
+[33moMLX - LLM inference, optimized for your Mac[0m
+[33m├─ https://github.com/jundot/omlx[0m
+[33m└─ Version: 0.8.3[0m
+
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+2026-11-23 22:24:20,343 - transformers - WARNING - PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+2026-11-23 22:24:20,372 - omlx.settings - INFO - Saved settings to ~/mf-bench/omlx-home/settings.json
+Saved CLI arguments to settings.json
+Log directory: ~/mf-bench/omlx-home/logs
+Binding server at http://127.0.0.1:8090
+INFO:     Uvicorn running on http://127.0.0.1:8090 (Press CTRL+C to quit)
+2026-11-23 22:24:20,892 - omlx.scheduler - INFO - ChunkedKVCache patch: methods already present upstream, skipped: size
+Base path: ~/mf-bench/omlx-home
+Model directories: ~/mf-bench/models/mlx
+Memory guard: off
+mf: scheduler prefill_step_size = 256
+Mode: Multi-model serving (continuous batching + paged SSD cache)
+paged SSD cache: ~/mf-bench/omlx-home/cache (max: auto, current limit 14.1GB)
+2026-11-23 22:24:21,706 - omlx.settings - INFO - Saved settings to ~/mf-bench/omlx-home/settings.json
+2026-11-23 22:24:21,706 - omlx.server - INFO - Generated and saved new auth secret key
+2026-11-23 22:24:21,706 - omlx.server - INFO - CORS origins: ['*']
+2026-11-23 22:24:21,706 - omlx.model_settings - INFO - Loaded settings for 1 models
+2026-11-23 22:24:21,727 - omlx.model_discovery - INFO - Discovered model: Inkling-2-Mini-oQ2.5e-mtp (type: vlm, engine: vlm, size: 11.28GB, text-only: 10.66GB)
+2026-11-23 22:24:21,727 - omlx.engine_pool - INFO - Discovered 1 models
+2026-11-23 22:24:21,734 - omlx.server - INFO - Server initialized with 1 models
+2026-11-23 22:24:21,734 - omlx.server - INFO - Default model: Inkling-2-Mini-oQ2.5e-mtp
+2026-11-23 22:24:21,734 - omlx.server - INFO - Memory guard tier: balanced (guard off)
+2026-11-23 22:24:21,734 - omlx.server - INFO - Default max tokens: 32768
+2026-11-23 22:24:21,734 - omlx.server - INFO - HF Downloader initialized
+2026-11-23 22:24:21,734 - omlx.server - INFO - ModelScope SDK not installed, MS downloader disabled
+2026-11-23 22:24:21,736 - omlx.server - INFO - oQ Quantizer initialized
+2026-11-23 22:24:21,741 - omlx.server - INFO - HF Uploader initialized
+Starting server at http://127.0.0.1:8090
+INFO:     Started server process [22880]
+INFO:     Waiting for application startup.
+2026-11-23 22:24:21,801 - omlx.settings - INFO - Saved settings to ~/mf-bench/omlx-home/settings.json
+2026-11-23 22:24:21,801 - omlx.server - INFO - Auto-detected server aliases: ['localhost', '127.0.0.1', '<redacted>.home', '<redacted>.home.local', '192.168.1.91', '100.114.220.99']
+2026-11-23 22:24:21,802 - omlx.process_memory_enforcer - INFO - Process memory enforcer started (tier=balanced, ceiling=0.0GB, interval=1.0s)
+INFO:     Application startup complete.
+2026-11-23 22:24:22,942 - omlx.engine_pool - INFO - Loading model: Inkling-2-Mini-oQ2.5e-mtp
+2026-11-23 22:24:22,944 - omlx.utils.model_loading - INFO - M5 sorted gather_qmm reroute installed (issue #2267)
+2026-11-23 22:24:22,946 - omlx.utils.model_loading - INFO - Inkling 2 pre-load patch applied for ~/mf-bench/models/mlx/Inkling-2-Mini-oQ2.5e-mtp
+2026-11-23 22:24:22,952 - omlx.patches.mlx_lm_mtp.qwen35_model - INFO - Qwen3.5/3.6 MTP model patch applied (PR 990)
+2026-11-23 22:24:22,954 - omlx.patches.mlx_lm_mtp.nemotron_h_chain - INFO - nemotron_h MTP chain patch applied (depth-k drafting, sequential fused verify, replay-free rollback)
+2026-11-23 22:24:22,954 - omlx.patches.qwen35_verify_qmm - INFO - MTP verify qmm patch applied (rows 2..6 split-K, 7..8 sg8, 9..24 mma)
+2026-11-23 22:24:22,955 - omlx.patches.mlx_vlm_mtp.qwen35_vlm_model - INFO - Patched mlx_vlm.models.qwen3_5.Model.sanitize for MTP
+2026-11-23 22:24:22,957 - omlx.patches.mlx_vlm_mtp.qwen35_moe_vlm_model - INFO - Patched mlx_vlm.models.qwen3_5_moe.Model.sanitize for MTP
+2026-11-23 22:24:22,960 - omlx.patches.mlx_vlm_inkling_compat - INFO - Inkling mlx-vlm compatibility patch applied
+2026-11-23 22:24:29,497 - omlx.engine.vlm - INFO - Vision feature cache enabled (SSD: ~/mf-bench/omlx-home/cache/vision_features)
+2026-11-23 22:24:30,047 - omlx.scheduler - INFO - Enlarging paged cache block_size=256 to 2048 for ArraysCache hybrid model (reduces boundary snapshot overhead)
+2026-11-23 22:24:30,049 - omlx.scheduler - INFO - Decode KV cache materialization interval set to 256 tokens
+2026-11-23 22:24:30,049 - omlx.memory_monitor - INFO - MemoryMonitor initialized (estimator-only, eviction disabled)
+2026-11-23 22:24:30,056 - omlx.memory_monitor - INFO - Model info set: 24 layers (8 KVCache), 8 KV heads, 24 Q heads, 128 head_dim. Estimated memory per 64-token block: 2.00 MB
+2026-11-23 22:24:30,056 - omlx.scheduler - INFO - paged SSD-only mode: max_blocks=100000, block_size=2048 tokens
+2026-11-23 22:24:30,057 - omlx.cache.paged_cache - INFO - PagedCacheManager initialized: block_size=2048, initial_blocks=256, max_blocks=100000, max_tokens=204800000
+2026-11-23 22:24:30,057 - omlx.cache.paged_ssd_cache - INFO - Scanning SSD cache directory: ~/mf-bench/omlx-home/cache
+2026-11-23 22:24:30,058 - omlx.cache.paged_ssd_cache - INFO - SSD cache scan complete: scanned=0, indexed=0, errors=0, total_size=0 B, gdn_sidecars=0
+2026-11-23 22:24:30,058 - omlx.cache.paged_ssd_cache - INFO - PagedSSDCacheManager initialized: dir=~/mf-bench/omlx-home/cache, max_size=13.64 GB, auto_size=True, existing_files=0, disk_free=27.28 GB, cache_used=0 B, incompatible_files=0
+2026-11-23 22:24:30,058 - omlx.cache.paged_cache - INFO - paged SSD cache manager connected to PagedCacheManager
+2026-11-23 22:24:30,058 - omlx.scheduler - INFO - paged SSD cache enabled: cache_dir=~/mf-bench/omlx-home/cache, max_size=13.64 GB, block_size=2048 tokens
+2026-11-23 22:24:30,058 - omlx.scheduler - INFO - paged SSD cache enabled: ~/mf-bench/omlx-home/cache, block_size=2048, max_blocks=100000
+2026-11-23 22:24:30,058 - omlx.scheduler - INFO - Output parser detected: inkling for Inkling-2-Mini-oQ2.5e-mtp, stop_tokens=[200006]
+2026-11-23 22:24:30,062 - omlx.engine_core - INFO - Engine started
+2026-11-23 22:24:30,065 - omlx.patches.sdpa256_attention - INFO - sdpa256 attention patch applied (head_dim=256 prefill, kv_len>=8192, always force bounded for qualifying calls (#2025))
+2026-11-23 22:24:30,066 - omlx.patches.qwen35_gdn_prework - INFO - mlx-vlm Qwen3.5 GDN q/k normalization follows mlx-lm normalize_qk
+2026-11-23 22:24:30,066 - omlx.patches.qwen35_gdn_verify_fused - INFO - GDN verify replay commit patch applied
+2026-11-23 22:24:30,066 - omlx.patches.qwen35_gdn_prework - INFO - Qwen fused GDN prework patch applied
+2026-11-23 22:24:30,067 - omlx.patches.qwen35_verify_sdpa_split - INFO - Qwen3.5/3.6 verify-width causal vector attention patch applied
+2026-11-23 22:24:30,068 - omlx.patches.qwen35_gdn_chunked - INFO - Qwen3.5/3.6 GDN prefill kernel patch applied (Metal, impl=pipelined, min_t=64)
+2026-11-23 22:24:30,068 - omlx.patches.qwen35_moe_router - INFO - Qwen MoE fused router top-k patch applied
+2026-11-23 22:24:30,069 - omlx.patches.qwen35_moe_routed_decode - INFO - Qwen MoE fused routed-expert decode patch applied
+2026-11-23 22:24:30,070 - omlx.patches.qwen35_ragged_decode - INFO - qwen3_5 ragged decode threadgroup fallback patch applied
+2026-11-23 22:24:30,070 - omlx.patches.qwen35_padded_row_attention - INFO - qwen3_5 padded-row attention patch applied
+2026-11-23 22:24:30,070 - omlx.patches.qwen35_deferred_realign - INFO - qwen3_5 deferred ragged-rollback realignment patch applied
+2026-11-23 22:24:30,072 - omlx.cache.paged_ssd_cache - INFO - PagedSSDCacheManager updated layer cache signature (56 layers, 2 unique types, turboquant_kv_bits=None, cachelist_subtypes=no, numerics=None)
+2026-11-23 22:24:30,074 - omlx.engine.vlm - INFO - VLMBatchedEngine loaded: ~/mf-bench/models/mlx/Inkling-2-Mini-oQ2.5e-mtp
+2026-11-23 22:24:30,076 - omlx.engine_pool - INFO - Loaded model: Inkling-2-Mini-oQ2.5e-mtp (actual: 10.30GB, local estimate: 11.28GB, full model: 11.28GB, total: 11.28GB)
+2026-11-23 22:24:30,087 - omlx.scheduler - INFO - Enabled boundary cache snapshots for stateful non-sliceable cache layers
+2026-11-23 22:24:36,602 - omlx.scheduler - INFO - Cache phase timings: cleanup_finished_sync=0.1ms/1, prefix_cache_lookup=0.9ms/1, store_cache_main_boundary=0.0ms/1
+2026-11-23 22:24:36,604 - omlx.server - INFO - Completion: model=Inkling-2-Mini-oQ2.5e-mtp, 1 tokens in 6.52s (4972.0 tok/s), prompt: 1
+2026-11-23 22:24:38,270 - omlx.scheduler - INFO - Reserved prefill capacity for 8000 tokens across 8 caches (+0.24GB)
+2026-11-23 22:25:31,150 - omlx.scheduler - INFO - Using boundary cache snapshot for dfd837cd-6e82-4e4e-84be-834d04d96b84: storing 8192/8256 tokens (block aligned, 3 intermediate snapshots)
+2026-11-23 22:25:31,165 - omlx.scheduler - INFO - Cache phase timings: boundary_capture_extract=0.4ms/1, boundary_capture_sync=8.2ms/1, boundary_snapshot_save=62.3ms/1, cleanup_finished_sync=7.4ms/2, prefix_cache_lookup=1.3ms/2, store_cache_main_boundary=148.3ms/2, store_cache_main_collect=3.0ms/1, store_cache_main_dispatch=0.7ms/1
+2026-11-23 22:25:31,174 - omlx.server - INFO - Completion: model=Inkling-2-Mini-oQ2.5e-mtp, 256 tokens in 54.15s (45310.1 tok/s), prompt: 8000
+2026-11-23 22:25:31,471 - omlx.scheduler - INFO - Prefix cache restore for 3eae5ccf-30f7-4e4a-ae73-bb0c574fa66e: source=paged cached=6144 suffix=1856 blocks=3 lookup=0.354ms reconstruct=90.375ms promote=True
+2026-11-23 22:25:31,550 - omlx.scheduler - INFO - Reserved prefill capacity for 8000 tokens across 8 caches (+0.06GB)
+2026-11-23 22:25:54,000 - omlx.scheduler - INFO - Using boundary cache snapshot for 3eae5ccf-30f7-4e4a-ae73-bb0c574fa66e: storing 8192/8256 tokens (block aligned, 0 intermediate snapshots)
+2026-11-23 22:25:54,002 - omlx.scheduler - INFO - Cache phase timings: boundary_capture_extract=0.8ms/2, boundary_capture_sync=16.4ms/2, boundary_snapshot_save=91.3ms/2, cleanup_finished_sync=14.7ms/3, prefix_cache_lookup=1.7ms/3, prefix_cache_reconstruct=90.4ms/1, store_cache_main_boundary=192.2ms/3, store_cache_main_collect=3.0ms/2, store_cache_main_dispatch=0.8ms/2, store_cache_worker_sync=1.4ms/1
+2026-11-23 22:25:54,006 - omlx.server - INFO - Completion: model=Inkling-2-Mini-oQ2.5e-mtp, 256 tokens in 22.76s (161641.7 tok/s), prompt: 8000
+2026-11-23 22:25:59,891 - omlx.scheduler - INFO - Using boundary cache snapshot for 159825e4-b065-40cc-99d2-4424f25c5cc4: storing 68/197 tokens (tail terminal, 0 intermediate snapshots)
+2026-11-23 22:25:59,891 - omlx.scheduler - INFO - Cache phase timings: boundary_capture_extract=0.8ms/2, boundary_capture_sync=16.4ms/2, boundary_snapshot_save=91.3ms/2, cleanup_finished_sync=21.9ms/4, prefix_cache_lookup=1.7ms/4, prefix_cache_reconstruct=90.4ms/1, store_cache_main_boundary=206.1ms/4, store_cache_main_collect=3.0ms/3, store_cache_main_dispatch=0.9ms/3, store_cache_worker_sync=1.5ms/2
+2026-11-23 22:25:59,892 - omlx.server - INFO - Completion: model=Inkling-2-Mini-oQ2.5e-mtp, 128 tokens in 5.86s (341675.0 tok/s), prompt: 69
+2026-11-23 22:25:59,979 - omlx.scheduler - INFO - Prefix cache restore for 342a9aa0-f882-409f-a545-427f040c35d1: source=paged cached=6144 suffix=1856 blocks=3 lookup=0.328ms reconstruct=65.055ms promote=True
+2026-11-23 22:26:00,129 - omlx.scheduler - INFO - Reserved prefill capacity for 8000 tokens across 8 caches (+0.06GB)
+2026-11-23 22:26:11,121 - omlx.scheduler - INFO - Using boundary cache snapshot for 342a9aa0-f882-409f-a545-427f040c35d1: storing 7999/8001 tokens (tail terminal, 0 intermediate snapshots)
+2026-11-23 22:26:11,123 - omlx.scheduler - INFO - Cache phase timings: boundary_capture_extract=0.8ms/2, boundary_capture_sync=16.4ms/2, boundary_snapshot_save=91.3ms/2, cleanup_finished_sync=29.4ms/5, prefix_cache_lookup=2.0ms/5, prefix_cache_reconstruct=155.4ms/2, store_cache_main_boundary=220.9ms/5, store_cache_main_collect=3.1ms/4, store_cache_main_dispatch=1.1ms/4, store_cache_worker_sync=1.6ms/3
+2026-11-23 22:26:11,127 - omlx.server - INFO - Completion: model=Inkling-2-Mini-oQ2.5e-mtp, 1 tokens in 11.22s (4135.8 tok/s), prompt: 8000
+2026-11-23 22:26:11,168 - omlx.scheduler - INFO - Prefix cache restore for 93309dad-3dbf-4ec5-843e-48ca37888264: source=paged cached=68 suffix=1 blocks=1 lookup=0.047ms reconstruct=14.644ms promote=True
+2026-11-23 22:26:11,262 - omlx.scheduler - INFO - Cache phase timings: boundary_capture_extract=0.8ms/2, boundary_capture_sync=16.4ms/2, boundary_snapshot_save=91.3ms/2, cleanup_finished_sync=36.6ms/6, prefix_cache_lookup=2.1ms/6, prefix_cache_reconstruct=170.1ms/3, store_cache_main_boundary=220.9ms/6, store_cache_main_collect=3.1ms/4, store_cache_main_dispatch=1.1ms/4, store_cache_worker_sync=1.7ms/4
+2026-11-23 22:26:11,263 - omlx.server - INFO - Completion: model=Inkling-2-Mini-oQ2.5e-mtp, 1 tokens in 0.11s (3411.5 tok/s), prompt: 69
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-11-23 22:26:11,487 - omlx.process_memory_enforcer - INFO - Process memory enforcer stopped
+2026-11-23 22:26:11,488 - omlx.server - INFO - Process memory enforcer stopped
+2026-11-23 22:26:11,496 - omlx.admin.hf_downloader - INFO - HF Downloader shut down
+2026-11-23 22:26:11,496 - omlx.server - INFO - HF Downloader stopped
+2026-11-23 22:26:11,498 - omlx.engine_pool - INFO - Unloading model: Inkling-2-Mini-oQ2.5e-mtp (immediate abort)
+2026-11-23 22:26:11,501 - omlx.engine_core - INFO - Engine stopped
+2026-11-23 22:26:11,568 - omlx.scheduler - INFO - Scheduler shutdown initiated...
+2026-11-23 22:26:11,571 - omlx.cache.paged_ssd_cache - INFO - Shutting down PagedSSDCacheManager...
+2026-11-23 22:26:11,572 - omlx.scheduler - INFO - Scheduler shutdown completed
+2026-11-23 22:26:11,572 - omlx.cache.paged_cache - INFO - PagedCacheManager cleared (reset to 256 initial blocks)
+2026-11-23 22:26:12,299 - omlx.scheduler - INFO - Deep reset completed - all caches cleared
+2026-11-23 22:26:12,431 - omlx.engine.vlm - INFO - VLMBatchedEngine stopped
+2026-11-23 22:26:13,062 - omlx.engine_pool - INFO - Unloaded model: Inkling-2-Mini-oQ2.5e-mtp, freed=10.16GB (expected>=9.28GB), active_memory: 198.66KB (settled)
+2026-11-23 22:26:13,125 - omlx.engine_pool - INFO - Engine pool shutdown complete
+2026-11-23 22:26:13,126 - omlx.server - INFO - Engine pool shutdown
+INFO:     Application shutdown complete.
+INFO:     Finished server process [22880]

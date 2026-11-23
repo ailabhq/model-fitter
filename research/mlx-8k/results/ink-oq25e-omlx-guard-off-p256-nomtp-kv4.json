@@ -1,0 +1,158 @@
+{
+  "config": "ink-oq25e-omlx-guard-off-p256-nomtp-kv4",
+  "runtime": "omlx",
+  "runtime_version": "omlx 0.8.3 mlx 0.32.4",
+  "model": {
+    "repo": "mlx-community/Inkling-2-Mini-oQ2.5e-mtp",
+    "revision": "d4a4f3f555fdf6f06102de1865d07e8ac5effe6d"
+  },
+  "model_bytes": 11565374660,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "guard": "off",
+    "prefill_step": 256,
+    "model_settings": {
+      "mtp_enabled": false,
+      "turboquant_kv_enabled": true,
+      "turboquant_kv_scheme": "affine4",
+      "turboquant_kv_bits": 4
+    }
+  },
+  "started": "2026-11-23T22:28:15+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "start_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 6.7,
+    "compressor_gib": 0.42,
+    "free_gib": 12.08,
+    "swap_used_gib": 2.09
+  },
+  "load_s": 14.01,
+  "cmdline": "~/mf-bench/omlx-venv/bin/python -c \nimport sys\nfrom omlx.settings import GlobalSettings\n_orig = GlobalSettings.to_scheduler_config\ndef _patched(self):\n    c = _orig(self)\n    c.prefill_step_size = 256\n    print(\"mf: scheduler prefill_step_size =\", c.prefill_step_size, flush=True)\n    return c\nGlobalSettings.to_scheduler_config = _patched\nfrom omlx.cli import main\nsys.argv = [\"omlx\", *sys.argv[1:]]\nsys.exit(main())\n serve --model-dir ~/mf-bench/models/mlx --port 8090 --base-path ~/mf-bench/omlx-home --memory-guard off",
+  "req_8k_cold": {
+    "wall_s": 54.65,
+    "prompt_n": 8000,
+    "ttft_s": 42.86,
+    "prompt_tps": 186.65,
+    "gen_n": 256,
+    "text_events": 1,
+    "gen_tps": null,
+    "server_usage": {
+      "time_to_first_token": 54.62,
+      "prompt_tokens_per_second": 146.46,
+      "prompt_eval_duration": 54.62,
+      "generation_tokens_per_second": 119157.5
+    },
+    "sample": ".g. `<think>\\n</think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                                          | Parser                                                                    |\n|-----------------------------------------------|----------------",
+    "prompt_s": 42.86,
+    "prompt_method": "wall minus decode time from req_8k_cached"
+  },
+  "req_8k_cached": {
+    "wall_s": 23.23,
+    "prompt_n": 8000,
+    "ttft_s": 23.23,
+    "prompt_tps": 344.43,
+    "gen_n": 256,
+    "text_events": 1,
+    "gen_tps": 21.63,
+    "server_usage": {
+      "time_to_first_token": 23.15,
+      "prompt_tokens_per_second": 80.16,
+      "prompt_eval_duration": 23.15,
+      "generation_tokens_per_second": 237183.52
+    },
+    "sample": ".g. `<think>\\n</think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                                          | Parser                                                                    |\n|-----------------------------------------------|----------------",
+    "wall_1tok_s": 11.44,
+    "gen_tps_method": "(n-1)/(wall(n)-wall(1)), prefix-cached"
+  },
+  "req_short": {
+    "wall_s": 5.77,
+    "prompt_n": 69,
+    "ttft_s": 5.77,
+    "prompt_tps": 11.97,
+    "gen_n": 128,
+    "text_events": 1,
+    "gen_tps": 22.76,
+    "server_usage": {
+      "time_to_first_token": 5.74,
+      "prompt_tokens_per_second": 12.02,
+      "prompt_eval_duration": 5.74,
+      "generation_tokens_per_second": 625534.64
+    },
+    "sample": "laration on Android devices.\n![Hardware acceleration](./android/hardware-acceleration.jpg)\n\n## Build GUI binding using Gradle\n\n```bash\n./gradlew :llama.android:assemble\n```\n\n## Build GUI binding using Gradle with hardware acceleration\n\n```bash\n./gradlew :llama.android:assemble -Pllama.android.hardwa",
+    "wall_1tok_s": 0.19,
+    "gen_tps_method": "(n-1)/(wall(n)-wall(1)), prefix-cached"
+  },
+  "memory": {
+    "baseline": {
+      "wired": 1.75,
+      "compressor": 0.38,
+      "free": 11.57,
+      "swap_used": 2.08,
+      "anonymous": 1.33,
+      "file_backed": 0.43
+    },
+    "peak_proc_rss_gib": 5.7,
+    "peak_wired_gib": 13.58,
+    "peak_compressor_gib": 9.73,
+    "min_free_gib": 0.04,
+    "peak_swap_used_gib": 4.17,
+    "swapouts_gib": 2.93,
+    "pageouts_gib": 0.0,
+    "pageins_gib": 14.14,
+    "max_pressure_level": 4,
+    "pressure": {
+      "benchmark_s": 118.5,
+      "critical_s": 1.6,
+      "critical_share": 0.013,
+      "critical_longest_s": 1.6,
+      "warning_s": 22.3
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 233,
+      "p50": 1.5,
+      "p99": 5.9,
+      "max": 144.8,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 4259,
+      "p50": 10.0,
+      "p99": 10.1,
+      "max": 224.6,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 117,
+      "p50": 5.0,
+      "p99": 20.6,
+      "max": 35.2,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "aborted": null,
+  "responsive": true,
+  "gen_tps_at_8k": 21.63,
+  "usable": true,
+  "log_excerpt": [
+    "2026-11-23 22:28:18,792 - transformers - WARNING - PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.",
+    "2026-11-23 22:28:28,220 - omlx.cache.paged_ssd_cache - INFO - SSD cache scan complete: scanned=0, indexed=0, errors=0, total_size=0 B, gdn_sidecars=0"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

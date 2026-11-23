@@ -1,0 +1,140 @@
+{
+  "config": "ink-oq25e-mlx-p256",
+  "runtime": "mlx-direct",
+  "runtime_version": "mlx-lm 0.32.3.dev8+g0d4d3d04f mlx 0.32.4 model code: omlx 0.8.3",
+  "model": {
+    "repo": "mlx-community/Inkling-2-Mini-oQ2.5e-mtp",
+    "revision": "d4a4f3f555fdf6f06102de1865d07e8ac5effe6d"
+  },
+  "model_bytes": 11565374660,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "direct": {
+      "prefill_step": 256,
+      "kv_bits": null,
+      "kv_start": 0,
+      "cache_limit_mb": null
+    }
+  },
+  "started": "2026-11-23T22:05:46+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "start_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 6.3,
+    "compressor_gib": 0.56,
+    "free_gib": 8.27,
+    "swap_used_gib": 1.52
+  },
+  "load_s": 11.31,
+  "worker_ready": {
+    "ready": true,
+    "load_s": 6.55,
+    "active_gib": 10.16,
+    "max_recommended_gib": 11.84
+  },
+  "cmdline": "~/mf-bench/omlx-venv/bin/python ~/model-fitter-mlx8k/research/baseline/harness/mlx_direct.py ~/mf-bench/models/mlx/Inkling-2-Mini-oQ2.5e-mtp {\"prefill_step\": 256, \"kv_bits\": null, \"kv_start\": 0, \"cache_limit_mb\": null}",
+  "req_8k_cold": {
+    "wall_s": 59.85,
+    "prompt_n": 8000,
+    "ttft_s": 48.35,
+    "prompt_tps": 173.98,
+    "prompt_s": 45.98,
+    "gen_n": 256,
+    "gen_tps": 22.29,
+    "peak_mlx_gib": 11.7,
+    "sample": ".g. `<think>\\n</think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                                          | Parser                                                                    |\n|-----------------------------------------------|----------------"
+  },
+  "req_8k_cached": {
+    "wall_s": 52.97,
+    "prompt_n": 8000,
+    "ttft_s": 41.5,
+    "prompt_tps": 192.79,
+    "prompt_s": 41.5,
+    "gen_n": 256,
+    "gen_tps": 22.32,
+    "peak_mlx_gib": 11.7,
+    "sample": ".g. `<think>\\n</think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                                          | Parser                                                                    |\n|-----------------------------------------------|----------------"
+  },
+  "req_short": {
+    "wall_s": 5.74,
+    "prompt_n": 69,
+    "ttft_s": 0.62,
+    "prompt_tps": 112.27,
+    "prompt_s": 0.61,
+    "gen_n": 128,
+    "gen_tps": 25.02,
+    "peak_mlx_gib": 10.58,
+    "sample": "laration on Android devices.\n![Hardware acceleration](./android/hardware-acceleration.jpg)\n\n## Build GUI binding using Gradle\n\n```bash\n./gradlew :llama.android:assemble\n```\n\n## Build GUI binding using Gradle with hardware acceleration\n\n```bash\n./gradlew :llama.android:assemble -Pllama.android.hardwa"
+  },
+  "memory": {
+    "baseline": {
+      "wired": 1.8,
+      "compressor": 0.56,
+      "free": 7.93,
+      "swap_used": 1.52,
+      "anonymous": 4.75,
+      "file_backed": 0.44
+    },
+    "peak_proc_rss_gib": 4.66,
+    "peak_wired_gib": 13.45,
+    "peak_compressor_gib": 10.87,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 3.55,
+    "swapouts_gib": 2.39,
+    "pageouts_gib": 0.01,
+    "pageins_gib": 12.38,
+    "max_pressure_level": 4,
+    "pressure": {
+      "benchmark_s": 134.2,
+      "critical_s": 3.1,
+      "critical_share": 0.023,
+      "critical_longest_s": 3.1,
+      "warning_s": 71.9
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 263,
+      "p50": 1.5,
+      "p99": 13.1,
+      "max": 237.0,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 4774,
+      "p50": 10.0,
+      "p99": 10.8,
+      "max": 240.2,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 133,
+      "p50": 4.4,
+      "p99": 16.7,
+      "max": 20.6,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "aborted": null,
+  "responsive": true,
+  "gen_tps_at_8k": 22.3,
+  "usable": true,
+  "log_excerpt": [
+    "[transformers] You are using a model of type `inkling2_loop` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating."
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "config": "ink-oq25e-omlx-guard-off-p256",
+  "runtime": "omlx",
+  "runtime_version": "omlx 0.8.3 mlx 0.32.4",
+  "model": {
+    "repo": "mlx-community/Inkling-2-Mini-oQ2.5e-mtp",
+    "revision": "d4a4f3f555fdf6f06102de1865d07e8ac5effe6d"
+  },
+  "model_bytes": 11565374660,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "guard": "off",
+    "prefill_step": 256
+  },
+  "started": "2026-11-23T22:11:31+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "start_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 8.7,
+    "compressor_gib": 0.62,
+    "free_gib": 11.5,
+    "swap_used_gib": 2.25
+  },
+  "load_s": 16.2,
+  "cmdline": "~/mf-bench/omlx-venv/bin/python -c \nimport sys\nfrom omlx.settings import GlobalSettings\n_orig = GlobalSettings.to_scheduler_config\ndef _patched(self):\n    c = _orig(self)\n    c.prefill_step_size = 256\n    print(\"mf: scheduler prefill_step_size =\", c.prefill_step_size, flush=True)\n    return c\nGlobalSettings.to_scheduler_config = _patched\nfrom omlx.cli import main\nsys.argv = [\"omlx\", *sys.argv[1:]]\nsys.exit(main())\n serve --model-dir ~/mf-bench/models/mlx --port 8090 --base-path ~/mf-bench/omlx-home --memory-guard off",
+  "error": "RuntimeError: stream error: {'message': '[METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory).', 'type': 'server_error'}",
+  "memory": {
+    "baseline": {
+      "wired": 1.66,
+      "compressor": 0.61,
+      "free": 11.03,
+      "swap_used": 2.25,
+      "anonymous": 1.67,
+      "file_backed": 0.5
+    },
+    "peak_proc_rss_gib": 6.05,
+    "peak_wired_gib": 13.28,
+    "peak_compressor_gib": 10.42,
+    "min_free_gib": 0.04,
+    "peak_swap_used_gib": 4.78,
+    "swapouts_gib": 2.8,
+    "pageouts_gib": 0.0,
+    "pageins_gib": 11.45,
+    "max_pressure_level": 4,
+    "pressure": {
+      "benchmark_s": 40.3,
+      "critical_s": 2.6,
+      "critical_share": 0.064,
+      "critical_longest_s": 2.6,
+      "warning_s": 8.3
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 81,
+      "p50": 1.4,
+      "p99": 9.6,
+      "max": 9.6,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 1474,
+      "p50": 9.9,
+      "p99": 10.9,
+      "max": 231.4,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 41,
+      "p50": 5.8,
+      "p99": 20.9,
+      "max": 20.9,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "aborted": null,
+  "responsive": false,
+  "gen_tps_at_8k": null,
+  "usable": false,
+  "log_excerpt": [
+    "2026-11-23 22:11:35,611 - transformers - WARNING - PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.",
+    "2026-11-23 22:11:58,942 - omlx.cache.paged_ssd_cache - INFO - SSD cache scan complete: scanned=0, indexed=0, errors=0, total_size=0 B, gdn_sidecars=0",
+    "2026-11-23 22:12:10,255 - omlx.scheduler - ERROR - Prefill failed for 77d3c4ef-2946-4bf1-b278-09b80caaba47: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory).",
+    "2026-11-23 22:12:10,268 - omlx.server - ERROR - Error during completion streaming: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory)."
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

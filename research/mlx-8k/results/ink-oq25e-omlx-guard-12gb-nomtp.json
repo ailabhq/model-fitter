@@ -1,0 +1,106 @@
+{
+  "config": "ink-oq25e-omlx-guard-12gb-nomtp",
+  "runtime": "omlx",
+  "runtime_version": "omlx 0.8.3 mlx 0.32.4",
+  "model": {
+    "repo": "mlx-community/Inkling-2-Mini-oQ2.5e-mtp",
+    "revision": "d4a4f3f555fdf6f06102de1865d07e8ac5effe6d"
+  },
+  "model_bytes": 11565374660,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "guard_gb": 12,
+    "model_settings": {
+      "mtp_enabled": false
+    }
+  },
+  "started": "2026-11-23T22:31:03+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "start_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 5.5,
+    "compressor_gib": 0.3,
+    "free_gib": 11.48,
+    "swap_used_gib": 1.99
+  },
+  "load_s": 13.62,
+  "cmdline": "~/mf-bench/omlx-venv/bin/omlx serve --model-dir ~/mf-bench/models/mlx --port 8090 --base-path ~/mf-bench/omlx-home --memory-guard-gb 12",
+  "error": "RuntimeError: stream error: {'message': 'oMLX memory guard aborted this request mid-prefill: Request aborted: process memory limit exceeded (usage 11.9 GB, abort threshold (hard watermark) 11.6 GB, dynamic ceiling 12.0 GB). Raise custom_ceiling_bytes in admin Memory settings (currently pinned at 12.00 GB), or reduce context length.', 'type': 'invalid_request_error', 'param': None, 'code': 'prefill_memory_aborted', 'omlx_code': 'prefill_memory_aborted', 'limit_bytes': 12498354831}",
+  "memory": {
+    "baseline": {
+      "wired": 1.8,
+      "compressor": 0.3,
+      "free": 11.15,
+      "swap_used": 1.99,
+      "anonymous": 1.8,
+      "file_backed": 0.41
+    },
+    "peak_proc_rss_gib": 5.95,
+    "peak_wired_gib": 13.37,
+    "peak_compressor_gib": 10.1,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 3.99,
+    "swapouts_gib": 2.07,
+    "pageouts_gib": 0.0,
+    "pageins_gib": 10.56,
+    "max_pressure_level": 4,
+    "pressure": {
+      "benchmark_s": 25.3,
+      "critical_s": 2.1,
+      "critical_share": 0.081,
+      "critical_longest_s": 2.1,
+      "warning_s": 5.7
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 51,
+      "p50": 1.4,
+      "p99": 137.0,
+      "max": 137.0,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 938,
+      "p50": 9.9,
+      "p99": 10.1,
+      "max": 209.3,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 26,
+      "p50": 4.0,
+      "p99": 73.7,
+      "max": 73.7,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "aborted": null,
+  "responsive": false,
+  "gen_tps_at_8k": null,
+  "usable": false,
+  "log_excerpt": [
+    "2026-11-23 22:31:06,746 - transformers - WARNING - PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.",
+    "2026-11-23 22:31:08,339 - omlx.process_memory_enforcer - WARNING - Metal cap (11.8GB, Apple max_recommended_working_set_size) is below the oMLX static ceiling (14.0GB); leaving Apple's default Metal cap active because iogpu.wired_limit_mb is unset. Raise it with: sudo sysctl iogpu.wired_limit_mb=14336",
+    "2026-11-23 22:31:16,520 - omlx.cache.paged_ssd_cache - INFO - SSD cache scan complete: scanned=0, indexed=0, errors=0, total_size=0 B, gdn_sidecars=0",
+    "2026-11-23 22:31:26,416 - omlx.engine_core - WARNING - Aborted 1 requests due to memory pressure",
+    "2026-11-23 22:31:26,416 - omlx.process_memory_enforcer - WARNING - Hard memory pressure: aborted 1 request(s) on 'Inkling-2-Mini-oQ2.5e-mtp' and kept model loaded",
+    "2026-11-23 22:31:26,417 - omlx.server - WARNING - completion streaming prefill rejected: Request aborted: process memory limit exceeded (usage 11.9 GB, abort threshold (hard watermark) 11.6 GB, dynamic ceiling 12.0 GB). Raise custom_ceiling_bytes in admin Memory settings (currently pinned at 12.00 GB), or reduce context length.",
+    "2026-11-23 22:31:27,176 - omlx.scheduler - ERROR - Prefill failed for c9d804ba-6ff7-4360-9089-808d5bc745cc: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory)."
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

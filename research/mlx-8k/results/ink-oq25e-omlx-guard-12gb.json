@@ -1,0 +1,97 @@
+{
+  "config": "ink-oq25e-omlx-guard-12gb",
+  "runtime": "omlx",
+  "runtime_version": "omlx 0.8.3 mlx 0.32.4",
+  "model": {
+    "repo": "mlx-community/Inkling-2-Mini-oQ2.5e-mtp",
+    "revision": "d4a4f3f555fdf6f06102de1865d07e8ac5effe6d"
+  },
+  "model_bytes": 11565374660,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "guard_gb": 12
+  },
+  "started": "2026-11-23T22:12:14+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "start_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 5.2,
+    "compressor_gib": 0.6,
+    "free_gib": 12.24,
+    "swap_used_gib": 2.48
+  },
+  "error": "RuntimeError: HTTP 507: {\"error\":{\"message\":\"Cannot load Inkling-2-Mini-oQ2.5e-mtp: projected memory 12.17GB would exceed the dynamic memory ceiling 12.00GB (current: 206.72MB, model: 11.97GB). Raise custom_ceiling_bytes in admin Memory settings (currently pinned at 12.00GB), or unload another model.\",\"type\":\"server_error\"",
+  "memory": {
+    "baseline": {
+      "wired": 1.67,
+      "compressor": 0.6,
+      "free": 11.9,
+      "swap_used": 2.48,
+      "anonymous": 0.91,
+      "file_backed": 0.39
+    },
+    "peak_proc_rss_gib": 0.23,
+    "peak_wired_gib": 1.71,
+    "peak_compressor_gib": 0.6,
+    "min_free_gib": 11.11,
+    "peak_swap_used_gib": 2.48,
+    "swapouts_gib": 0.0,
+    "pageouts_gib": 0.0,
+    "pageins_gib": 0.24,
+    "max_pressure_level": 1,
+    "pressure": {
+      "benchmark_s": 6.8,
+      "critical_s": 0.0,
+      "critical_share": 0.0,
+      "critical_longest_s": 0.0,
+      "warning_s": 0.0
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 15,
+      "p50": 1.6,
+      "p99": 5.6,
+      "max": 5.6,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 261,
+      "p50": 10.0,
+      "p99": 13.2,
+      "max": 13.5,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 8,
+      "p50": 9.1,
+      "p99": 19.1,
+      "max": 19.1,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "aborted": null,
+  "responsive": true,
+  "gen_tps_at_8k": null,
+  "usable": false,
+  "log_excerpt": [
+    "2026-11-23 22:12:18,253 - transformers - WARNING - PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.",
+    "2026-11-23 22:12:19,749 - omlx.process_memory_enforcer - WARNING - Metal cap (11.8GB, Apple max_recommended_working_set_size) is below the oMLX static ceiling (14.0GB); leaving Apple's default Metal cap active because iogpu.wired_limit_mb is unset. Raise it with: sudo sysctl iogpu.wired_limit_mb=14336",
+    "2026-11-23 22:12:20,869 - omlx.server - WARNING - POST /v1/completions \u2192 507: Cannot load Inkling-2-Mini-oQ2.5e-mtp: projected memory 12.17GB would exceed the dynamic memory ceiling 12.00GB (current: 206.72MB, model: 11.97GB). Raise custom_ceiling_bytes in admin Memory settings (currently pinned at 12.00GB), or unload another model."
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "config": "ink-oq25e-mlx-p256-kv4",
+  "runtime": "mlx-direct",
+  "runtime_version": "mlx-lm 0.32.3.dev8+g0d4d3d04f mlx 0.32.4 model code: omlx 0.8.3",
+  "model": {
+    "repo": "mlx-community/Inkling-2-Mini-oQ2.5e-mtp",
+    "revision": "d4a4f3f555fdf6f06102de1865d07e8ac5effe6d"
+  },
+  "model_bytes": 11565374660,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "direct": {
+      "prefill_step": 256,
+      "kv_bits": 4,
+      "kv_start": 0,
+      "cache_limit_mb": null
+    }
+  },
+  "started": "2026-11-23T22:08:59+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "start_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 7.8,
+    "compressor_gib": 0.3,
+    "free_gib": 12.36,
+    "swap_used_gib": 2.62
+  },
+  "load_s": 7.52,
+  "worker_ready": {
+    "ready": true,
+    "load_s": 6.37,
+    "active_gib": 10.16,
+    "max_recommended_gib": 11.84
+  },
+  "cmdline": "~/mf-bench/omlx-venv/bin/python ~/model-fitter-mlx8k/research/baseline/harness/mlx_direct.py ~/mf-bench/models/mlx/Inkling-2-Mini-oQ2.5e-mtp {\"prefill_step\": 256, \"kv_bits\": 4, \"kv_start\": 0, \"cache_limit_mb\": null}",
+  "error": "RuntimeError: AttributeError: 'list' object has no attribute 'shape'",
+  "memory": {
+    "baseline": {
+      "wired": 1.79,
+      "compressor": 0.28,
+      "free": 11.7,
+      "swap_used": 2.6,
+      "anonymous": 1.1,
+      "file_backed": 0.59
+    },
+    "peak_proc_rss_gib": 5.99,
+    "peak_wired_gib": 13.04,
+    "peak_compressor_gib": 8.86,
+    "min_free_gib": 0.05,
+    "peak_swap_used_gib": 3.82,
+    "swapouts_gib": 1.25,
+    "pageouts_gib": 0.0,
+    "pageins_gib": 10.28,
+    "max_pressure_level": 4,
+    "pressure": {
+      "benchmark_s": 15.9,
+      "critical_s": 0.9,
+      "critical_share": 0.055,
+      "critical_longest_s": 0.9,
+      "warning_s": 4.7
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 32,
+      "p50": 1.4,
+      "p99": 138.9,
+      "max": 138.9,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 576,
+      "p50": 10.0,
+      "p99": 12.0,
+      "max": 241.3,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 16,
+      "p50": 5.0,
+      "p99": 20.2,
+      "max": 20.2,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "aborted": null,
+  "responsive": false,
+  "gen_tps_at_8k": null,
+  "usable": false,
+  "log_excerpt": [
+    "[transformers] You are using a model of type `inkling2_loop` to instantiate a model of type ``. This may be expected if you are loading a checkpoint that shares a subset of the architecture (e.g., loading a `sam2_video` checkpoint into `Sam2Model`), but is otherwise not supported and can yield errors. Please verify that the checkpoint is compatible with the model you are instantiating."
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}
