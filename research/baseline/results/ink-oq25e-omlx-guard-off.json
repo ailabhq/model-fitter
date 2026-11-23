@@ -1,0 +1,104 @@
+{
+  "config": "ink-oq25e-omlx-guard-off",
+  "runtime": "omlx",
+  "runtime_version": "omlx 0.8.3 mlx 0.32.4",
+  "model": {
+    "repo": "mlx-community/Inkling-2-Mini-oQ2.5e-mtp"
+  },
+  "model_bytes": 11565370400,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "started": "2026-11-23T20:16:51+0100",
+  "responsive_criteria": {
+    "max_pressure_level_below": 4,
+    "swapouts_gib_max": 0.25,
+    "timer_p99_ms_max": 50,
+    "spawn_max_ms_max": 1000
+  },
+  "quiet_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 26.6,
+    "compressor_gib": 0.7
+  },
+  "load_s": 26.22,
+  "cmdline": "~/mf-bench/omlx-venv/bin/omlx serve --model-dir ~/mf-bench/models/mlx --port 8090 --memory-guard off",
+  "req_8k_cold": {
+    "wall_s": 2.01,
+    "prompt_n": null,
+    "ttft_s": null,
+    "prompt_tps": null,
+    "gen_n": 0,
+    "gen_tps": null,
+    "gen_tps_basis": "wall clock between first and last streamed token",
+    "sample": ""
+  },
+  "req_8k_cached": {
+    "wall_s": 1.17,
+    "prompt_n": null,
+    "ttft_s": null,
+    "prompt_tps": null,
+    "gen_n": 0,
+    "gen_tps": null,
+    "gen_tps_basis": "wall clock between first and last streamed token",
+    "sample": ""
+  },
+  "req_short": {
+    "wall_s": 6.97,
+    "prompt_n": 69,
+    "ttft_s": 6.97,
+    "prompt_tps": 9.9,
+    "gen_n": 128,
+    "gen_tps": null,
+    "gen_tps_basis": "wall clock between first and last streamed token",
+    "sample": "laration on Android devices.\n![Hardware acceleration](./android/hardware-acceleration.jpg)\n\n## Build GUI binding using Gradle\n\n```bash\n./gradlew :llama.android:assemble\n```\n\n## Build GUI binding using Gradle with hardware acceleration\n\n```bash\n./gradlew :llama.android:assemble -Pllama.android.hardwa"
+  },
+  "memory": {
+    "baseline": {
+      "wired": 1.83,
+      "compressor": 0.7,
+      "free": 8.59,
+      "swap_used": 2.13,
+      "anonymous": 3.71,
+      "file_backed": 0.64
+    },
+    "peak_proc_rss_gib": 4.83,
+    "peak_wired_gib": 13.64,
+    "peak_compressor_gib": 11.16,
+    "min_free_gib": 0.02,
+    "peak_swap_used_gib": 5.66,
+    "swapouts_gib": 4.97,
+    "pageouts_gib": 0.01,
+    "pageins_gib": 11.89,
+    "max_pressure_level": 4,
+    "timer_late_ms": {
+      "p50": 10.0,
+      "p99": 10.2,
+      "max": 297.9
+    },
+    "spawn_ms": {
+      "p50": 3.3,
+      "p99": 118.8,
+      "max": 118.8
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "aborted": null,
+  "responsive": false,
+  "gen_tps_at_8k": null,
+  "usable": false,
+  "log_excerpt": [
+    "2026-11-23 20:16:54,361 - transformers - WARNING - PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.",
+    "2026-11-23 20:17:03,585 - omlx.cache.paged_ssd_cache - INFO - SSD cache scan complete: scanned=0, indexed=0, errors=0, total_size=0 B, gdn_sidecars=0",
+    "2026-11-23 20:17:24,500 - omlx.scheduler - ERROR - Prefill failed for 2ed1f318-5bb2-46e9-b0fd-2fe02fc023e1: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory).",
+    "2026-11-23 20:17:24,529 - omlx.server - ERROR - Error during completion streaming: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory).",
+    "2026-11-23 20:17:25,674 - omlx.scheduler - ERROR - Prefill failed for f2b4d171-d776-4f98-84b9-a50da25df839: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory).",
+    "2026-11-23 20:17:25,700 - omlx.server - ERROR - Error during completion streaming: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory)."
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

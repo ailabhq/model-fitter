@@ -1,0 +1,60 @@
+0.00.119.493 I ggml_metal_device_init: recommendedMaxWorkingSetSize  = 12713.12 MB
+0.00.120.874 I cmn  common_param: system_info: n_threads = 4 (n_threads_batch = 4) / 10 | MTL : EMBED_LIBRARY = 1 | CPU : NEON = 1 | ARM_FMA = 1 | FP16_VA = 1 | MATMUL_INT8 = 1 | DOTPROD = 1 | SME = 1 | SME2 = 1 | ACCELERATE = 1 | REPACK = 1 | 
+0.00.127.139 I cmn  common_fit_a: fitting params to device memory ...
+0.00.127.140 I cmn  common_fit_a: (for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on)
+0.00.127.799 I common_params_fit_impl: getting device memory data for initial parameters:
+0.00.260.996 I common_params_fit_impl: projected to use 12525 MiB of device memory vs. 12123 MiB of free device memory
+0.00.260.999 I common_params_fit_impl: cannot meet free memory target of 1024 MiB, need to reduce device memory by 1425 MiB
+0.00.260.999 I common_params_fit_impl: context size set by user to 8704 -> no change
+0.00.261.000 I common_params_fit_impl: id=0, target=11099 MiB
+0.00.371.523 I common_memory_breakdown_print: |   - CPU_REPACK         |                   1796 =  1796 +       0 +       0                |
+0.00.382.721 I common_params_fit_impl: memory for test allocation by device:
+0.00.382.725 I common_params_fit_impl: id=0, n_layer= 0, n_part= 0, overflow_type=4, mem=     0 MiB
+0.00.382.725 I common_params_fit_impl: filling dense layers back-to-front:
+0.00.506.864 I common_params_fit_impl: memory for test allocation by device:
+0.00.506.867 I common_params_fit_impl: id=0, n_layer=65, n_part= 0, overflow_type=4, mem= 12525 MiB
+0.00.506.868 I common_params_fit_impl: start filling device 0, delta=65
+0.00.620.136 I common_memory_breakdown_print: |   - CPU_REPACK         |                    281 =   281 +       0 +       0                |
+0.00.630.818 I common_params_fit_impl: memory for test allocation by device:
+0.00.630.821 I common_params_fit_impl: id=0, n_layer=57, n_part= 0, overflow_type=4, mem= 11080 MiB
+0.00.630.822 I common_params_fit_impl: set ngl_per_device[0].n_layer=57
+0.00.742.817 I common_memory_breakdown_print: |   - CPU_REPACK         |                    274 =   274 +       0 +       0                |
+0.00.752.829 I common_params_fit_impl: memory for test allocation by device:
+0.00.752.832 I common_params_fit_impl: id=0, n_layer=58, n_part= 0, overflow_type=4, mem= 11266 MiB
+0.00.752.833 I common_params_fit_impl: set ngl_per_device_high[0].n_layer=58
+0.00.752.834 I common_params_fit_impl:   - MTL0 (Apple M4): 57 layers,  11080 MiB used,   1043 MiB free
+0.00.752.835 I common_fit_params: successfully fit params to free device memory
+0.00.752.836 I common_fit_params: fitting params to free memory took 0.63 seconds
+0.19.642.263 I load_tensors: offloading output layer to GPU
+0.19.642.268 I load_tensors: offloading 57 repeating layers to GPU
+0.19.642.268 I load_tensors: offloaded 58/66 layers to GPU
+0.19.642.801 I load_tensors:   CPU_Mapped model buffer size =   647.87 MiB
+0.19.642.801 I load_tensors:   CPU_Mapped model buffer size =     0.16 MiB
+0.19.642.802 I load_tensors:   CPU_Mapped model buffer size =     0.02 MiB
+0.19.642.802 I load_tensors:   CPU_Mapped model buffer size =   100.29 MiB
+0.19.642.802 I load_tensors:   CPU_Mapped model buffer size =     0.16 MiB
+0.19.642.802 I load_tensors:   CPU_Mapped model buffer size =   144.80 MiB
+0.19.642.803 I load_tensors:   CPU_Mapped model buffer size =    16.09 MiB
+0.19.642.803 I load_tensors:   CPU_Mapped model buffer size =     0.02 MiB
+0.19.642.803 I load_tensors:   CPU_Mapped model buffer size =     0.00 MiB
+0.19.642.803 I load_tensors:   CPU_Mapped model buffer size =   118.22 MiB
+0.19.642.803 I load_tensors:   CPU_Mapped model buffer size =    26.58 MiB
+0.19.642.804 I load_tensors:   CPU_Mapped model buffer size =    73.07 MiB
+0.19.642.804 I load_tensors:   CPU_Mapped model buffer size =     0.16 MiB
+0.19.642.804 I load_tensors:   CPU_Mapped model buffer size =   147.03 MiB
+0.19.642.804 I load_tensors:   CPU_Mapped model buffer size =     0.16 MiB
+0.19.642.804 I load_tensors:   CPU_Mapped model buffer size =   140.82 MiB
+0.19.642.811 I load_tensors:   CPU_Mapped model buffer size =    16.09 MiB
+0.19.642.811 I load_tensors:   CPU_Mapped model buffer size =    35.65 MiB
+0.19.642.812 I load_tensors:   CPU_Mapped model buffer size =   109.59 MiB
+0.19.644.218 I load_tensors:   CPU_REPACK model buffer size =   281.43 MiB
+0.19.644.252 I load_tensors:  MTL0_Mapped model buffer size =   833.61 MiB
+0.19.644.253 I load_tensors:  MTL0_Mapped model buffer size =  9500.32 MiB
+0.20.710.465 I llama_context:        CPU  output buffer size =     0.95 MiB
+0.20.716.984 I llama_kv_cache:        CPU KV buffer size =    68.00 MiB
+0.20.801.936 I llama_kv_cache:       MTL0 KV buffer size =   476.00 MiB
+0.20.803.119 I llama_memory_recurrent:        CPU RS buffer size =    18.70 MiB
+0.20.825.160 I llama_memory_recurrent:       MTL0 RS buffer size =   130.92 MiB
+0.20.855.068 I sched_reserve:       MTL0 compute buffer size =   139.77 MiB
+0.20.855.072 I sched_reserve:        CPU compute buffer size =   160.52 MiB
+0.27.113.376 I common_memory_breakdown_print: |   - CPU_REPACK         |                   281 =   281 +       0 +       0                |

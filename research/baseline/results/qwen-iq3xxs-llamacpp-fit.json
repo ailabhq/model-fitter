@@ -1,0 +1,96 @@
+{
+  "config": "qwen-iq3xxs-llamacpp-fit",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 50, commit b6d5ce4)",
+  "model": {
+    "repo": "unsloth/Qwen3.8-27B-GGUF",
+    "file": "Qwen3.8-27B-UD-IQ3_XXS.gguf"
+  },
+  "model_bytes": 10934860704,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "started": "2026-11-23T19:01:33+0100",
+  "responsive_criteria": {
+    "max_pressure_level_below": 4,
+    "swapouts_gib_max": 0.25,
+    "timer_p99_ms_max": 50,
+    "spawn_max_ms_max": 1000
+  },
+  "quiet_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 24.4,
+    "compressor_gib": 0.55
+  },
+  "load_s": 14.75,
+  "cmdline": "~/mf-bench/llama.cpp/build/bin/llama-server -m ~/mf-bench/models/qwen/Qwen3.8-27B-UD-IQ3_XXS.gguf -c 8704 -np 1 -fa on --port 8090 --no-webui",
+  "req_8k_cold": {
+    "wall_s": 176.11,
+    "prompt_n": 8000,
+    "cached_n": 8255,
+    "prompt_tps": 57.97,
+    "prompt_s": 138.01,
+    "gen_n": 256,
+    "gen_tps": 6.71
+  },
+  "req_8k_cached": {
+    "wall_s": 37.99,
+    "prompt_n": 4,
+    "cached_n": 8255,
+    "prompt_tps": 15.81,
+    "prompt_s": 0.25,
+    "gen_n": 256,
+    "gen_tps": 6.79
+  },
+  "req_short": {
+    "wall_s": 19.84,
+    "prompt_n": 64,
+    "cached_n": 191,
+    "prompt_tps": 46.89,
+    "prompt_s": 1.36,
+    "gen_n": 128,
+    "gen_tps": 6.95
+  },
+  "memory": {
+    "baseline": {
+      "wired": 1.85,
+      "compressor": 0.55,
+      "free": 9.51,
+      "swap_used": 4.6,
+      "anonymous": 2.83,
+      "file_backed": 0.73
+    },
+    "peak_proc_rss_gib": 3.39,
+    "peak_wired_gib": 12.3,
+    "peak_compressor_gib": 2.25,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 5.65,
+    "swapouts_gib": 2.85,
+    "pageouts_gib": 0.11,
+    "pageins_gib": 21.72,
+    "max_pressure_level": 4,
+    "timer_late_ms": {
+      "p50": 7.9,
+      "p99": 10.2,
+      "max": 24.3
+    },
+    "spawn_ms": {
+      "p50": 4.7,
+      "p99": 22.4,
+      "max": 30.6
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "responsive": false,
+  "gen_tps_at_8k": 6.75,
+  "usable": false,
+  "log_excerpt": [
+    "0.14.484.257 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

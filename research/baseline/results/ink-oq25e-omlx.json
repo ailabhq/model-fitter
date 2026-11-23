@@ -1,0 +1,105 @@
+{
+  "config": "ink-oq25e-omlx",
+  "runtime": "omlx",
+  "runtime_version": "omlx 0.8.3 mlx 0.32.4",
+  "model": {
+    "repo": "mlx-community/Inkling-2-Mini-oQ2.5e-mtp"
+  },
+  "model_bytes": 11565370400,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "started": "2026-11-23T20:14:57+0100",
+  "responsive_criteria": {
+    "max_pressure_level_below": 4,
+    "swapouts_gib_max": 0.25,
+    "timer_p99_ms_max": 50,
+    "spawn_max_ms_max": 1000
+  },
+  "quiet_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 26.0,
+    "compressor_gib": 0.73
+  },
+  "load_s": null,
+  "cmdline": "~/mf-bench/omlx-venv/bin/omlx serve --model-dir ~/mf-bench/models/mlx --port 8090",
+  "req_8k_cold": {
+    "wall_s": 1.02,
+    "prompt_n": null,
+    "ttft_s": null,
+    "prompt_tps": null,
+    "gen_n": 0,
+    "gen_tps": null,
+    "gen_tps_basis": "wall clock between first and last streamed token",
+    "sample": ""
+  },
+  "req_8k_cached": {
+    "wall_s": 1.02,
+    "prompt_n": null,
+    "ttft_s": null,
+    "prompt_tps": null,
+    "gen_n": 0,
+    "gen_tps": null,
+    "gen_tps_basis": "wall clock between first and last streamed token",
+    "sample": ""
+  },
+  "req_short": {
+    "wall_s": 1.03,
+    "prompt_n": null,
+    "ttft_s": null,
+    "prompt_tps": null,
+    "gen_n": 0,
+    "gen_tps": null,
+    "gen_tps_basis": "wall clock between first and last streamed token",
+    "sample": ""
+  },
+  "memory": {
+    "baseline": {
+      "wired": 1.82,
+      "compressor": 0.73,
+      "free": 8.92,
+      "swap_used": 2.18,
+      "anonymous": 3.38,
+      "file_backed": 0.63
+    },
+    "peak_proc_rss_gib": 0.28,
+    "peak_wired_gib": 1.89,
+    "peak_compressor_gib": 0.74,
+    "min_free_gib": 6.93,
+    "peak_swap_used_gib": 2.18,
+    "swapouts_gib": 0.0,
+    "pageouts_gib": 0.0,
+    "pageins_gib": 0.69,
+    "max_pressure_level": 1,
+    "timer_late_ms": {
+      "p50": 9.7,
+      "p99": 11.2,
+      "max": 264.4
+    },
+    "spawn_ms": {
+      "p50": 5.3,
+      "p99": 147.8,
+      "max": 147.8
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "aborted": null,
+  "responsive": true,
+  "gen_tps_at_8k": null,
+  "usable": false,
+  "log_excerpt": [
+    "2026-11-23 20:15:04,578 - transformers - WARNING - PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.",
+    "2026-11-23 20:15:21,576 - omlx.process_memory_enforcer - WARNING - Metal cap (11.8GB, Apple max_recommended_working_set_size) is below the oMLX static ceiling (13.0GB); leaving Apple's default Metal cap active because iogpu.wired_limit_mb is unset. Raise it with: sudo sysctl iogpu.wired_limit_mb=13312",
+    "2026-11-23 20:15:22,645 - omlx.server - WARNING - POST /v1/completions \u2192 507: Model 'Inkling-2-Mini-oQ2.5e-mtp' (11.97GB) does not fit under the dynamic memory ceiling (8.01GB). Close other apps to free RAM (macOS and other apps leave oMLX 8.01GB of the 13.00GB static cap, and oMLX itself uses 257.89MB of that), raise memory_guard_tier (safe \u2192 balanced \u2192 aggressive), or use a smaller model.",
+    "2026-11-23 20:15:24,230 - omlx.server - WARNING - POST /v1/completions \u2192 507: Model 'Inkling-2-Mini-oQ2.5e-mtp' (11.97GB) does not fit under the dynamic memory ceiling (7.85GB). Close other apps to free RAM (macOS and other apps leave oMLX 7.85GB of the 13.00GB static cap, and oMLX itself uses 257.95MB of that), raise memory_guard_tier (safe \u2192 balanced \u2192 aggressive), or use a smaller model.",
+    "2026-11-23 20:15:25,251 - omlx.server - WARNING - POST /v1/completions \u2192 507: Model 'Inkling-2-Mini-oQ2.5e-mtp' (11.97GB) does not fit under the dynamic memory ceiling (7.86GB). Close other apps to free RAM (macOS and other apps leave oMLX 7.85GB of the 13.00GB static cap, and oMLX itself uses 257.95MB of that), raise memory_guard_tier (safe \u2192 balanced \u2192 aggressive), or use a smaller model.",
+    "2026-11-23 20:15:26,274 - omlx.server - WARNING - POST /v1/completions \u2192 507: Model 'Inkling-2-Mini-oQ2.5e-mtp' (11.97GB) does not fit under the dynamic memory ceiling (7.85GB). Close other apps to free RAM (macOS and other apps leave oMLX 7.85GB of the 13.00GB static cap, and oMLX itself uses 257.94MB of that), raise memory_guard_tier (safe \u2192 balanced \u2192 aggressive), or use a smaller model."
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  },
+  "error": "HTTP 507 on every request: oMLX default memory guard (balanced) refused the load; model 11.97 GB vs dynamic memory ceiling 7.85-8.01 GB (from server log)"
+}

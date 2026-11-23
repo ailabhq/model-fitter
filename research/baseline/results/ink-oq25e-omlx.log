@@ -1,0 +1,54 @@
+[33moMLX - LLM inference, optimized for your Mac[0m
+[33m├─ https://github.com/jundot/omlx[0m
+[33m└─ Version: 0.8.3[0m
+
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+2026-11-23 20:15:04,578 - transformers - WARNING - PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+2026-11-23 20:15:04,905 - omlx.settings - INFO - Saved settings to ~/.omlx/settings.json
+Saved CLI arguments to settings.json
+Log directory: ~/.omlx/logs
+Binding server at http://127.0.0.1:8090
+INFO:     Uvicorn running on http://127.0.0.1:8090 (Press CTRL+C to quit)
+2026-11-23 20:15:07,714 - omlx.scheduler - INFO - ChunkedKVCache patch: methods already present upstream, skipped: size
+Base path: ~/.omlx
+Model directories: ~/mf-bench/models/mlx
+Memory guard: on (tier: balanced)
+Mode: Multi-model serving (continuous batching + paged SSD cache)
+paged SSD cache: ~/.omlx/cache (max: auto, current limit 15.5GB)
+2026-11-23 20:15:21,054 - omlx.settings - INFO - Saved settings to ~/.omlx/settings.json
+2026-11-23 20:15:21,054 - omlx.server - INFO - Generated and saved new auth secret key
+2026-11-23 20:15:21,054 - omlx.server - INFO - CORS origins: ['*']
+2026-11-23 20:15:21,099 - omlx.model_discovery - INFO - Discovered model: Inkling-2-Mini-oQ2.5e-mtp (type: vlm, engine: vlm, size: 11.28GB, text-only: 10.66GB)
+2026-11-23 20:15:21,099 - omlx.engine_pool - INFO - Discovered 1 models
+2026-11-23 20:15:21,100 - omlx.engine_pool - INFO - Applied initial settings for Inkling-2-Mini-oQ2.5e-mtp: {'temperature': 1.0, 'mtp_enabled': True}
+2026-11-23 20:15:21,107 - omlx.server - INFO - Server initialized with 1 models
+2026-11-23 20:15:21,107 - omlx.server - INFO - Default model: Inkling-2-Mini-oQ2.5e-mtp
+2026-11-23 20:15:21,107 - omlx.server - INFO - Memory guard tier: balanced (guard on)
+2026-11-23 20:15:21,107 - omlx.server - INFO - Default max tokens: 32768
+2026-11-23 20:15:21,107 - omlx.server - INFO - HF Downloader initialized
+2026-11-23 20:15:21,110 - omlx.server - INFO - ModelScope SDK not installed, MS downloader disabled
+2026-11-23 20:15:21,115 - omlx.server - INFO - oQ Quantizer initialized
+2026-11-23 20:15:21,177 - omlx.server - INFO - HF Uploader initialized
+Starting server at http://127.0.0.1:8090
+INFO:     Started server process [94303]
+INFO:     Waiting for application startup.
+2026-11-23 20:15:21,540 - omlx.settings - INFO - Saved settings to ~/.omlx/settings.json
+2026-11-23 20:15:21,541 - omlx.server - INFO - Auto-detected server aliases: ['localhost', '127.0.0.1', '<redacted>.home', '<redacted>.home.local', '192.168.1.91', '100.114.220.99']
+2026-11-23 20:15:21,550 - omlx.cluster.worker_shim - INFO - Published ~/.omlx/bin/omlx-cluster-python -> ~/mf-bench/omlx-venv/bin/python3
+2026-11-23 20:15:21,576 - omlx.process_memory_enforcer - WARNING - Metal cap (11.8GB, Apple max_recommended_working_set_size) is below the oMLX static ceiling (13.0GB); leaving Apple's default Metal cap active because iogpu.wired_limit_mb is unset. Raise it with: sudo sysctl iogpu.wired_limit_mb=13312
+2026-11-23 20:15:21,576 - omlx.process_memory_enforcer - INFO - Process memory enforcer started (tier=balanced, ceiling=8.0GB, interval=1.0s)
+INFO:     Application startup complete.
+2026-11-23 20:15:22,645 - omlx.server - WARNING - POST /v1/completions → 507: Model 'Inkling-2-Mini-oQ2.5e-mtp' (11.97GB) does not fit under the dynamic memory ceiling (8.01GB). Close other apps to free RAM (macOS and other apps leave oMLX 8.01GB of the 13.00GB static cap, and oMLX itself uses 257.89MB of that), raise memory_guard_tier (safe → balanced → aggressive), or use a smaller model.
+2026-11-23 20:15:24,230 - omlx.server - WARNING - POST /v1/completions → 507: Model 'Inkling-2-Mini-oQ2.5e-mtp' (11.97GB) does not fit under the dynamic memory ceiling (7.85GB). Close other apps to free RAM (macOS and other apps leave oMLX 7.85GB of the 13.00GB static cap, and oMLX itself uses 257.95MB of that), raise memory_guard_tier (safe → balanced → aggressive), or use a smaller model.
+2026-11-23 20:15:25,251 - omlx.server - WARNING - POST /v1/completions → 507: Model 'Inkling-2-Mini-oQ2.5e-mtp' (11.97GB) does not fit under the dynamic memory ceiling (7.86GB). Close other apps to free RAM (macOS and other apps leave oMLX 7.85GB of the 13.00GB static cap, and oMLX itself uses 257.95MB of that), raise memory_guard_tier (safe → balanced → aggressive), or use a smaller model.
+2026-11-23 20:15:26,274 - omlx.server - WARNING - POST /v1/completions → 507: Model 'Inkling-2-Mini-oQ2.5e-mtp' (11.97GB) does not fit under the dynamic memory ceiling (7.85GB). Close other apps to free RAM (macOS and other apps leave oMLX 7.85GB of the 13.00GB static cap, and oMLX itself uses 257.94MB of that), raise memory_guard_tier (safe → balanced → aggressive), or use a smaller model.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-11-23 20:15:26,480 - omlx.process_memory_enforcer - INFO - Process memory enforcer stopped
+2026-11-23 20:15:26,481 - omlx.server - INFO - Process memory enforcer stopped
+2026-11-23 20:15:26,481 - omlx.admin.hf_downloader - INFO - HF Downloader shut down
+2026-11-23 20:15:26,481 - omlx.server - INFO - HF Downloader stopped
+2026-11-23 20:15:26,481 - omlx.engine_pool - INFO - Engine pool shutdown complete
+2026-11-23 20:15:26,483 - omlx.server - INFO - Engine pool shutdown
+INFO:     Application shutdown complete.
+INFO:     Finished server process [94303]

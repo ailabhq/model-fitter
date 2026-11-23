@@ -1,0 +1,72 @@
+{
+  "config": "qwen-q3kxl-llamacpp-fit",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 50, commit b6d5ce4)",
+  "model": {
+    "repo": "unsloth/Qwen3.8-27B-GGUF",
+    "file": "Qwen3.8-27B-UD-Q3_K_XL.gguf"
+  },
+  "model_bytes": 13146393504,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "started": "2026-11-23T19:25:40+0100",
+  "responsive_criteria": {
+    "max_pressure_level_below": 4,
+    "swapouts_gib_max": 0.25,
+    "timer_p99_ms_max": 50,
+    "spawn_max_ms_max": 1000
+  },
+  "quiet_gate": {
+    "waited_s": 2.0,
+    "cpu_percent": 9.9,
+    "compressor_gib": 0.65
+  },
+  "load_s": 27.2,
+  "cmdline": "~/mf-bench/llama.cpp/build/bin/llama-server -m ~/mf-bench/models/qwen/Qwen3.8-27B-UD-Q3_K_XL.gguf -c 8704 -np 1 -fa on --port 8090 --no-webui",
+  "error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+  "memory": {
+    "baseline": {
+      "wired": 2.15,
+      "compressor": 0.65,
+      "free": 5.62,
+      "swap_used": 3.33,
+      "anonymous": 6.46,
+      "file_backed": 0.58
+    },
+    "peak_proc_rss_gib": 2.19,
+    "peak_wired_gib": 13.15,
+    "peak_compressor_gib": 2.61,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 6.5,
+    "swapouts_gib": 124.06,
+    "pageouts_gib": 0.44,
+    "pageins_gib": 194.63,
+    "max_pressure_level": 4,
+    "timer_late_ms": {
+      "p50": 4.0,
+      "p99": 12.1,
+      "max": 1319.1
+    },
+    "spawn_ms": {
+      "p50": 31.6,
+      "p99": 1191.1,
+      "max": 2440.0
+    },
+    "foreign_procs_over_1gib": {
+      "0.8.0": 1.0
+    }
+  },
+  "responsive": false,
+  "gen_tps_at_8k": null,
+  "usable": false,
+  "log_excerpt": [
+    "0.26.966.720 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

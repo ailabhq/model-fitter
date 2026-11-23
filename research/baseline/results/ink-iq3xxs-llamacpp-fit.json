@@ -1,0 +1,100 @@
+{
+  "config": "ink-iq3xxs-llamacpp-fit",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 50, commit b6d5ce4)",
+  "model": {
+    "repo": "unsloth/Inkling-2-Mini-GGUF",
+    "file": "Mainline_Support/Inkling-2-Mini-UD-IQ3_XXS.gguf_file"
+  },
+  "model_bytes": 11663310784,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "started": "2026-11-23T20:00:51+0100",
+  "responsive_criteria": {
+    "max_pressure_level_below": 4,
+    "swapouts_gib_max": 0.25,
+    "timer_p99_ms_max": 50,
+    "spawn_max_ms_max": 1000
+  },
+  "quiet_gate": {
+    "waited_s": 2.2,
+    "cpu_percent": 32.3,
+    "compressor_gib": 1.38
+  },
+  "load_s": 11.66,
+  "cmdline": "~/mf-bench/llama.cpp/build/bin/llama-server -m ~/mf-bench/models/ink/Inkling-2-Mini-UD-IQ3_XXS.gguf -c 8704 -np 1 -fa on --port 8090 --no-webui",
+  "req_8k_cold": {
+    "wall_s": 483.08,
+    "prompt_n": 8000,
+    "cached_n": 8255,
+    "prompt_tps": 20.0,
+    "prompt_s": 399.92,
+    "gen_n": 256,
+    "gen_tps": 3.07,
+    "sample": ".g. `<think></think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                    | Parser                                                                    |\n|-------------------------|--------------------------------------------------------------"
+  },
+  "req_8k_cached": {
+    "wall_s": 84.31,
+    "prompt_n": 4,
+    "cached_n": 8255,
+    "prompt_tps": 3.13,
+    "prompt_s": 1.28,
+    "gen_n": 256,
+    "gen_tps": 3.07,
+    "sample": ".g. `<think></think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                    | Parser                                                                    |\n|-------------------------|--------------------------------------------------------------"
+  },
+  "req_short": {
+    "wall_s": 46.77,
+    "prompt_n": 69,
+    "cached_n": 196,
+    "prompt_tps": 5.27,
+    "prompt_s": 13.09,
+    "gen_n": 128,
+    "gen_tps": 3.78,
+    "sample": "laration using Vulkan.\nTo enable it, you need to add the following line to the `build.gradle` file:\n```\nexternalNativeBuild {\n    cmake {\n        arguments \"-DLLAMA_VULKAN=ON\"\n    }\n}\n```\n\n## Build GUI binding using Gradle\n\nTo build the GUI binding using Gradle, you need to have the Android SDK and "
+  },
+  "memory": {
+    "baseline": {
+      "wired": 1.87,
+      "compressor": 1.37,
+      "free": 8.8,
+      "swap_used": 1.68,
+      "anonymous": 2.75,
+      "file_backed": 0.67
+    },
+    "peak_proc_rss_gib": 8.82,
+    "peak_wired_gib": 10.48,
+    "peak_compressor_gib": 3.06,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 2.21,
+    "swapouts_gib": 0.62,
+    "pageouts_gib": 0.11,
+    "pageins_gib": 198.93,
+    "max_pressure_level": 2,
+    "timer_late_ms": {
+      "p50": 6.0,
+      "p99": 10.1,
+      "max": 33.4
+    },
+    "spawn_ms": {
+      "p50": 3.5,
+      "p99": 28.6,
+      "max": 82.1
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "aborted": null,
+  "responsive": false,
+  "gen_tps_at_8k": 3.07,
+  "usable": false,
+  "log_excerpt": [
+    "0.11.249.516 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

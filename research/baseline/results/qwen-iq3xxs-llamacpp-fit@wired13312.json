@@ -1,0 +1,95 @@
+{
+  "config": "qwen-iq3xxs-llamacpp-fit@wired13312",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 50, commit b6d5ce4)",
+  "model": {
+    "repo": "unsloth/Qwen3.8-27B-GGUF",
+    "file": "Qwen3.8-27B-UD-IQ3_XXS.gguf"
+  },
+  "model_bytes": 10934860704,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 13312,
+  "started": "2026-11-23T18:56:48+0100",
+  "responsive_criteria": {
+    "max_pressure_level_below": 4,
+    "swapouts_gib_max": 0.25,
+    "timer_p99_ms_max": 50,
+    "spawn_max_ms_max": 1000
+  },
+  "quiet_gate": {
+    "waited_s": 14.1,
+    "cpu_percent": 30.5,
+    "compressor_gib": 1.55
+  },
+  "load_s": 20.0,
+  "cmdline": "~/mf-bench/llama.cpp/build/bin/llama-server -m ~/mf-bench/models/qwen/Qwen3.8-27B-UD-IQ3_XXS.gguf -c 8704 -np 1 -fa on --port 8090 --no-webui",
+  "req_8k_cold": {
+    "wall_s": 181.93,
+    "prompt_n": 8000,
+    "cached_n": 8255,
+    "prompt_tps": 55.92,
+    "prompt_s": 143.05,
+    "gen_n": 256,
+    "gen_tps": 6.57
+  },
+  "req_8k_cached": {
+    "wall_s": 37.69,
+    "prompt_n": 4,
+    "cached_n": 8255,
+    "prompt_tps": 16.34,
+    "prompt_s": 0.24,
+    "gen_n": 256,
+    "gen_tps": 6.85
+  },
+  "req_short": {
+    "wall_s": 19.44,
+    "prompt_n": 64,
+    "cached_n": 191,
+    "prompt_tps": 47.33,
+    "prompt_s": 1.35,
+    "gen_n": 128,
+    "gen_tps": 7.12
+  },
+  "memory": {
+    "baseline": {
+      "wired": 2.18,
+      "compressor": 1.53,
+      "free": 7.6,
+      "swap_used": 3.62,
+      "anonymous": 3.07,
+      "file_backed": 1.1
+    },
+    "peak_proc_rss_gib": 1.01,
+    "peak_wired_gib": 12.56,
+    "peak_compressor_gib": 2.65,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 5.79,
+    "swapouts_gib": 4.78,
+    "pageouts_gib": 0.15,
+    "pageins_gib": 29.08,
+    "max_pressure_level": 4,
+    "timer_late_ms": {
+      "p50": 7.5,
+      "p99": 10.1,
+      "max": 29.0
+    },
+    "spawn_ms": {
+      "p50": 5.7,
+      "p99": 30.6,
+      "max": 82.2
+    }
+  },
+  "responsive": false,
+  "gen_tps_at_8k": 6.71,
+  "usable": false,
+  "log_excerpt": [
+    "0.19.873.682 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

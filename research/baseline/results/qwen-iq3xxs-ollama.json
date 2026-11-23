@@ -1,0 +1,94 @@
+{
+  "config": "qwen-iq3xxs-ollama",
+  "runtime": "ollama",
+  "runtime_version": "0.40.16",
+  "model": {
+    "repo": "unsloth/Qwen3.8-27B-GGUF",
+    "file": "Qwen3.8-27B-UD-IQ3_XXS.gguf"
+  },
+  "model_bytes": 10934860704,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "started": "2026-11-23T19:11:00+0100",
+  "responsive_criteria": {
+    "max_pressure_level_below": 4,
+    "swapouts_gib_max": 0.25,
+    "timer_p99_ms_max": 50,
+    "spawn_max_ms_max": 1000
+  },
+  "quiet_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 12.0,
+    "compressor_gib": 0.76
+  },
+  "load_s": 9.39,
+  "load_s_reported": 0.0,
+  "cmdline": "ollama /api/generate model=mf-qwen38-27b-iq3xxs options.num_ctx=8704 raw=true",
+  "req_8k_cold": {
+    "wall_s": 179.13,
+    "prompt_n": 8000,
+    "prompt_tps": 57.28,
+    "prompt_s": 139.67,
+    "gen_n": 256,
+    "gen_tps": 6.62
+  },
+  "req_8k_cached": {
+    "wall_s": 39.82,
+    "prompt_n": 8000,
+    "prompt_tps": 3771.1,
+    "prompt_s": 2.12,
+    "gen_n": 256,
+    "gen_tps": 6.89
+  },
+  "req_short": {
+    "wall_s": 20.34,
+    "prompt_n": 64,
+    "prompt_tps": 42.37,
+    "prompt_s": 1.51,
+    "gen_n": 128,
+    "gen_tps": 7.04
+  },
+  "memory": {
+    "baseline": {
+      "wired": 2.04,
+      "compressor": 0.71,
+      "free": 8.86,
+      "swap_used": 4.11,
+      "anonymous": 3.23,
+      "file_backed": 0.64
+    },
+    "peak_proc_rss_gib": 20.61,
+    "peak_wired_gib": 12.82,
+    "peak_compressor_gib": 2.44,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 6.92,
+    "swapouts_gib": 14.02,
+    "pageouts_gib": 0.1,
+    "pageins_gib": 19.82,
+    "max_pressure_level": 4,
+    "timer_late_ms": {
+      "p50": 4.7,
+      "p99": 11.3,
+      "max": 79.7
+    },
+    "spawn_ms": {
+      "p50": 8.4,
+      "p99": 105.7,
+      "max": 270.0
+    },
+    "foreign_procs_over_1gib": {
+      "llama-server": 6.39
+    }
+  },
+  "responsive": false,
+  "gen_tps_at_8k": 6.75,
+  "usable": false,
+  "log_excerpt": [],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}
