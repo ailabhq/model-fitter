@@ -1,0 +1,27 @@
+# Secrets and personal config: never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+.netrc
+.huggingface/
+**/token
+**/hf_token
+credentials*
+secrets*
+
+# Model weights and Fits: never commit (large, and licensed separately)
+*.gguf
+*.safetensors
+*.bin
+*.npz
+*.mlpackage/
+models/
+fits/
+
+# OS / tooling
+.DS_Store
+__pycache__/
+.venv/
