@@ -10,7 +10,9 @@
 
 **Usable**: A Fit that generates at least 5 tokens per second with at least 8K context while the machine stays responsive.
 
-**Slow mode**: An explicit opt-in that accepts a Fit below the Usable bar, trading speed for running at all.
+**Responsive**: The machine stays responsive while a Fit runs: the desktop and the app in front keep answering without hangs, and memory pressure is only rarely critical. Background apps may be swapped out.
+
+**Slow mode**: An explicit opt-in that accepts a Fit below the Usable speed, trading speed for running at all. It never accepts a Fit that leaves the machine unresponsive.
 
 **Quality loss**: The measured difference in output quality between a Fit and its Source model, taken against the Source's Reference pack. Every Fit reports it; a Fit whose Quality loss cannot be measured is not produced.
 
