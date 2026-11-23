@@ -12,4 +12,10 @@
 
 **Slow mode**: An explicit opt-in that accepts a Fit below the Usable bar, trading speed for running at all.
 
-**Quality loss**: The measured difference in output quality between a Fit and its Source model. Every Fit reports it.
+**Quality loss**: The measured difference in output quality between a Fit and its Source model, taken against the Source's Reference pack. Every Fit reports it; a Fit whose Quality loss cannot be measured is not produced.
+
+**Reference pack**: The Source model's top-k next-token distributions over a fixed corpus, computed off the device once per Source model revision. For a Source model published already quantized, the published checkpoint is the reference.
+
+**Quality band**: The grade a Fit's Quality loss earns: Near-lossless, Lossy, or Rejected.
+
+**Degraded mode**: An explicit opt-in that accepts a Rejected Fit, trading quality for running at all. A Rejected Fit is still a Fit.
