@@ -16,7 +16,9 @@
 
 **Quality loss**: The measured difference in output quality between a Fit and its Source model, taken against the Source's Reference pack. Every Fit reports it; a Fit whose Quality loss cannot be measured is not produced.
 
-**Reference pack**: The Source model's top-k next-token distributions over a fixed corpus, computed off the device once per Source model revision. For a Source model published already quantized, the published checkpoint is the reference.
+**Reference pack**: The Source model's top-k next-token distributions over a fixed corpus, computed off the device once per Source model revision and Prompt set version. The corpus is the Prompt set together with the Source's own responses to it. For a Source model published already quantized, the reference is its published weights, dequantized and computed at full precision; quantizing activations is a runtime choice and counts as Quality loss.
+
+**Prompt set**: The fixed, versioned prompts shared by every Source model, across chat, code, multilingual and tool calls, plus one 8K-context prompt. Each Reference pack adds the Source's own responses to it.
 
 **Quality band**: The grade a Fit's Quality loss earns: Near-lossless, Lossy, or Rejected.
 
