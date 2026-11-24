@@ -1,0 +1,15 @@
+0.00.193.201 I srv  llama_server: initializing ...
+0.00.193.207 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.194.848 I srv  init_listene: The UI is disabled
+0.00.194.852 I srv  init_listene: Use --ui/--no-ui (or deprecated --webui/--no-webui) to enable/disable
+0.00.195.206 W srv  server_setup: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+0.00.197.776 I srv    load_model: loading model '~/mf-bench/models/ink/Inkling-2-Mini-UD-IQ3_XXS.gguf'
+0.00.295.908 W load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
+0.15.616.767 I cmn          init: llama threadpool init, n_threads = 4
+0.15.833.170 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'
+0.15.845.672 W srv          init: chat template supports preserving reasoning, it is enabled by default (may use more tokens, disable via --no-reasoning-preserve)
+0.15.845.683 I srv  server_run_i: model loaded
+0.15.846.057 I srv  server_on_li: listening on http://127.0.0.1:8090
+0.16.208.968 I slot       select: id  0 | task -1 | selected slot by LRU, n_tokens = 0, t_last = -1
+0.16.208.991 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+0.34.913.293 I slot print_timing: id  0 | task 0 | prompt processing, n_tokens =   2048, progress = 0.26, t =  18.70 s / 109.50 tokens per second

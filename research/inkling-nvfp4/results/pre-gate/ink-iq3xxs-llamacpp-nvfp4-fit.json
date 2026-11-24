@@ -1,0 +1,108 @@
+{
+  "config": "ink-iq3xxs-llamacpp-nvfp4-fit",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 12719, commit 22b99122e)",
+  "model": {
+    "repo": "unsloth/Inkling-2-Mini-GGUF",
+    "file": "Mainline_Support/Inkling-2-Mini-UD-IQ3_XXS.gguf_file",
+    "revision": "8078d149286eec7193795413b9e0643da6d11fa1"
+  },
+  "model_bytes": 11663310784,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "args": []
+  },
+  "started": "2026-11-24T21:51:55+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "start_gate": {
+    "waited_s": 2.1,
+    "cpu_percent": 17.9,
+    "compressor_gib": 0.63,
+    "free_gib": 10.51,
+    "swap_used_gib": 2.39
+  },
+  "load_s": 26.83,
+  "cmdline": "~/mf-bench/llama.cpp/build/bin/llama-server -m ~/mf-bench/models/ink/Inkling-2-Mini-UD-IQ3_XXS.gguf -c 8704 -np 1 -fa on --port 8090 --no-webui",
+  "req_8k_cold": {
+    "wall_s": 223.16,
+    "prompt_n": 8000,
+    "cached_n": 8255,
+    "prompt_tps": 42.35,
+    "prompt_s": 188.89,
+    "gen_n": 256,
+    "gen_tps": 7.57,
+    "sample": ".g. `<think></think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                    | Parser                                                                                                                                                               "
+  },
+  "error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+  "memory": {
+    "baseline": {
+      "wired": 2.02,
+      "compressor": 0.63,
+      "free": 9.85,
+      "swap_used": 2.38,
+      "anonymous": 2.27,
+      "file_backed": 0.71
+    },
+    "peak_proc_rss_gib": 8.46,
+    "peak_wired_gib": 13.1,
+    "peak_compressor_gib": 2.54,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 5.54,
+    "swapouts_gib": 20.49,
+    "pageouts_gib": 0.15,
+    "pageins_gib": 51.53,
+    "max_pressure_level": 4,
+    "pressure": {
+      "benchmark_s": 284.8,
+      "critical_s": 9.6,
+      "critical_share": 0.034,
+      "critical_longest_s": 3.4,
+      "warning_s": 253.4
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 558,
+      "p50": 1.7,
+      "p99": 114.8,
+      "max": 723.2,
+      "microhangs": 2
+    },
+    "timer_late_ms": {
+      "n": 11953,
+      "p50": 5.0,
+      "p99": 8.2,
+      "max": 90.8,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 280,
+      "p50": 5.3,
+      "p99": 118.8,
+      "max": 229.1,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {}
+  },
+  "aborted": "window check stuck for >= 500 ms at t=282s in phase gen@8k",
+  "responsive": false,
+  "gen_tps_at_8k": 7.57,
+  "usable": false,
+  "log_excerpt": [
+    "0.26.539.712 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

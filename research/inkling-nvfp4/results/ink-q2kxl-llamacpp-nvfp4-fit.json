@@ -1,0 +1,142 @@
+{
+  "config": "ink-q2kxl-llamacpp-nvfp4-fit",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 12719, commit 22b99122e)",
+  "model": {
+    "repo": "unsloth/Inkling-2-Mini-GGUF",
+    "file": "Mainline_Support/Inkling-2-Mini-UD-Q2_K_XL.gguf_file",
+    "revision": "8078d149286eec7193795413b9e0643da6d11fa1"
+  },
+  "model_bytes": 9138716608,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "args": []
+  },
+  "started": "2026-11-24T22:28:07+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "quiet_criteria": {
+    "cpu_percent_max": 20,
+    "available_gib_min": 8,
+    "hold_s": 60,
+    "foreign_cores_max": 1.5,
+    "busy_checks": 3,
+    "retries": 3
+  },
+  "start_gate": {
+    "waited_s": 65.4,
+    "cpu_percent": 6.1,
+    "available_gib": 10.95,
+    "compressor_gib": 0.58,
+    "free_gib": 9.18,
+    "swap_used_gib": 3.34
+  },
+  "load_s": 6.48,
+  "cmdline": "~/mf-bench/llama.cpp/build/bin/llama-server -m ~/mf-bench/models/ink/Inkling-2-Mini-UD-Q2_K_XL.gguf -c 8704 -np 1 -fa on --port 8090 --no-webui",
+  "req_8k_cold": {
+    "wall_s": 93.33,
+    "prompt_n": 8000,
+    "cached_n": 8255,
+    "prompt_tps": 104.34,
+    "prompt_s": 76.67,
+    "gen_n": 256,
+    "gen_tps": 15.33,
+    "sample": ".g. `<think></think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                                          | Parser                                                                    |\n|-----------------------------------------------|------------------"
+  },
+  "req_8k_cached": {
+    "wall_s": 16.92,
+    "prompt_n": 4,
+    "cached_n": 8255,
+    "prompt_tps": 19.11,
+    "prompt_s": 0.21,
+    "gen_n": 256,
+    "gen_tps": 15.32,
+    "sample": ".g. `<think></think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                                          | Parser                                                                    |\n|-----------------------------------------------|------------------"
+  },
+  "req_short": {
+    "wall_s": 8.41,
+    "prompt_n": 69,
+    "cached_n": 196,
+    "prompt_tps": 82.79,
+    "prompt_s": 0.83,
+    "gen_n": 128,
+    "gen_tps": 17.18,
+    "sample": "laration on Android devices with a GPU.\nTo enable this, you need to add the following to the `local.properties` file in the project root:\n```\nllama.android.use_vulkan=true\n```\nThis will cause the Gradle build to download the Vulkan SDK and build the llama.cpp library with Vulkan support.\nThe Vulkan "
+  },
+  "memory": {
+    "baseline": {
+      "wired": 2.16,
+      "compressor": 0.58,
+      "free": 9.19,
+      "swap_used": 3.34,
+      "anonymous": 2.31,
+      "file_backed": 1.23
+    },
+    "peak_proc_rss_gib": 9.21,
+    "peak_wired_gib": 12.11,
+    "peak_compressor_gib": 2.05,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 3.34,
+    "swapouts_gib": 0.02,
+    "pageouts_gib": 0.0,
+    "pageins_gib": 9.05,
+    "max_pressure_level": 2,
+    "pressure": {
+      "benchmark_s": 128.2,
+      "critical_s": 0.0,
+      "critical_share": 0.0,
+      "critical_longest_s": 0.0,
+      "warning_s": 8.4
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 254,
+      "p50": 1.0,
+      "p99": 2.1,
+      "max": 9.1,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 4693,
+      "p50": 9.0,
+      "p99": 10.2,
+      "max": 25.2,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 128,
+      "p50": 3.7,
+      "p99": 12.6,
+      "max": 12.7,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {},
+    "foreign_procs_over_quarter_core": {},
+    "foreign_cores": {
+      "max": 0.62,
+      "mean": 0.2
+    }
+  },
+  "contaminated": null,
+  "aborted": null,
+  "responsive": true,
+  "gen_tps_at_8k": 15.32,
+  "usable": true,
+  "log_excerpt": [
+    "0.06.219.652 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

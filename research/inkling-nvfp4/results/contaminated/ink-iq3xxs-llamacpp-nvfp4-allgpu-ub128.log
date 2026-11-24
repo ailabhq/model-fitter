@@ -1,0 +1,7 @@
+0.00.283.795 I srv  llama_server: initializing ...
+0.00.283.802 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.285.742 I srv  init_listene: The UI is disabled
+0.00.285.744 I srv  init_listene: Use --ui/--no-ui (or deprecated --webui/--no-webui) to enable/disable
+0.00.285.943 W srv  server_setup: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+0.00.288.734 I srv    load_model: loading model '~/mf-bench/models/ink/Inkling-2-Mini-UD-IQ3_XXS.gguf'
+0.00.447.238 W load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect

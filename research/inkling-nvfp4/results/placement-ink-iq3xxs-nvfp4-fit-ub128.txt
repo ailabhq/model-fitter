@@ -1,0 +1,78 @@
+0.00.483.980 I ggml_metal_device_init: recommendedMaxWorkingSetSize  = 12713.12 MB
+0.00.484.698 I cmn  common_param: system_info: n_threads = 4 (n_threads_batch = 4) / 10 | MTL : EMBED_LIBRARY = 1 | CPU : NEON = 1 | ARM_FMA = 1 | FP16_VA = 1 | MATMUL_INT8 = 1 | DOTPROD = 1 | SME = 1 | SME2 = 1 | ACCELERATE = 1 | REPACK = 1 | 
+0.00.493.249 I cmn  common_fit_a: fitting params to device memory ...
+0.00.493.250 I cmn  common_fit_a: (for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on)
+0.00.493.261 I common_params_fit_impl: getting device memory data for initial parameters:
+0.00.766.481 I common_params_fit_impl: projected to use 11600 MiB of device memory vs. 12123 MiB of free device memory
+0.00.766.485 I common_params_fit_impl: cannot meet free memory target of 1024 MiB, need to reduce device memory by 500 MiB
+0.00.766.485 I common_params_fit_impl: context size set by user to 8704 -> no change
+0.00.766.487 I common_params_fit_impl: getting device memory data with all MoE tensors moved to system memory:
+0.00.992.245 I common_memory_breakdown_print: |   - CPU_REPACK         |                   729 =   729 +       0 +       0                |
+0.01.019.267 I common_params_fit_impl: with only dense weights in device memory there is a total surplus of 4281 MiB
+0.01.019.270 I common_params_fit_impl: id=0, target=11099 MiB
+0.01.218.030 I common_memory_breakdown_print: |   - CPU_REPACK         |                   1626 =  1626 +       0 +       0                |
+0.01.243.565 I common_params_fit_impl: memory for test allocation by device:
+0.01.243.569 I common_params_fit_impl: id=0, n_layer= 0, n_part= 0, overflow_type=4, mem=  5282 MiB
+0.01.243.570 I common_params_fit_impl: filling dense-only layers back-to-front:
+0.01.536.447 I common_memory_breakdown_print: |   - CPU_REPACK         |                   729 =   729 +       0 +       0                |
+0.01.555.615 I common_params_fit_impl: memory for test allocation by device:
+0.01.555.618 I common_params_fit_impl: id=0, n_layer=49, n_part=48, overflow_type=4, mem=  7167 MiB
+0.01.555.624 I common_params_fit_impl: set ngl_per_device[0].n_layer=49
+0.01.555.625 I common_params_fit_impl:   - MTL0 (Apple M4): 49 layers,   7167 MiB used,   4956 MiB free
+0.01.555.625 I common_params_fit_impl: converting dense-only layers to full layers and filling them front-to-back with overflow to next device/system memory:
+0.01.743.163 I common_params_fit_impl: memory for test allocation by device:
+0.01.743.168 I common_params_fit_impl: id=0, n_layer=49, n_part= 0, overflow_type=4, mem= 11600 MiB
+0.01.974.744 I common_params_fit_impl: memory for test allocation by device:
+0.01.974.749 I common_params_fit_impl: id=0, n_layer=49, n_part= 6, overflow_type=4, mem= 11600 MiB
+0.01.974.751 I common_params_fit_impl: set ngl_per_device_high[0].(n_layer, n_part)=(49, 6), id_dense_start_high=0
+0.02.266.767 I common_params_fit_impl: memory for test allocation by device:
+0.02.266.774 I common_params_fit_impl: id=0, n_layer=49, n_part=11, overflow_type=4, mem= 11600 MiB
+0.02.266.776 I common_params_fit_impl: set ngl_per_device_high[0].(n_layer, n_part)=(49, 11), id_dense_start_high=0
+0.02.495.184 I common_params_fit_impl: memory for test allocation by device:
+0.02.495.189 I common_params_fit_impl: id=0, n_layer=49, n_part=16, overflow_type=4, mem= 11600 MiB
+0.02.495.190 I common_params_fit_impl: set ngl_per_device_high[0].(n_layer, n_part)=(49, 16), id_dense_start_high=0
+0.02.744.704 I common_params_fit_impl: memory for test allocation by device:
+0.02.744.708 I common_params_fit_impl: id=0, n_layer=49, n_part=20, overflow_type=4, mem= 11600 MiB
+0.02.744.710 I common_params_fit_impl: set ngl_per_device_high[0].(n_layer, n_part)=(49, 20), id_dense_start_high=0
+0.03.171.123 I common_params_fit_impl: memory for test allocation by device:
+0.03.171.127 I common_params_fit_impl: id=0, n_layer=49, n_part=24, overflow_type=4, mem= 11600 MiB
+0.03.171.128 I common_params_fit_impl: set ngl_per_device_high[0].(n_layer, n_part)=(49, 24), id_dense_start_high=0
+0.03.435.988 I common_memory_breakdown_print: |   - CPU_REPACK         |                    364 =   364 +       0 +       0                |
+0.03.457.648 I common_params_fit_impl: memory for test allocation by device:
+0.03.457.652 I common_params_fit_impl: id=0, n_layer=49, n_part=27, overflow_type=4, mem= 10757 MiB
+0.03.457.654 I common_params_fit_impl: set ngl_per_device[0].(n_layer, n_part)=(49, 27), id_dense_start=0
+0.03.679.890 I common_memory_breakdown_print: |   - CPU_REPACK         |                    182 =   182 +       0 +       0                |
+0.03.705.706 I common_params_fit_impl: memory for test allocation by device:
+0.03.705.711 I common_params_fit_impl: id=0, n_layer=49, n_part=26, overflow_type=4, mem= 11188 MiB
+0.03.705.713 I common_params_fit_impl: set ngl_per_device_high[0].(n_layer, n_part)=(49, 26), id_dense_start_high=0
+0.03.705.713 I common_params_fit_impl: trying to fit one extra layer with overflow_type=LAYER_FRACTION_UP
+0.03.954.673 I common_memory_breakdown_print: |   - CPU_REPACK         |                    364 =   364 +       0 +       0                |
+0.03.978.145 I common_params_fit_impl: memory for test allocation by device:
+0.03.978.149 I common_params_fit_impl: id=0, n_layer=49, n_part=27, overflow_type=2, mem= 10756 MiB
+0.03.978.151 I common_params_fit_impl: set ngl_per_device[0].(n_layer, n_part, overflow_type)=(49, 27, UP), id_dense_start=0
+0.03.978.151 I common_params_fit_impl: trying to fit one extra layer with overflow_type=LAYER_FRACTION_GATE
+0.04.244.869 I common_memory_breakdown_print: |   - CPU_REPACK         |                    364 =   364 +       0 +       0                |
+0.04.266.411 I common_params_fit_impl: memory for test allocation by device:
+0.04.266.414 I common_params_fit_impl: id=0, n_layer=49, n_part=27, overflow_type=3, mem= 11005 MiB
+0.04.266.415 I common_params_fit_impl: set ngl_per_device[0].(n_layer, n_part, overflow_type)=(49, 27, GATE), id_dense_start=0
+0.04.266.416 I common_params_fit_impl:   - MTL0 (Apple M4): 49 layers (27 overflowing),  11005 MiB used,   1117 MiB free
+0.04.266.418 I common_fit_params: successfully fit params to free device memory
+0.04.266.420 I common_fit_params: fitting params to free memory took 3.77 seconds
+0.13.781.692 I load_tensors: offloading output layer to GPU
+0.13.781.695 I load_tensors: offloading 47 repeating layers to GPU
+0.13.781.695 I load_tensors: offloaded 49/49 layers to GPU
+0.13.782.266 I load_tensors:   CPU_Mapped model buffer size =   248.46 MiB
+0.13.782.266 I load_tensors:   CPU_Mapped model buffer size =   248.06 MiB
+0.13.782.486 I load_tensors:   CPU_REPACK model buffer size =   364.50 MiB
+0.13.782.497 I load_tensors:  MTL0_Mapped model buffer size =   303.69 MiB
+0.13.782.499 I load_tensors:  MTL0_Mapped model buffer size =  9676.24 MiB
+0.13.782.499 I load_tensors:  MTL0_Mapped model buffer size =   269.02 MiB
+0.13.782.507 I load_tensors:  MTL0_Mapped model buffer size =     1.12 MiB
+0.13.782.508 I load_tensors:  MTL0_Mapped model buffer size =     0.47 MiB
+0.19.342.941 I llama_context:        CPU  output buffer size =     0.76 MiB
+0.19.402.046 I llama_kv_cache:       MTL0 KV buffer size =   272.00 MiB
+0.19.441.567 I llama_kv_cache:       MTL0 KV buffer size =   200.00 MiB
+0.19.442.728 I llama_memory_recurrent:       MTL0 RS buffer size =     3.66 MiB
+0.19.591.659 I sched_reserve:       MTL0 compute buffer size =   279.73 MiB
+0.19.591.664 I sched_reserve:        CPU compute buffer size =    17.44 MiB
+0.21.104.362 I common_memory_breakdown_print: |   - CPU_REPACK         |                   364 =   364 +       0 +       0                |

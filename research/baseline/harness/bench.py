@@ -102,6 +102,23 @@ CONFIGS |= {
                                                                     "turboquant_kv_scheme": "affine4", "turboquant_kv_bits": 4}),
 }
 
+# Inkling on llama.cpp with Metal NVFP4 (master at or after 51831d47d), map ticket 18. Same GGUFs as the
+# Baseline, pinned; distinct names so the Baseline's b6d5ce4 results stay as they are.
+INK_REV = "8078d149286eec7193795413b9e0643da6d11fa1"
+
+
+def ink_gguf(quant: str) -> dict:
+    return {**gguf(INK_GGUF, f"Mainline_Support/Inkling-2-Mini-{quant}.gguf_file", f"ink/Inkling-2-Mini-{quant}.gguf"), "revision": INK_REV}
+
+
+# -ub sets the physical batch, which sizes the Metal compute buffer (1047 MiB at 512, 523 at 256, 280 at 128 for
+# IQ3_XXS at 8704 context): the llama.cpp counterpart of MLX's prefill step.
+for _q, _tag in (("UD-IQ3_XXS", "iq3xxs"), ("UD-Q2_K_XL", "q2kxl"), ("UD-IQ2_XXS", "iq2xxs")):
+    for _ub in (None, 256, 128):
+        _sfx, _ubarg = (f"-ub{_ub}", ["-ub", str(_ub)]) if _ub else ("", [])
+        CONFIGS[f"ink-{_tag}-llamacpp-nvfp4-fit{_sfx}"] = dict(runtime="llamacpp", model=ink_gguf(_q), args=_ubarg)
+        CONFIGS[f"ink-{_tag}-llamacpp-nvfp4-allgpu{_sfx}"] = dict(runtime="llamacpp", model=ink_gguf(_q), args=["--fit", "off", "-ngl", "999", *_ubarg])
+
 # ---------------------------------------------------------------- sanitizing
 
 _HOME = str(Path.home())
@@ -209,6 +226,10 @@ class Monitor:
         self.inflight = {k: None for k in self.PROBES}
         self.window_checked = window_roundtrip()
         self.foreign = {}  # process name -> peak RSS of processes > 1 GiB outside the runtime under test
+        self.foreign_cpu = {}  # process name -> peak cores of processes using > 0.25 core outside the runtime under test
+        self.foreign_busy = []  # (t, cores used by all other processes) every 5 s
+        self._cpu_prev = None
+        self.contaminated = None  # why the run was stopped for sharing the machine, if it was
         self.pids_fn = lambda: []
         self.phase = "idle"
         self.tripped = None  # reason the kill-switch fired, if it did
@@ -220,6 +241,9 @@ class Monitor:
         if self.tripped:
             return
         self.tripped = f"{reason} at t={time.time() - self.t0:.0f}s in phase {self.phase}"
+        self._kill()
+
+    def _kill(self):
         for pid in self.pids_fn():
             try:
                 p = psutil.Process(pid)
@@ -229,17 +253,37 @@ class Monitor:
                 pass
 
     def _foreign(self):
-        ours = set()
+        """Other processes: peak RSS of those > 1 GiB, and their CPU. Sustained foreign CPU means another
+        workload shares the machine, so the run measures it too: stop and mark the run contaminated."""
+        ours = {0}  # kernel_task does our paging
         for pid in self.pids_fn() + [os.getpid()]:
             try:
                 p = psutil.Process(pid)
                 ours |= {pid} | {c.pid for c in p.children(recursive=True)}
             except psutil.NoSuchProcess:
                 pass
-        for p in psutil.process_iter(["name", "memory_info"]):
-            mi = p.info["memory_info"]
-            if p.pid not in ours and mi and mi.rss > GiB:
+        now, cpu, busy = time.time(), {}, 0.0
+        for p in psutil.process_iter(["name", "memory_info", "cpu_times"]):
+            if p.pid in ours:
+                continue
+            mi, ct = p.info["memory_info"], p.info["cpu_times"]
+            if mi and mi.rss > GiB:
                 self.foreign[p.info["name"]] = max(self.foreign.get(p.info["name"], 0), mi.rss)
+            if ct:
+                cpu[p.pid] = ct.user + ct.system
+                if self._cpu_prev and p.pid in self._cpu_prev[1]:
+                    used = (cpu[p.pid] - self._cpu_prev[1][p.pid]) / (now - self._cpu_prev[0])
+                    busy += used
+                    if used > 0.25:
+                        name = p.info["name"] or "?"
+                        self.foreign_cpu[name] = max(self.foreign_cpu.get(name, 0), used)
+        if self._cpu_prev:
+            self.foreign_busy.append((round(now - self.t0, 1), round(busy, 2)))
+            recent = self.foreign_busy[-QUIET["busy_checks"]:]
+            if len(recent) == QUIET["busy_checks"] and all(b > QUIET["foreign_cores_max"] for _, b in recent):
+                self.contaminated = f"other processes used {busy:.1f} cores at t={now - self.t0:.0f}s in phase {self.phase}"
+                self._kill()
+        self._cpu_prev = (now, cpu)
 
     def _sample(self):
         n, since, critical_s, last = 0, None, 0.0, time.time()
@@ -351,6 +395,9 @@ class Monitor:
             "timer_late_ms": dist("timer"),
             "spawn_ms": dist("spawn"),
             "foreign_procs_over_1gib": {clean(k): round(v / GiB, 2) for k, v in self.foreign.items()},
+            "foreign_procs_over_quarter_core": {clean(k): round(v, 2) for k, v in self.foreign_cpu.items()},
+            "foreign_cores": {"max": max((b for _, b in self.foreign_busy), default=None),
+                              "mean": round(statistics.mean(b for _, b in self.foreign_busy), 2) if self.foreign_busy else None},
         }
 
 
@@ -672,7 +719,11 @@ def interesting(log_text: str) -> list:
     return [clean(l) for l in log_text.splitlines() if pat.search(l)][:80]
 
 
-START = {"pressure_level": 1, "cpu_percent_max": 40}
+START = {"pressure_level": 1}
+# A quiet machine: the usual desktop, no other heavy session. Before the run, CPU and available memory must
+# stay quiet for hold_s; during it, other processes using more than foreign_cores_max cores for busy_checks
+# checks in a row (5 s apart) stop the run as contaminated, and it is retried once the machine is quiet again.
+QUIET = {"cpu_percent_max": 20, "available_gib_min": 8, "hold_s": 60, "foreign_cores_max": 1.5, "busy_checks": 3, "retries": 3}
 
 
 def is_runtime(argv: list) -> bool:
@@ -682,23 +733,30 @@ def is_runtime(argv: list) -> bool:
             or ("serve" in argv and "--model-dir" in argv) or any(a.endswith("mlx_direct.py") for a in argv))
 
 
-def start_gate(timeout=1800) -> dict:
-    """Wait for normal memory pressure (the Responsive rule's only start condition), plus no other
-    runtime, download or busy CPU, so a concurrent benchmark can't skew this one. The usual
-    desktop stays open; what else holds memory is recorded by the Monitor."""
+def start_gate(timeout=4 * 3600) -> dict:
+    """Wait for normal memory pressure (the Responsive rule's only start condition), then for the machine to
+    stay quiet for QUIET["hold_s"]: no other runtime or download, low CPU, enough available memory. The
+    usual desktop stays open; what else holds memory or CPU is recorded by the Monitor."""
     t = time.perf_counter()
+    quiet_since = None
     while True:
         s = snapshot()
         argvs = [p.info["cmdline"] or [] for p in psutil.process_iter(["cmdline"]) if p.pid != os.getpid()]
         downloading = any("download" in argv and any(os.path.basename(a) in ("hf", "huggingface-cli") for a in argv[:2]) for argv in argvs)
         runtime = any(is_runtime(argv) for argv in argvs)
-        cpu = psutil.cpu_percent(interval=2)
-        if s["pressure"] == START["pressure_level"] and cpu <= START["cpu_percent_max"] and not downloading and not runtime:
-            return {"waited_s": round(time.perf_counter() - t, 1), "cpu_percent": cpu, "compressor_gib": round(s["compressor"] / GiB, 2),
-                    "free_gib": round(s["free"] / GiB, 2), "swap_used_gib": round(s["swap_used"] / GiB, 2)}
+        cpu = psutil.cpu_percent(interval=5)
+        avail = psutil.virtual_memory().available / GiB
+        quiet = (s["pressure"] == START["pressure_level"] and cpu <= QUIET["cpu_percent_max"]
+                 and avail >= QUIET["available_gib_min"] and not downloading and not runtime)
+        quiet_since = (quiet_since or time.perf_counter()) if quiet else None
+        if quiet_since and time.perf_counter() - quiet_since >= QUIET["hold_s"]:
+            return {"waited_s": round(time.perf_counter() - t, 1), "cpu_percent": cpu, "available_gib": round(avail, 2),
+                    "compressor_gib": round(s["compressor"] / GiB, 2), "free_gib": round(s["free"] / GiB, 2),
+                    "swap_used_gib": round(s["swap_used"] / GiB, 2)}
         if time.perf_counter() - t > timeout:
-            raise TimeoutError(f"cannot start: pressure={s['pressure']} cpu={cpu}% downloading={downloading} other runtime={runtime}")
-        time.sleep(10)
+            raise TimeoutError(f"cannot start: pressure={s['pressure']} cpu={cpu}% available={avail:.1f} GiB "
+                               f"downloading={downloading} other runtime={runtime}")
+        time.sleep(5)
 
 
 def set_wired(mb: int):
@@ -729,7 +787,8 @@ def _run(cfg, name, label, log_path) -> dict:
                "model_bytes": size, "ctx": CTX, "prompt_tokens_target": PROMPT_TOKENS, "gen_tokens": GEN_TOKENS,
                "iogpu_wired_limit_mb": sysctl_int("iogpu.wired_limit_mb"),
                "settings": {k: v for k, v in cfg.items() if k not in ("runtime", "model")},
-               "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "responsive_criteria": {**RESPONSIVE, "planned_s": PLANNED_S}}
+               "started": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "responsive_criteria": {**RESPONSIVE, "planned_s": PLANNED_S},
+               "quiet_criteria": QUIET}
         subprocess.run(["sudo", "-n", "/usr/sbin/purge"], check=True)  # cold file cache: load_s is a cold load
         res["start_gate"] = start_gate()
         baseline = snapshot()
@@ -763,6 +822,7 @@ def _run(cfg, name, label, log_path) -> dict:
                     res["stop_error"] = clean(str(e))
                 time.sleep(3)
         res["memory"] = mon.summary(baseline)
+        res["contaminated"] = mon.contaminated
         res["aborted"] = mon.tripped
         res["responsive"] = responsive(res["memory"], mon.tripped)
         gen8k = [r["gen_tps"] for k in ("req_8k_cold", "req_8k_cached") if (r := res.get(k)) and r.get("gen_tps")]
@@ -772,8 +832,13 @@ def _run(cfg, name, label, log_path) -> dict:
     log_path.write_text(clean(log_path.read_text(errors="ignore")))
     res["machine"] = {"chip": subprocess.run(["sysctl", "-n", "machdep.cpu.brand_string"], capture_output=True, text=True).stdout.strip(),
                       "mem_gib": round(psutil.virtual_memory().total / GiB), "macos": platform.mac_ver()[0]}
-    (OUT / f"{label}.json").write_text(json.dumps(res, indent=2))
-    (OUT / f"{label}.samples.json").write_text(json.dumps({"samples": mon.samples}, separators=(",", ":")))
+    out = OUT / "contaminated" if mon.contaminated else OUT
+    out.mkdir(parents=True, exist_ok=True)
+    stamp = f".{int(time.time())}" if mon.contaminated else ""
+    if mon.contaminated:
+        log_path.rename(out / f"{label}{stamp}.log")
+    (out / f"{label}{stamp}.json").write_text(json.dumps(res, indent=2))
+    (out / f"{label}{stamp}.samples.json").write_text(json.dumps({"samples": mon.samples}, separators=(",", ":")))
     return res
 
 
@@ -788,8 +853,14 @@ if __name__ == "__main__":
         if wired > WIRED_MAX_MB:
             sys.exit(f"--wired {wired} refused: {WIRED_MAX_MB} MB is the cap (14336 froze WindowServer)")
     for n in args:
-        r = run(n, wired)
+        for attempt in range(QUIET["retries"] + 1):
+            r = run(n, wired)
+            if not r.get("contaminated"):
+                break
+            print(json.dumps({"config": n, "contaminated": r["contaminated"], "retry": attempt < QUIET["retries"]}), flush=True)
+        else:
+            continue
         brief = {k: r.get(k) for k in ("config", "load_s", "gen_tps_at_8k", "responsive", "usable", "aborted", "error")}
         brief |= {k: r["memory"][k] for k in ("peak_proc_rss_gib", "peak_wired_gib", "swapouts_gib", "pressure", "window_ms", "timer_late_ms", "spawn_ms")}
         brief |= {k: (r.get(k) or {}).get(f) for k, f in (("req_8k_cold", "prompt_tps"), ("req_8k_cold", "gen_tps"), ("req_8k_cached", "gen_tps"), ("req_short", "gen_tps"))}
-        print(json.dumps(brief))
+        print(json.dumps(brief), flush=True)

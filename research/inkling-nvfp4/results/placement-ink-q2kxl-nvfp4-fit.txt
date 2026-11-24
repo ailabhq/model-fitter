@@ -1,0 +1,21 @@
+0.00.241.932 I ggml_metal_device_init: recommendedMaxWorkingSetSize  = 12713.12 MB
+0.00.242.531 I cmn  common_param: system_info: n_threads = 4 (n_threads_batch = 4) / 10 | MTL : EMBED_LIBRARY = 1 | CPU : NEON = 1 | ARM_FMA = 1 | FP16_VA = 1 | MATMUL_INT8 = 1 | DOTPROD = 1 | SME = 1 | SME2 = 1 | ACCELERATE = 1 | REPACK = 1 | 
+0.00.245.103 I cmn  common_fit_a: fitting params to device memory ...
+0.00.245.103 I cmn  common_fit_a: (for bugs during this step try to reproduce them with -fit off, or provide --verbose logs if the bug only occurs with -fit on)
+0.00.245.110 I common_params_fit_impl: getting device memory data for initial parameters:
+0.00.402.950 I common_params_fit_impl: projected to use 10032 MiB of device memory vs. 12123 MiB of free device memory
+0.00.402.954 I common_params_fit_impl: will leave 2091 >= 1024 MiB of free device memory, no changes needed
+0.00.402.955 I common_fit_params: successfully fit params to free device memory
+0.00.402.956 I common_fit_params: fitting params to free memory took 0.16 seconds
+0.04.798.058 I load_tensors: offloading output layer to GPU
+0.04.798.062 I load_tensors: offloading 47 repeating layers to GPU
+0.04.798.062 I load_tensors: offloaded 49/49 layers to GPU
+0.04.798.066 I load_tensors:   CPU_Mapped model buffer size =   234.65 MiB
+0.04.798.070 I load_tensors:  MTL0_Mapped model buffer size =   248.48 MiB
+0.04.798.070 I load_tensors:  MTL0_Mapped model buffer size =  8220.80 MiB
+0.04.800.688 I llama_context:        CPU  output buffer size =     0.76 MiB
+0.04.819.744 I llama_kv_cache:       MTL0 KV buffer size =   272.00 MiB
+0.04.862.664 I llama_kv_cache:       MTL0 KV buffer size =   240.00 MiB
+0.04.862.919 I llama_memory_recurrent:       MTL0 RS buffer size =     3.66 MiB
+0.05.031.152 I sched_reserve:       MTL0 compute buffer size =  1047.21 MiB
+0.05.031.155 I sched_reserve:        CPU compute buffer size =    39.02 MiB
