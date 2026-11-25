@@ -14,6 +14,8 @@
 
 **Responsive**: The machine stays responsive while a Fit runs: the desktop and the app in front keep answering without hangs, and memory pressure is only rarely critical. Background apps may be swapped out.
 
+**Stall**: A hang during a Fit's benchmark while memory pressure never reaches critical. Unlike a memory failure, it is no evidence about other candidates.
+
 **Slow mode**: An explicit opt-in that accepts a Fit below the Usable speed, trading speed for running at all. It never accepts a Fit that leaves the machine unresponsive.
 
 **Source-precision Fit**: A Fit that runs the Source model's own weights, unchanged, and quantizes nothing at run time either. Its Quality loss is still measured, and what remains is runtime noise, never zero. Asking for one constrains the Fit plan; when the result is below Usable speed, asking for it also opts into Slow mode.
