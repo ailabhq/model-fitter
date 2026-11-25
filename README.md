@@ -1,4 +1,4 @@
-# model-fitter
+# sarto
 
 Take a newly released open-weights model and turn it into something usable on an Apple Silicon Mac with limited memory.
 
