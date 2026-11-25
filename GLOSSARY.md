@@ -14,6 +14,10 @@
 
 **Slow mode**: An explicit opt-in that accepts a Fit below the Usable speed, trading speed for running at all. It never accepts a Fit that leaves the machine unresponsive.
 
+**Source-precision Fit**: A Fit that runs the Source model's own weights, unchanged, and quantizes nothing at run time either. Its Quality loss is still measured, and what remains is runtime noise, never zero. Asking for one constrains the Fit plan; when the result is below Usable speed, asking for it also opts into Slow mode.
+
+**Batch throughput**: Tokens generated per hour across several sequences decoded together. This is the speed that matters for unattended work such as overnight batches, where single-sequence tokens per second does not.
+
 **Quality loss**: The measured difference in output quality between a Fit and its Source model, taken against the Source's Reference pack. Every Fit reports it; a Fit whose Quality loss cannot be measured is not produced.
 
 **Reference pack**: The Source model's top-k next-token distributions over a fixed corpus, computed off the device once per Source model revision and Prompt set version. The corpus is the Prompt set together with the Source's own responses to it. For a Source model published already quantized, the reference is its published weights, dequantized and computed at full precision; quantizing activations is a runtime choice and counts as Quality loss.
