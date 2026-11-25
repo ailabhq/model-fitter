@@ -1,0 +1,53 @@
+{
+  "prompt_set": "v0-draft",
+  "note": "Draft for the first Quality loss measurement only, not the curated v1. All prompts are maintainer-written (CC0-1.0) except the long document. Responses are the Source's own, temperature 0, default thinking mode, capped at max_new_tokens.",
+  "items": [
+    {"id": "chat-1", "domain": "chat", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "My sourdough starter smells like nail polish remover since I moved it to the fridge. What is going on, and how do I get it back in shape before I bake on Saturday?"}]},
+    {"id": "chat-2", "domain": "chat", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "I just started my first full-time job. Explain the difference between a Roth IRA and a traditional IRA, and tell me when each one makes more sense."}]},
+    {"id": "chat-3", "domain": "chat", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "Write a short, warm message declining my friend's wedding invitation. I'll be abroad for work that week. Keep it under 120 words."}]},
+    {"id": "chat-4", "domain": "chat", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "I have 25 minutes, two eggs, a can of chickpeas, half an onion, a bag of spinach and some stale bread. Suggest one dinner and walk me through it."}]},
+
+    {"id": "code-1", "domain": "code", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "Write a Python function `merge_intervals(intervals)` that merges overlapping closed intervals given as a list of (start, end) tuples and returns them sorted. Add pytest tests, including touching intervals like (1, 2) and (2, 3)."}]},
+    {"id": "code-2", "domain": "code", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "This function should return the total size of all files, but it always returns 0. Why, and how do I fix it?\n\n```js\nasync function totalSize(paths) {\n  let total = 0;\n  paths.forEach(async (p) => {\n    const st = await fs.promises.stat(p);\n    total += st.size;\n  });\n  return total;\n}\n```"}]},
+    {"id": "code-3", "domain": "code", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "Tables: orders(id, customer_id, created_at, total) and customers(id, name, country). Write a PostgreSQL query that returns the top 3 customers by total spend in each country for 2025, breaking ties by name, with their rank."}]},
+    {"id": "code-4", "domain": "code", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "What does this C function do, and what is wrong with it?\n\n```c\nchar *join(const char *a, const char *b) {\n    char *out = malloc(strlen(a) + strlen(b));\n    strcpy(out, a);\n    strcat(out, b);\n    return out;\n}\n```"}]},
+
+    {"id": "multi-fr", "domain": "multilingual", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "Peux-tu m'expliquer pourquoi le ciel est bleu le jour et rouge au coucher du soleil, puis le résumer en une phrase pour un enfant de six ans ?"}]},
+    {"id": "multi-zh", "domain": "multilingual", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "请用简洁的中文解释什么是复利，并用一个具体的数字例子说明：每年存一万元，年利率百分之五，二十年后大约有多少钱？"}]},
+    {"id": "multi-es", "domain": "multilingual", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "Voy a pasar cuatro días en Lisboa en marzo con poco presupuesto y me gusta caminar. ¿Qué itinerario me recomiendas, día por día?"}]},
+    {"id": "multi-ja", "domain": "multilingual", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "messages": [{"role": "user", "content": "次の英文を自然な日本語に翻訳してください。「The meeting has been moved to Thursday afternoon because the client's flight was delayed.」そのあと、取引先に送る丁寧なメールの形にも書き直してください。"}]},
+
+    {"id": "tool-1", "domain": "tool_calls", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "tools": [{"type": "function", "function": {"name": "get_forecast", "description": "Hourly weather forecast for a city.", "parameters": {"type": "object", "properties": {"city": {"type": "string"}, "date": {"type": "string", "description": "ISO date, YYYY-MM-DD"}, "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}}, "required": ["city", "date"]}}}],
+     "messages": [{"role": "user", "content": "Today is 2026-11-24. Do I need an umbrella in Amsterdam tomorrow morning?"}]},
+    {"id": "tool-2", "domain": "tool_calls", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "tools": [{"type": "function", "function": {"name": "search_flights", "description": "Search one-way flights.", "parameters": {"type": "object", "properties": {"origin": {"type": "string", "description": "IATA code"}, "destination": {"type": "string", "description": "IATA code"}, "date": {"type": "string", "description": "YYYY-MM-DD"}, "depart_after": {"type": "string", "description": "HH:MM, local time"}, "depart_before": {"type": "string", "description": "HH:MM, local time"}, "sort": {"type": "string", "enum": ["price", "duration", "departure"]}}, "required": ["origin", "destination", "date"]}}},
+               {"type": "function", "function": {"name": "book_flight", "description": "Book a flight by offer id.", "parameters": {"type": "object", "properties": {"offer_id": {"type": "string"}}, "required": ["offer_id"]}}}],
+     "messages": [{"role": "user", "content": "Find me the cheapest flight from Lyon to Berlin on 12 March 2027, leaving in the morning. Don't book anything yet."}]},
+    {"id": "tool-3", "domain": "tool_calls", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "tools": [{"type": "function", "function": {"name": "list_tickets", "description": "List support tickets for a customer.", "parameters": {"type": "object", "properties": {"customer": {"type": "string"}, "status": {"type": "string", "enum": ["open", "pending", "closed"]}}, "required": ["customer"]}}}],
+     "messages": [{"role": "user", "content": "How many open tickets does ACME Corp have, and which one has been waiting longest?"},
+                  {"role": "assistant", "content": "", "tool_calls": [{"id": "call_1", "type": "function", "function": {"name": "list_tickets", "arguments": {"customer": "ACME Corp", "status": "open"}}}]},
+                  {"role": "tool", "tool_call_id": "call_1", "name": "list_tickets", "content": "[{\"id\": \"T-1042\", \"subject\": \"SSO login loop\", \"opened\": \"2026-11-02\"}, {\"id\": \"T-1077\", \"subject\": \"Invoice PDF missing VAT line\", \"opened\": \"2026-11-15\"}, {\"id\": \"T-0998\", \"subject\": \"API rate limit too low\", \"opened\": \"2026-10-21\"}]"}]},
+    {"id": "tool-4", "domain": "tool_calls", "source": "maintainers", "license": "CC0-1.0", "max_new_tokens": 1024,
+     "tools": [{"type": "function", "function": {"name": "convert_currency", "description": "Convert an amount between currencies at today's rate.", "parameters": {"type": "object", "properties": {"amount": {"type": "number"}, "from": {"type": "string"}, "to": {"type": "string"}}, "required": ["amount", "from", "to"]}}},
+               {"type": "function", "function": {"name": "get_price", "description": "Current list price of a product in a store's own currency.", "parameters": {"type": "object", "properties": {"product": {"type": "string"}, "store": {"type": "string"}}, "required": ["product", "store"]}}}],
+     "messages": [{"role": "user", "content": "Is the Framework Laptop 16 cheaper at the German store or the UK store once you convert both to euros?"}]},
+
+    {"id": "long-8k", "domain": "long_8k", "source": "llama.cpp docs/speculative.md lines 1-473 at b6d5ce4bc", "license": "MIT (The ggml authors)", "max_new_tokens": 512,
+     "document": "long-speculative.md",
+     "messages": [{"role": "user", "content": "{document}\n\nUsing only the document above: list every speculative decoding type llama.cpp supports with the `--spec-type` value that selects it, say which of them need no draft model, and recommend one for a MoE model with no draft model available, citing the document's advice."}]}
+  ]
+}

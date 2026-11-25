@@ -1,0 +1,4 @@
+0.02.470.887 W load: special_eos_id is not in special_eog_ids - the tokenizer config may be incorrect
+0.02.513.509 W llama_model_loader: tensor overrides to CPU are used with mmap enabled - consider using --load-mode none for better performance
+0.20.754.342 I cmn          init: llama threadpool init, n_threads = 4
+8.34.528.532 W ~llama_context:        CPU compute buffer size of  75.0215 MiB, does not match expectation of  70.5215 MiB
