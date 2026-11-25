@@ -6,7 +6,9 @@
 
 **Fit plan**: The decision of how a Source model will run on a Device profile: precision per part of the model, which parts stay in memory and which are read from disk, and which runtime executes it.
 
-**Fit**: The runnable result of carrying out a Fit plan: the converted weights plus everything needed to start the model, together with its measured speed and quality loss.
+**Fit**: The runnable result of carrying out a Fit plan: its weights, converted by sarto or taken from a Community build, plus everything needed to start the model, together with its measured speed and quality loss.
+
+**Community build**: A quantized build of a Source model published by someone other than its authors (e.g. unsloth, ggml-org). It is never a Source model: its Quality loss is measured against the Source's Reference pack, like any other Fit's.
 
 **Usable**: A Fit that generates at least 5 tokens per second with at least 8K context while the machine stays responsive.
 
@@ -20,9 +22,11 @@
 
 **Quality loss**: The measured difference in output quality between a Fit and its Source model, taken against the Source's Reference pack. Every Fit reports it; a Fit whose Quality loss cannot be measured is not produced.
 
-**Reference pack**: The Source model's top-k next-token distributions over a fixed corpus, computed off the device once per Source model revision and Prompt set version. The corpus is the Prompt set together with the Source's own responses to it. For a Source model published already quantized, the reference is its published weights, dequantized and computed at full precision; quantizing activations is a runtime choice and counts as Quality loss.
+**Reference pack**: The Source model's top-k next-token distributions over a fixed corpus, together with how much each of its weights matters on the Calibration set, computed off the device once per Source model revision, Prompt set version and Calibration set version. The corpus is the Prompt set together with the Source's own responses to it. For a Source model published already quantized, the reference is its published weights, dequantized and computed at full precision; quantizing activations is a runtime choice and counts as Quality loss.
 
 **Prompt set**: The fixed, versioned prompts shared by every Source model, across chat, code, multilingual and tool calls, plus one 8K-context prompt. Each Reference pack adds the Source's own responses to it.
+
+**Calibration set**: The fixed, versioned text a Source model is run on to measure which of its weights matter most before sarto quantizes it. It never overlaps the Prompt set, so Quality loss is never scored on text the quantization was tuned to.
 
 **Quality band**: The grade a Fit's Quality loss earns: Near-lossless, Lossy, or Rejected.
 
