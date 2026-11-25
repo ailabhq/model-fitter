@@ -8,6 +8,10 @@
 
 **Fit**: The runnable result of carrying out a Fit plan: its weights, converted by sarto or taken from a Community build, plus everything needed to start the model, together with its measured speed and quality loss.
 
+**Candidate**: A set of weights a Fit plan measures on a Device profile, either a Community build or one converted by sarto. A Fit's weights are the candidate its plan run chose.
+
+**Plan run**: One execution of a Fit plan on a machine, from listing its candidates to a Fit or a refusal.
+
 **Community build**: A quantized build of a Source model published by someone other than its authors (e.g. unsloth, ggml-org). It is never a Source model: its Quality loss is measured against the Source's Reference pack, like any other Fit's.
 
 **Usable**: A Fit that generates at least 5 tokens per second with at least 8K context while the machine stays responsive.
