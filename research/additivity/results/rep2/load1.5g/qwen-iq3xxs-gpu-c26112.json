@@ -1,0 +1,121 @@
+{
+  "config": "qwen-iq3xxs-gpu-c26112",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 12719, commit 22b99122e)",
+  "model": {
+    "repo": "unsloth/Qwen3.8-27B-GGUF",
+    "file": "Qwen3.8-27B-UD-IQ3_XXS.gguf"
+  },
+  "model_bytes": 10934860704,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "args": [
+      "--fit",
+      "off",
+      "-ngl",
+      "999",
+      "-c",
+      "26112"
+    ]
+  },
+  "started": "2026-11-25T12:48:53+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "quiet_criteria": {
+    "cpu_percent_max": 20,
+    "available_gib_min": 6.0,
+    "hold_s": 60,
+    "foreign_cores_max": 1.5,
+    "busy_checks": 3,
+    "retries": 3
+  },
+  "start_gate": {
+    "waited_s": 145.8,
+    "cpu_percent": 7.0,
+    "available_gib": 8.36,
+    "compressor_gib": 0.41,
+    "free_gib": 3.96,
+    "swap_used_gib": 2.62
+  },
+  "error": "RuntimeError: runtime exited with -9",
+  "memory": {
+    "baseline": {
+      "wired": 2.12,
+      "compressor": 0.43,
+      "free": 3.81,
+      "swap_used": 2.57,
+      "anonymous": 5.22,
+      "file_backed": 3.9
+    },
+    "peak_proc_rss_gib": 7.09,
+    "peak_wired_gib": 13.56,
+    "peak_compressor_gib": 3.01,
+    "min_free_gib": 0.02,
+    "peak_swap_used_gib": 4.56,
+    "swapouts_gib": 2.01,
+    "pageouts_gib": 0.0,
+    "pageins_gib": 20.62,
+    "max_pressure_level": 4,
+    "pressure": {
+      "benchmark_s": 24.2,
+      "critical_s": 5.0,
+      "critical_share": 0.207,
+      "critical_longest_s": 5.0,
+      "warning_s": 1.6
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 40,
+      "p50": 1.2,
+      "p99": 4141.4,
+      "max": 4141.4,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 771,
+      "p50": 7.8,
+      "p99": 42.8,
+      "max": 250.1,
+      "microhangs": 1
+    },
+    "spawn_ms": {
+      "n": 21,
+      "p50": 4.6,
+      "p99": 3345.2,
+      "max": 3345.2,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {},
+    "foreign_procs_over_quarter_core": {},
+    "foreign_cores": {
+      "max": 0.27,
+      "mean": 0.22
+    }
+  },
+  "contaminated": null,
+  "aborted": "window check stuck for >= 500 ms at t=17s in phase load",
+  "responsive": false,
+  "gen_tps_at_8k": null,
+  "usable": false,
+  "log_excerpt": [],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  },
+  "holder": {
+    "gib": 1.5,
+    "rss_first_gib": 1.51,
+    "rss_min_gib": 0.0,
+    "rss_last_gib": 0.0
+  }
+}

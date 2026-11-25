@@ -1,0 +1,156 @@
+{
+  "config": "qwen-iq3xxs-ngl58-c8704",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 12719, commit 22b99122e)",
+  "model": {
+    "repo": "unsloth/Qwen3.8-27B-GGUF",
+    "file": "Qwen3.8-27B-UD-IQ3_XXS.gguf"
+  },
+  "model_bytes": 10934860704,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "args": [
+      "--fit",
+      "off",
+      "-ngl",
+      "58"
+    ]
+  },
+  "started": "2026-11-25T12:03:47+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "quiet_criteria": {
+    "cpu_percent_max": 20,
+    "available_gib_min": 6.0,
+    "hold_s": 60,
+    "foreign_cores_max": 1.5,
+    "busy_checks": 3,
+    "retries": 3
+  },
+  "start_gate": {
+    "waited_s": 65.3,
+    "cpu_percent": 2.5,
+    "available_gib": 10.98,
+    "compressor_gib": 0.19,
+    "free_gib": 8.42,
+    "swap_used_gib": 2.93
+  },
+  "load_s": 11.39,
+  "cmdline": "~/mf-bench/llama.cpp/build/bin/llama-server -m ~/mf-bench/models/qwen/Qwen3.8-27B-UD-IQ3_XXS.gguf -c 8704 -np 1 -fa on --port 8090 --no-webui --fit off -ngl 58",
+  "req_8k_cold": {
+    "wall_s": 184.33,
+    "prompt_n": 8000,
+    "cached_n": 8255,
+    "prompt_tps": 59.02,
+    "prompt_s": 135.56,
+    "gen_n": 256,
+    "gen_tps": 5.23,
+    "sample": "(true)\n   .expect(\"expected output\")\n   .run();\n```\n\n### Test Coverage\n\n- **`tests/test-chat-auto-parser.cpp`**: Unit tests for the auto-parser analysis and parser generation\n- **`tests/test-chat.cpp`**: Integration tests for PEG parsing with real templates\n- **`tests/test-chat-analysis.cpp`**: Temp"
+  },
+  "req_8k_cached": {
+    "wall_s": 49.12,
+    "prompt_n": 4,
+    "cached_n": 8255,
+    "prompt_tps": 8.9,
+    "prompt_s": 0.45,
+    "gen_n": 256,
+    "gen_tps": 5.24,
+    "sample": "(true)\n   .expect(\"expected output\")\n   .run();\n```\n\n### Test Coverage\n\n- **`tests/test-chat-auto-parser.cpp`**: Unit tests for the auto-parser analysis and parser generation\n- **`tests/test-chat.cpp`**: Integration tests for PEG parsing with real templates\n- **`tests/test-chat-analysis.cpp`**: Temp"
+  },
+  "req_short": {
+    "wall_s": 26.09,
+    "prompt_n": 64,
+    "cached_n": 191,
+    "prompt_tps": 15.3,
+    "prompt_s": 4.18,
+    "gen_n": 128,
+    "gen_tps": 5.84,
+    "sample": "erated inference using OpenCL.\n\n## Build GUI binding using CMake\n\n```bash\ncd examples/llama.android\nmkdir build\ncd build\ncmake ..\ncmake --build .\n```\n\n## Build GUI binding using Docker\n\n```bash\ncd examples/llama.android\ndocker build -t llama.android .\ndocker run -it --rm llama.android\n```\n\n## Run GU"
+  },
+  "memory": {
+    "baseline": {
+      "wired": 1.74,
+      "compressor": 0.19,
+      "free": 8.42,
+      "swap_used": 2.93,
+      "anonymous": 3.37,
+      "file_backed": 1.76
+    },
+    "peak_proc_rss_gib": 10.13,
+    "peak_wired_gib": 11.13,
+    "peak_compressor_gib": 2.72,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 4.02,
+    "swapouts_gib": 1.39,
+    "pageouts_gib": 0.02,
+    "pageins_gib": 33.09,
+    "max_pressure_level": 2,
+    "pressure": {
+      "benchmark_s": 274.0,
+      "critical_s": 0.0,
+      "critical_share": 0.0,
+      "critical_longest_s": 0.0,
+      "warning_s": 260.1
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 540,
+      "p50": 1.5,
+      "p99": 8.3,
+      "max": 21.6,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 10108,
+      "p50": 8.9,
+      "p99": 10.1,
+      "max": 17.6,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 271,
+      "p50": 3.9,
+      "p99": 34.5,
+      "max": 148.5,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {},
+    "foreign_procs_over_quarter_core": {
+      "corespotlightd": 0.3,
+      "siriactionsd": 0.5,
+      "BackgroundShortcutRunner": 0.58
+    },
+    "foreign_cores": {
+      "max": 1.29,
+      "mean": 0.32
+    }
+  },
+  "contaminated": null,
+  "aborted": null,
+  "responsive": true,
+  "gen_tps_at_8k": 5.24,
+  "usable": true,
+  "log_excerpt": [
+    "0.11.274.011 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  },
+  "holder": {
+    "gib": 1.0,
+    "rss_first_gib": 1.01,
+    "rss_min_gib": 0.0,
+    "rss_last_gib": 0.0
+  }
+}

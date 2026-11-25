@@ -1,0 +1,29 @@
+0.00.110.024 I ggml_metal_device_init: recommendedMaxWorkingSetSize  = 12713.12 MB
+0.00.110.320 I cmn  common_param: system_info: n_threads = 4 (n_threads_batch = 4) / 10 | MTL : EMBED_LIBRARY = 1 | CPU : NEON = 1 | ARM_FMA = 1 | FP16_VA = 1 | MATMUL_INT8 = 1 | DOTPROD = 1 | SME = 1 | SME2 = 1 | ACCELERATE = 1 | REPACK = 1 | 
+0.01.178.763 I load_tensors: offloading output layer to GPU
+0.01.178.766 I load_tensors: offloading 57 repeating layers to GPU
+0.01.178.766 I load_tensors: offloaded 58/66 layers to GPU
+0.01.178.767 I load_tensors:   CPU_Mapped model buffer size =   498.16 MiB
+0.01.178.769 I load_tensors:   CPU_Mapped model buffer size =     0.16 MiB
+0.01.178.771 I load_tensors:   CPU_Mapped model buffer size =   103.91 MiB
+0.01.178.771 I load_tensors:   CPU_Mapped model buffer size =     0.16 MiB
+0.01.178.771 I load_tensors:   CPU_Mapped model buffer size =   121.64 MiB
+0.01.178.772 I load_tensors:   CPU_Mapped model buffer size =    16.09 MiB
+0.01.178.773 I load_tensors:   CPU_Mapped model buffer size =     0.02 MiB
+0.01.178.773 I load_tensors:   CPU_Mapped model buffer size =    19.69 MiB
+0.01.178.773 I load_tensors:   CPU_Mapped model buffer size =   197.64 MiB
+0.01.178.774 I load_tensors:   CPU_Mapped model buffer size =   132.11 MiB
+0.01.178.774 I load_tensors:   CPU_Mapped model buffer size =   125.78 MiB
+0.01.178.775 I load_tensors:   CPU_Mapped model buffer size =    46.39 MiB
+0.01.178.775 I load_tensors:   CPU_Mapped model buffer size =    82.36 MiB
+0.01.178.777 I load_tensors:   CPU_REPACK model buffer size =    62.05 MiB
+0.01.178.777 I load_tensors:  MTL0_Mapped model buffer size =   682.05 MiB
+0.01.178.777 I load_tensors:  MTL0_Mapped model buffer size =  7994.85 MiB
+0.01.205.334 I llama_context:        CPU  output buffer size =     0.95 MiB
+0.01.208.527 I llama_kv_cache:        CPU KV buffer size =    68.00 MiB
+0.01.235.938 I llama_kv_cache:       MTL0 KV buffer size =   476.00 MiB
+0.01.236.890 I llama_memory_recurrent:        CPU RS buffer size =    18.70 MiB
+0.01.244.443 I llama_memory_recurrent:       MTL0 RS buffer size =   130.92 MiB
+0.01.259.543 I sched_reserve:       MTL0 compute buffer size =   139.77 MiB
+0.01.259.545 I sched_reserve:        CPU compute buffer size =   160.52 MiB
+0.03.121.870 I common_memory_breakdown_print: |   - CPU_REPACK         |                   62 =    62 +       0 +       0                |

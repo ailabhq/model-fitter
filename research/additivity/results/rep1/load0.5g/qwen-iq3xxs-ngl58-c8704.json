@@ -1,0 +1,123 @@
+{
+  "config": "qwen-iq3xxs-ngl58-c8704",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 12719, commit 22b99122e)",
+  "model": {
+    "repo": "unsloth/Qwen3.8-27B-GGUF",
+    "file": "Qwen3.8-27B-UD-IQ3_XXS.gguf"
+  },
+  "model_bytes": 10934860704,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "args": [
+      "--fit",
+      "off",
+      "-ngl",
+      "58"
+    ]
+  },
+  "started": "2026-11-25T11:44:32+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "quiet_criteria": {
+    "cpu_percent_max": 20,
+    "available_gib_min": 6.0,
+    "hold_s": 60,
+    "foreign_cores_max": 1.5,
+    "busy_checks": 3,
+    "retries": 3
+  },
+  "start_gate": {
+    "waited_s": 105.6,
+    "cpu_percent": 4.0,
+    "available_gib": 10.49,
+    "compressor_gib": 0.57,
+    "free_gib": 8.16,
+    "swap_used_gib": 2.7
+  },
+  "load_s": 11.86,
+  "cmdline": "~/mf-bench/llama.cpp/build/bin/llama-server -m ~/mf-bench/models/qwen/Qwen3.8-27B-UD-IQ3_XXS.gguf -c 8704 -np 1 -fa on --port 8090 --no-webui --fit off -ngl 58",
+  "error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+  "memory": {
+    "baseline": {
+      "wired": 2.06,
+      "compressor": 0.57,
+      "free": 8.15,
+      "swap_used": 2.7,
+      "anonymous": 3.17,
+      "file_backed": 1.51
+    },
+    "peak_proc_rss_gib": 9.55,
+    "peak_wired_gib": 11.51,
+    "peak_compressor_gib": 2.47,
+    "min_free_gib": 0.04,
+    "peak_swap_used_gib": 2.7,
+    "swapouts_gib": 0.0,
+    "pageouts_gib": 0.0,
+    "pageins_gib": 19.36,
+    "max_pressure_level": 2,
+    "pressure": {
+      "benchmark_s": 58.9,
+      "critical_s": 0.0,
+      "critical_share": 0.0,
+      "critical_longest_s": 0.0,
+      "warning_s": 47.5
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 115,
+      "p50": 1.1,
+      "p99": 8.7,
+      "max": 931.0,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 2221,
+      "p50": 7.1,
+      "p99": 10.1,
+      "max": 25.9,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 59,
+      "p50": 4.2,
+      "p99": 51.6,
+      "max": 51.6,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {},
+    "foreign_procs_over_quarter_core": {},
+    "foreign_cores": {
+      "max": 0.63,
+      "mean": 0.33
+    }
+  },
+  "contaminated": null,
+  "aborted": "window check stuck for >= 500 ms at t=56s in phase gen@8k",
+  "responsive": false,
+  "gen_tps_at_8k": null,
+  "usable": false,
+  "log_excerpt": [
+    "0.11.541.505 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  },
+  "holder": {
+    "gib": 0.5,
+    "rss_first_gib": 0.51,
+    "rss_min_gib": 0.0,
+    "rss_last_gib": 0.0
+  }
+}

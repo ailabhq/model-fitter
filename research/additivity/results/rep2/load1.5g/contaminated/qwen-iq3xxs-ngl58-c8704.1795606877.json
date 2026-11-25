@@ -1,0 +1,134 @@
+{
+  "config": "qwen-iq3xxs-ngl58-c8704",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 12719, commit 22b99122e)",
+  "model": {
+    "repo": "unsloth/Qwen3.8-27B-GGUF",
+    "file": "Qwen3.8-27B-UD-IQ3_XXS.gguf"
+  },
+  "model_bytes": 10934860704,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "args": [
+      "--fit",
+      "off",
+      "-ngl",
+      "58"
+    ]
+  },
+  "started": "2026-11-25T12:34:43+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "quiet_criteria": {
+    "cpu_percent_max": 20,
+    "available_gib_min": 4.5,
+    "hold_s": 60,
+    "foreign_cores_max": 1.5,
+    "busy_checks": 3,
+    "retries": 3
+  },
+  "start_gate": {
+    "waited_s": 125.7,
+    "cpu_percent": 3.1,
+    "available_gib": 10.73,
+    "compressor_gib": 0.26,
+    "free_gib": 7.99,
+    "swap_used_gib": 2.87
+  },
+  "load_s": 12.67,
+  "cmdline": "~/mf-bench/llama.cpp/build/bin/llama-server -m ~/mf-bench/models/qwen/Qwen3.8-27B-UD-IQ3_XXS.gguf -c 8704 -np 1 -fa on --port 8090 --no-webui --fit off -ngl 58",
+  "req_8k_cold": {
+    "wall_s": 190.27,
+    "prompt_n": 8000,
+    "cached_n": 8255,
+    "prompt_tps": 59.14,
+    "prompt_s": 135.28,
+    "gen_n": 256,
+    "gen_tps": 4.64,
+    "sample": "(true)\n   .expect(\"expected output\")\n   .run();\n```\n\n### Test Coverage\n\n- **`tests/test-chat-auto-parser.cpp`**: Unit tests for the auto-parser analysis and parser generation\n- **`tests/test-chat.cpp`**: Integration tests for PEG parsing with real templates\n- **`tests/test-chat-analysis.cpp`**: Temp"
+  },
+  "error": "ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+  "memory": {
+    "baseline": {
+      "wired": 1.73,
+      "compressor": 0.26,
+      "free": 7.98,
+      "swap_used": 2.87,
+      "anonymous": 3.92,
+      "file_backed": 1.58
+    },
+    "peak_proc_rss_gib": 9.19,
+    "peak_wired_gib": 11.88,
+    "peak_compressor_gib": 2.73,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 4.24,
+    "swapouts_gib": 1.98,
+    "pageouts_gib": 0.05,
+    "pageins_gib": 58.89,
+    "max_pressure_level": 2,
+    "pressure": {
+      "benchmark_s": 268.1,
+      "critical_s": 0.0,
+      "critical_share": 0.0,
+      "critical_longest_s": 0.0,
+      "warning_s": 225.9
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 529,
+      "p50": 1.2,
+      "p99": 8.7,
+      "max": 251.3,
+      "microhangs": 1
+    },
+    "timer_late_ms": {
+      "n": 10170,
+      "p50": 7.1,
+      "p99": 10.1,
+      "max": 45.9,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 265,
+      "p50": 4.1,
+      "p99": 124.9,
+      "max": 193.4,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {},
+    "foreign_procs_over_quarter_core": {
+      "siriactionsd": 0.32,
+      "BackgroundShortcutRunner": 0.51,
+      "duetexpertd": 0.9,
+      "corespotlightd": 0.33,
+      "assistantd": 0.25,
+      "mediaanalysisd": 1.98
+    },
+    "foreign_cores": {
+      "max": 2.44,
+      "mean": 0.59
+    }
+  },
+  "contaminated": "other processes used 2.3 cores at t=266s in phase gen@8k",
+  "aborted": null,
+  "responsive": true,
+  "gen_tps_at_8k": 4.64,
+  "usable": false,
+  "log_excerpt": [
+    "0.12.549.391 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

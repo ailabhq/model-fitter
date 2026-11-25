@@ -119,6 +119,14 @@ for _q, _tag in (("UD-IQ3_XXS", "iq3xxs"), ("UD-Q2_K_XL", "q2kxl"), ("UD-IQ2_XXS
         CONFIGS[f"ink-{_tag}-llamacpp-nvfp4-fit{_sfx}"] = dict(runtime="llamacpp", model=ink_gguf(_q), args=_ubarg)
         CONFIGS[f"ink-{_tag}-llamacpp-nvfp4-allgpu{_sfx}"] = dict(runtime="llamacpp", model=ink_gguf(_q), args=["--fit", "off", "-ngl", "999", *_ubarg])
 
+# Neighbouring candidates of one Source for "Does a candidate's memory cost add to the desktop's load...?"
+# (map ticket 20). Fixed placement (no --fit); each context step adds 544 MiB of KV on the GPU. The prompt
+# stays 8,000 tokens, so only memory differs. ngl58 leaves layers CPU-mapped at the base context.
+_QWEN3 = gguf(QWEN_GGUF, "Qwen3.8-27B-UD-IQ3_XXS.gguf", "qwen/Qwen3.8-27B-UD-IQ3_XXS.gguf")
+for _c in (8704, 17408, 26112):
+    CONFIGS[f"qwen-iq3xxs-gpu-c{_c}"] = dict(runtime="llamacpp", model=_QWEN3, args=["--fit", "off", "-ngl", "999", "-c", str(_c)])
+CONFIGS["qwen-iq3xxs-ngl58-c8704"] = dict(runtime="llamacpp", model=_QWEN3, args=["--fit", "off", "-ngl", "58"])
+
 # ---------------------------------------------------------------- sanitizing
 
 _HOME = str(Path.home())

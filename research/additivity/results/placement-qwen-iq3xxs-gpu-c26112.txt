@@ -1,0 +1,13 @@
+0.00.059.299 I ggml_metal_device_init: recommendedMaxWorkingSetSize  = 12713.12 MB
+0.00.059.607 I cmn  common_param: system_info: n_threads = 4 (n_threads_batch = 4) / 10 | MTL : EMBED_LIBRARY = 1 | CPU : NEON = 1 | ARM_FMA = 1 | FP16_VA = 1 | MATMUL_INT8 = 1 | DOTPROD = 1 | SME = 1 | SME2 = 1 | ACCELERATE = 1 | REPACK = 1 | 
+0.01.039.520 I load_tensors: offloading output layer to GPU
+0.01.039.525 I load_tensors: offloading 64 repeating layers to GPU
+0.01.039.525 I load_tensors: offloaded 66/66 layers to GPU
+0.01.039.526 I load_tensors:   CPU_Mapped model buffer size =   397.85 MiB
+0.01.039.527 I load_tensors:  MTL0_Mapped model buffer size =   682.05 MiB
+0.01.039.527 I load_tensors:  MTL0_Mapped model buffer size =  9003.16 MiB
+0.01.042.661 I llama_context:        CPU  output buffer size =     0.95 MiB
+0.01.230.982 I llama_kv_cache:       MTL0 KV buffer size =  1632.00 MiB
+0.01.248.165 I llama_memory_recurrent:       MTL0 RS buffer size =   149.62 MiB
+0.01.270.859 I sched_reserve:       MTL0 compute buffer size =   240.79 MiB
+0.01.270.862 I sched_reserve:        CPU compute buffer size =    65.52 MiB
