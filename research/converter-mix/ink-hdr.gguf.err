@@ -1,0 +1,7 @@
+0.00.222.038 E llama_model_load: error loading model: tensor 'blk.1.attn_res_query.weight' data is not within the file bounds, model is corrupted or incomplete
+0.00.222.085 E llama_model_load_from_file_impl: failed to load model
+0.00.222.157 E common_fit_params: encountered an error while trying to fit params to free device memory: failed to load model
+0.00.222.159 E llama_fit_params: failed to fit CLI arguments to free memory, exiting...
+real 0.26
+user 0.06
+sys 0.05
