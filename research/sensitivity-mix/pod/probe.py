@@ -204,6 +204,34 @@ def unit_layer(name: str) -> int | None:
     return int(m[1]) if m else None
 
 
+
+def dequant(pr: "Prober", g: ggmlq.GGML, imat: dict | None, u: dict, qtype: str | None = None) -> list:
+    """[(param name, dequantized values in the param's layout, relative RMS error)] for one unit at `qtype`
+    (default: the unit's probe type). imat None = all-ones imatrix (smoke tests only)."""
+    qtype = qtype or u["probe_type"]
+    parts = []
+    for tname, _cname, perm in u["parts"]:
+        w = pr.params[tname].detach().float().cpu().numpy()
+        shape, n = w.shape, w.shape[-1]
+        w = w.reshape(-1, n)
+        if perm is not None:
+            w = w[:, perm]  # GGUF column order
+        if not u["imatrix"]:
+            im = None
+        elif imat is None:
+            im = np.ones((1, n), np.float32)
+        else:
+            im = imat[u["gguf"]]
+        d = g.roundtrip(qtype, w, im, shape[-2] if len(shape) == 3 else None)
+        rel = float(np.sqrt(((d - w) ** 2).sum() / (w ** 2).sum()))
+        if perm is not None:
+            back = np.empty_like(d)
+            back[:, perm] = d
+            d = back
+        parts.append((tname, torch.from_numpy(d.reshape(shape)), rel))
+    return parts
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("arch", choices=sorted(U.ARCH))
@@ -270,37 +298,13 @@ def main():
     done = {json.loads(x)["unit"] for x in open(out)} if out.exists() else set()
     todo = [u for u in us if u["gguf"] not in done]
 
-    def dequant(u):
-        """[(param name, dequantized values in the param's layout, relative RMS error)] for one unit."""
-        parts = []
-        for tname, _cname, perm in u["parts"]:
-            w = pr.params[tname].detach().float().cpu().numpy()
-            shape, n = w.shape, w.shape[-1]
-            w = w.reshape(-1, n)
-            if perm is not None:
-                w = w[:, perm]  # GGUF column order
-            if not u["imatrix"]:
-                im = None
-            elif imat is None:  # smoke tests only
-                im = np.ones((1, n), np.float32)
-            else:
-                im = imat[u["gguf"]]
-            d = g.roundtrip(u["probe_type"], w, im, shape[-2] if len(shape) == 3 else None)
-            rel = float(np.sqrt(((d - w) ** 2).sum() / (w ** 2).sum()))
-            if perm is not None:
-                back = np.empty_like(d)
-                back[:, perm] = d
-                d = back
-            parts.append((tname, torch.from_numpy(d.reshape(shape)), rel))
-        return parts
-
     q: queue.Queue = queue.Queue(maxsize=2)
 
     def producer():
         for u in todo:
             t = time.perf_counter()
             try:
-                q.put((u, dequant(u), time.perf_counter() - t, None))
+                q.put((u, dequant(pr, g, imat, u), time.perf_counter() - t, None))
             except Exception as e:  # surfaced in the main loop
                 q.put((u, None, 0, e))
                 return

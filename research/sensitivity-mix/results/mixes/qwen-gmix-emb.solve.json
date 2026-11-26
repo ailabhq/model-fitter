@@ -1,0 +1,1 @@
+{"ceiling": 10934860704, "budget_tensor_bytes": 10145102304, "allocated_tensor_bytes": 10145095680, "estimated_file_bytes": 10934854080, "below_ceiling_bytes": 6624, "objective": 0.0667024307861819, "total_table_error": 177292.93898812393, "tensors": 417, "copied_nvfp4": 0, "weighted": true, "power_law": false}

@@ -159,6 +159,23 @@ def main():
         print(json.dumps({"arch": arch, "units": len(recs), "mapping": {k: man["mapping_check"][k] for k in ("value_checked", "size_mismatch")},
                           "null": man["null_probes"], "kld_range": [min(r["kld_all"] for r in recs), max(r["kld_all"] for r in recs)],
                           "types": sorted({r["probe_type"] for r in recs})}))
+        gout = work / f"{arch}-groups"
+        gcmd = [sys.executable, str(HERE / "group_probe.py"), arch, "local", "none", str(work / f"{arch}-calib.jsonl"),
+                str(work / f"{arch}.tsv.gz"), "ones", str(gout), "--model-path", str(mdir), "--ckpt-dir", str(cdir),
+                "--device", "cpu", "--tokens", "100000"]
+        subprocess.run(gcmd, check=True)
+        g2 = work / f"{arch}-groups-q8"
+        subprocess.run([*gcmd[:8], str(g2), *gcmd[9:], "--types", "q8_0", "--swap-only"], check=True)
+        gm = json.loads((gout / "manifest.json").read_text())
+        grs = [json.loads(x) for x in open(gout / "groups.jsonl")]
+        assert all(v == 0 for v in gm["null_probes"].values()), gm["null_probes"]
+        assert sum(len(r["members"]) for r in grs) == len(recs), "every probed tensor is in exactly one group"
+        assert all(sum(r["swap"]) > 0 and sum(r["control"]) > 0 for r in grs)
+        assert len({r["group"] for r in grs if "control2" in r}) == len({r["block"] for r in grs if r["block"] is not None})
+        print(json.dumps({"arch": arch, "groups": len(grs), "blocks": sorted({r["block"] for r in grs if r["block"] is not None}),
+                          "members_max": max(len(r["members"]) for r in grs)}))
+        subprocess.run([sys.executable, str(HERE.parent / "sens.py"), str(gout / "groups.jsonl"), "--second", str(g2 / "groups.jsonl"),
+                        "--out", str(work / f"{arch}-sens")], check=True)
     check_skip(work)
 
 
