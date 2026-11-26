@@ -1,0 +1,36 @@
+{
+  "tensors_ours": 27,
+  "tensors_ref": 27,
+  "only_ours": [],
+  "only_ref": [],
+  "same_order": false,
+  "identical": 25,
+  "type_differs": [
+    {
+      "name": "blk.0.ffn_gate_inp.weight",
+      "ours": "Q8_0",
+      "ref": "F32"
+    },
+    {
+      "name": "blk.1.ffn_gate_inp.weight",
+      "ours": "Q8_0",
+      "ref": "F32"
+    }
+  ],
+  "shape_differs": [],
+  "data_differs": [],
+  "kv_only_ours": [],
+  "kv_only_ref": {
+    "quantize.imatrix.chunks_count": 1,
+    "quantize.imatrix.dataset": "synthetic",
+    "quantize.imatrix.entries_count": 18,
+    "quantize.imatrix.file": "imatrix.gguf"
+  },
+  "kv_differs": {
+    "general.name": {
+      "ours": "hf-internal-testing/tiny-random-Qwen3MoeForCausalLM",
+      "ref": "Src"
+    }
+  },
+  "all_tensors_identical": false
+}

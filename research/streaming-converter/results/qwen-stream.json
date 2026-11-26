@@ -1,0 +1,105 @@
+{
+  "label": "qwen-stream",
+  "started": "2026-11-25T21:12:09+0100",
+  "planned_s": 14400,
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10
+  },
+  "quiet_criteria": {
+    "cpu_percent_max": 20,
+    "available_gib_min": 6.0,
+    "hold_s": 60,
+    "foreign_cores_max": 1.5,
+    "busy_checks": 1000000000,
+    "retries": 3
+  },
+  "start_gate": {
+    "waited_s": 65.3,
+    "cpu_percent": 6.6,
+    "available_gib": 7.63,
+    "compressor_gib": 1.98,
+    "free_gib": 4.06,
+    "swap_used_gib": 1.66
+  },
+  "exit_code": 0,
+  "wall_s": 5417.7,
+  "disk": {
+    "peak_outdir_gib": 10.208,
+    "free_before_gib": 19.65,
+    "min_free_gib": 9.1
+  },
+  "memory": {
+    "baseline": {
+      "wired": 2.29,
+      "compressor": 1.96,
+      "free": 4.04,
+      "swap_used": 1.66,
+      "anonymous": 5.39,
+      "file_backed": 1.79
+    },
+    "peak_proc_rss_gib": 2.35,
+    "peak_wired_gib": 2.75,
+    "peak_compressor_gib": 1.96,
+    "min_free_gib": 0.05,
+    "peak_swap_used_gib": 1.66,
+    "swapouts_gib": 0.0,
+    "pageouts_gib": 0.01,
+    "pageins_gib": 5.66,
+    "max_pressure_level": 1,
+    "pressure": {
+      "benchmark_s": 5415.6,
+      "critical_s": 0.0,
+      "critical_share": 0.0,
+      "critical_longest_s": 0.0,
+      "warning_s": 0.0
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 10654,
+      "p50": 1.7,
+      "p99": 5.5,
+      "max": 23.1,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 206403,
+      "p50": 6.4,
+      "p99": 12.9,
+      "max": 104.3,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 5334,
+      "p50": 10.1,
+      "p99": 15.1,
+      "max": 30.6,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {},
+    "foreign_procs_over_quarter_core": {
+      "mediaanalysisd": 1.68,
+      "tern": 0.54,
+      "corespotlightd": 0.28,
+      "python3.12": 0.33,
+      "node": 0.98,
+      "textunderstandingd": 0.3
+    },
+    "foreign_cores": {
+      "max": 2.2,
+      "mean": 0.34
+    }
+  },
+  "contaminated": null,
+  "aborted": null,
+  "responsive": true,
+  "memory_failure": false,
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16
+  },
+  "run": 1
+}

@@ -1,0 +1,35 @@
+{
+  "bytes_downloaded": 18894601376,
+  "range_requests": 13069,
+  "retries": 0,
+  "streamed": 178,
+  "whole": 0,
+  "chunked": 48,
+  "whole_max_f32_bytes": 0,
+  "whole_names": [],
+  "kept": 478,
+  "types": {
+    "F32": 478,
+    "Q4_K": 4,
+    "BF16": 32,
+    "Q8_0": 100,
+    "Q6_K": 28,
+    "IQ2_XXS": 1,
+    "NVFP4": 20,
+    "IQ2_S": 9,
+    "IQ3_XXS": 13,
+    "Q5_K": 14,
+    "IQ4_NL": 4,
+    "IQ2_XS": 1
+  },
+  "missing_imatrix": [
+    "token_embd.weight",
+    "output.weight"
+  ],
+  "defaulted": [],
+  "config_bytes": 26438374,
+  "planned_tensor_bytes": 11651310336,
+  "t_header_s": 10.8,
+  "wall_s": 2430.0,
+  "out_bytes": 11663287840
+}

@@ -1,0 +1,32 @@
+{
+  "bytes_downloaded": 1508507648,
+  "range_requests": 330,
+  "retries": 0,
+  "streamed": 198,
+  "whole": 0,
+  "chunked": 0,
+  "whole_max_f32_bytes": 0,
+  "whole_names": [],
+  "kept": 113,
+  "types": {
+    "IQ3_XXS": 17,
+    "Q4_K": 17,
+    "F32": 113,
+    "IQ2_S": 17,
+    "Q6_K": 17,
+    "IQ4_XS": 17,
+    "Q8_0": 17,
+    "IQ3_S": 16,
+    "Q3_K": 16,
+    "IQ2_XXS": 16,
+    "Q5_K": 16,
+    "BF16": 16,
+    "F16": 16
+  },
+  "missing_imatrix": [],
+  "defaulted": [],
+  "config_bytes": 15909807,
+  "t_header_s": 7.6,
+  "wall_s": 158.9,
+  "out_bytes": 502390112
+}

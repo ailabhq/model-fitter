@@ -1,0 +1,30 @@
+{
+  "tensors_ours": 311,
+  "tensors_ref": 311,
+  "only_ours": [],
+  "only_ref": [],
+  "same_order": false,
+  "identical": 311,
+  "type_differs": [],
+  "shape_differs": [],
+  "data_differs": [],
+  "kv_only_ours": [],
+  "kv_only_ref": {
+    "general.basename": "qwen3",
+    "quantize.imatrix.chunks_count": 1,
+    "quantize.imatrix.dataset": "synthetic",
+    "quantize.imatrix.entries_count": 198,
+    "quantize.imatrix.file": "imatrix.gguf"
+  },
+  "kv_differs": {
+    "general.name": {
+      "ours": "Qwen/Qwen3-0.6B",
+      "ref": "Qwen3 0.6b"
+    },
+    "general.size_label": {
+      "ours": "752M",
+      "ref": "0.6B"
+    }
+  },
+  "all_tensors_identical": true
+}

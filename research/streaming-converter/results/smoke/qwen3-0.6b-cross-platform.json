@@ -1,0 +1,110 @@
+{
+ "mac_stock_vs_x86_ref": {
+  "IQ3_XXS": {
+   "differ": 15,
+   "tensors": 17
+  },
+  "Q4_K": {
+   "differ": 17,
+   "tensors": 17
+  },
+  "F32": {
+   "differ": 0,
+   "tensors": 113
+  },
+  "IQ2_S": {
+   "differ": 17,
+   "tensors": 17
+  },
+  "Q6_K": {
+   "differ": 17,
+   "tensors": 17
+  },
+  "IQ4_XS": {
+   "differ": 17,
+   "tensors": 17
+  },
+  "Q8_0": {
+   "differ": 0,
+   "tensors": 17
+  },
+  "IQ3_S": {
+   "differ": 7,
+   "tensors": 16
+  },
+  "Q3_K": {
+   "differ": 16,
+   "tensors": 16
+  },
+  "IQ2_XXS": {
+   "differ": 0,
+   "tensors": 16
+  },
+  "Q5_K": {
+   "differ": 16,
+   "tensors": 16
+  },
+  "BF16": {
+   "differ": 0,
+   "tensors": 16
+  },
+  "F16": {
+   "differ": 0,
+   "tensors": 16
+  }
+ },
+ "mac_nocontract_vs_x86_ref": {
+  "IQ3_XXS": {
+   "differ": 0,
+   "tensors": 17
+  },
+  "Q4_K": {
+   "differ": 0,
+   "tensors": 17
+  },
+  "F32": {
+   "differ": 0,
+   "tensors": 113
+  },
+  "IQ2_S": {
+   "differ": 0,
+   "tensors": 17
+  },
+  "Q6_K": {
+   "differ": 0,
+   "tensors": 17
+  },
+  "IQ4_XS": {
+   "differ": 0,
+   "tensors": 17
+  },
+  "Q8_0": {
+   "differ": 0,
+   "tensors": 17
+  },
+  "IQ3_S": {
+   "differ": 0,
+   "tensors": 16
+  },
+  "Q3_K": {
+   "differ": 0,
+   "tensors": 16
+  },
+  "IQ2_XXS": {
+   "differ": 0,
+   "tensors": 16
+  },
+  "Q5_K": {
+   "differ": 0,
+   "tensors": 16
+  },
+  "BF16": {
+   "differ": 0,
+   "tensors": 16
+  },
+  "F16": {
+   "differ": 0,
+   "tensors": 16
+  }
+ }
+}

@@ -1,0 +1,26 @@
+{
+  "tensors_ours": 770,
+  "tensors_ref": 770,
+  "only_ours": [],
+  "only_ref": [],
+  "same_order": false,
+  "identical": 770,
+  "type_differs": [],
+  "shape_differs": [],
+  "data_differs": [],
+  "kv_only_ours": [],
+  "kv_only_ref": {
+    "general.basename": "qwen3.8",
+    "quantize.imatrix.chunks_count": 1251,
+    "quantize.imatrix.dataset": "unsloth_calibration_dataset",
+    "quantize.imatrix.entries_count": 592,
+    "quantize.imatrix.file": "qwen-adapted.imatrix.gguf"
+  },
+  "kv_differs": {
+    "general.name": {
+      "ours": "Qwen/Qwen3.8-27B",
+      "ref": "Qwen3.8 27b"
+    }
+  },
+  "all_tensors_identical": true
+}
