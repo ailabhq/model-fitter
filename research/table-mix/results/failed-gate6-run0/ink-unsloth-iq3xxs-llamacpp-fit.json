@@ -1,0 +1,108 @@
+{
+  "config": "ink-unsloth-iq3xxs-llamacpp-fit",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 12719, commit 22b99122e)",
+  "model": {
+    "repo": "local",
+    "file": "Inkling-2-Mini-UD-IQ3_XXS.gguf"
+  },
+  "model_bytes": 11663310784,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "args": []
+  },
+  "started": "2026-11-26T11:46:13+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "quiet_criteria": {
+    "cpu_percent_max": 20,
+    "available_gib_min": 6.0,
+    "hold_s": 60,
+    "foreign_cores_max": 1.5,
+    "busy_checks": 3,
+    "retries": 3
+  },
+  "start_gate": {
+    "waited_s": 85.4,
+    "cpu_percent": 4.6,
+    "available_gib": 8.62,
+    "compressor_gib": 0.63,
+    "free_gib": 3.14,
+    "swap_used_gib": 2.61
+  },
+  "error": "RuntimeError: runtime exited with -9",
+  "memory": {
+    "baseline": {
+      "wired": 2.31,
+      "compressor": 0.63,
+      "free": 3.14,
+      "swap_used": 2.61,
+      "anonymous": 7.17,
+      "file_backed": 2.22
+    },
+    "peak_proc_rss_gib": 6.53,
+    "peak_wired_gib": 12.44,
+    "peak_compressor_gib": 2.53,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 3.94,
+    "swapouts_gib": 1.44,
+    "pageouts_gib": 0.0,
+    "pageins_gib": 22.12,
+    "max_pressure_level": 4,
+    "pressure": {
+      "benchmark_s": 33.8,
+      "critical_s": 0.9,
+      "critical_share": 0.027,
+      "critical_longest_s": 0.9,
+      "warning_s": 8.5
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 66,
+      "p50": 1.3,
+      "p99": 920.1,
+      "max": 920.1,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 1255,
+      "p50": 8.2,
+      "p99": 10.1,
+      "max": 106.6,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 33,
+      "p50": 4.1,
+      "p99": 770.5,
+      "max": 770.5,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {},
+    "foreign_procs_over_quarter_core": {},
+    "foreign_cores": {
+      "max": 0.75,
+      "mean": 0.36
+    }
+  },
+  "contaminated": null,
+  "aborted": "spawn check stuck for >= 500 ms at t=30s in phase load",
+  "responsive": false,
+  "gen_tps_at_8k": null,
+  "usable": false,
+  "log_excerpt": [],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

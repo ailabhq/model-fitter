@@ -1,0 +1,40 @@
+--- a/src/llama-quant.cpp	2026-11-26 07:18:24.727662000 +0100
++++ b/src/llama-quant.cpp	2026-11-26 07:18:34.517124939 +0100
+@@ -906,6 +906,12 @@
+         GGML_TYPE_Q8_0,
+         GGML_TYPE_F16,
+         GGML_TYPE_BF16,
++        // sarto table dump: every other type the pinned Metal backend runs
++        GGML_TYPE_Q1_0,
++        GGML_TYPE_Q2_0,
++        GGML_TYPE_TQ2_0,
++        GGML_TYPE_MXFP4,
++        GGML_TYPE_NVFP4,
+     };
+ 
+     static constexpr double EPSILON = 1e-12;
+@@ -2349,6 +2355,24 @@
+             candidate.wce = qe.wce;
+             evaluations.push_back(candidate);
+             raw_errors.push_back(qe.error);
++
++            // sarto table dump: the error as target sizing uses it (A), and the plain imatrix-weighted error with
++            // no role adjustment: ffn_down measured on the unsmoothed rows, no inner-product factor (B)
++            if (const char * dump_path = std::getenv("MF_TABLE_DUMP")) {
++                double err_b = qe.error;
++                if (is_outlier_heavy && bpw < 3.0f) {
++                    err_b = compute_quant_error(tensor, vt, f32_sample, rows_sample, val_vec_ptr, act_vec_ptr,
++                                                q_buf, dq_buf, ptr_ref_wce, ptr_ref_mse, ptr_val_metric).error;
++                }
++                static std::mutex dump_mutex;
++                std::lock_guard<std::mutex> lock(dump_mutex);
++                if (FILE * df = std::fopen(dump_path, "a")) {
++                    std::fprintf(df, "%s\t%s\t%zu\t%.17g\t%.17g\t%zu\t%" PRId64 "\t%d\n", name.c_str(), ggml_type_name(vt),
++                                 candidate.bytes, candidate.error, err_b, total_rows_sampled, ggml_nelements(tensor),
++                                 val_vec_ptr != nullptr ? 1 : 0);
++                    std::fclose(df);
++                }
++            }
+         }
+ 
+         type_choice ch;

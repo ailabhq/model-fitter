@@ -1,0 +1,146 @@
+{
+  "config": "ink-unsloth-iq3xxs-llamacpp-fit",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 12719, commit 22b99122e)",
+  "model": {
+    "repo": "local",
+    "file": "Inkling-2-Mini-UD-IQ3_XXS.gguf"
+  },
+  "model_bytes": 11663310784,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "args": []
+  },
+  "started": "2026-11-26T14:17:50+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "quiet_criteria": {
+    "cpu_percent_max": 20,
+    "available_gib_min": 8.0,
+    "hold_s": 60,
+    "foreign_cores_max": 1.5,
+    "busy_checks": 3,
+    "retries": 3
+  },
+  "start_gate": {
+    "waited_s": 65.4,
+    "cpu_percent": 5.5,
+    "available_gib": 11.03,
+    "compressor_gib": 0.48,
+    "free_gib": 9.28,
+    "swap_used_gib": 3.78
+  },
+  "load_s": 23.47,
+  "cmdline": "~/mf-bench/llama.cpp/build/bin/llama-server -m ~/mf-bench/models/mix47/Inkling-2-Mini-UD-IQ3_XXS.gguf -c 8704 -np 1 -fa on --port 8090 --no-webui",
+  "req_8k_cold": {
+    "wall_s": 209.46,
+    "prompt_n": 8000,
+    "cached_n": 8255,
+    "prompt_tps": 42.37,
+    "prompt_s": 188.8,
+    "gen_n": 256,
+    "gen_tps": 12.7,
+    "sample": ".g. `<think></think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                    | Parser                                                                                                                                                               "
+  },
+  "req_8k_cached": {
+    "wall_s": 31.49,
+    "prompt_n": 4,
+    "cached_n": 8255,
+    "prompt_tps": 0.82,
+    "prompt_s": 4.88,
+    "gen_n": 256,
+    "gen_tps": 10.03,
+    "sample": ".g. `<think></think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                    | Parser                                                                                                                                                               "
+  },
+  "req_short": {
+    "wall_s": 27.23,
+    "prompt_n": 69,
+    "cached_n": 196,
+    "prompt_tps": 4.54,
+    "prompt_s": 15.2,
+    "gen_n": 128,
+    "gen_tps": 10.73,
+    "sample": "laration using Vulkan.\nTo enable it, you need to install the Vulkan SDK and set the `ANDROID_VULKAN_SDK` environment variable to the SDK path.\n![Vulkan SDK path set](./android/vulkan-sdk-path.jpg)\n\n## Build GUI binding using Gradle\n\nYou can also build the GUI binding using Gradle.\n```bash\ncd example"
+  },
+  "memory": {
+    "baseline": {
+      "wired": 2.17,
+      "compressor": 0.48,
+      "free": 9.24,
+      "swap_used": 3.77,
+      "anonymous": 2.58,
+      "file_backed": 1.0
+    },
+    "peak_proc_rss_gib": 9.67,
+    "peak_wired_gib": 13.05,
+    "peak_compressor_gib": 2.09,
+    "min_free_gib": 0.03,
+    "peak_swap_used_gib": 5.46,
+    "swapouts_gib": 15.88,
+    "pageouts_gib": 0.5,
+    "pageins_gib": 53.2,
+    "max_pressure_level": 4,
+    "pressure": {
+      "benchmark_s": 295.6,
+      "critical_s": 1.1,
+      "critical_share": 0.004,
+      "critical_longest_s": 0.6,
+      "warning_s": 269.2
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 583,
+      "p50": 1.1,
+      "p99": 26.5,
+      "max": 46.4,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 10984,
+      "p50": 8.3,
+      "p99": 10.1,
+      "max": 85.4,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 290,
+      "p50": 5.9,
+      "p99": 101.5,
+      "max": 209.8,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {},
+    "foreign_procs_over_quarter_core": {
+      "mediaanalysisd": 0.6,
+      "duetexpertd": 0.3,
+      "siriactionsd": 0.3,
+      "corespotlightd": 0.65
+    },
+    "foreign_cores": {
+      "max": 1.76,
+      "mean": 0.53
+    }
+  },
+  "contaminated": null,
+  "aborted": null,
+  "responsive": true,
+  "gen_tps_at_8k": 11.36,
+  "usable": true,
+  "log_excerpt": [
+    "0.23.264.414 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

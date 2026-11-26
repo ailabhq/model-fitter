@@ -1,0 +1,144 @@
+{
+  "config": "ink-tablemix-llamacpp-fit",
+  "runtime": "llama.cpp",
+  "runtime_version": "version: 1.0.0-dev (build 12719, commit 22b99122e)",
+  "model": {
+    "repo": "local",
+    "file": "ink-tablemix.gguf"
+  },
+  "model_bytes": 11663310368,
+  "ctx": 8704,
+  "prompt_tokens_target": 8000,
+  "gen_tokens": 256,
+  "iogpu_wired_limit_mb": 0,
+  "settings": {
+    "args": []
+  },
+  "started": "2026-11-26T13:27:22+0100",
+  "responsive_criteria": {
+    "hang_ms": 500,
+    "microhang_ms": 250,
+    "p99_ms_max": 100,
+    "critical_share_max": 0.05,
+    "critical_stretch_s_max": 10,
+    "planned_s": 300
+  },
+  "quiet_criteria": {
+    "cpu_percent_max": 20,
+    "available_gib_min": 8.0,
+    "hold_s": 60,
+    "foreign_cores_max": 1.5,
+    "busy_checks": 3,
+    "retries": 3
+  },
+  "start_gate": {
+    "waited_s": 115.5,
+    "cpu_percent": 4.6,
+    "available_gib": 10.37,
+    "compressor_gib": 0.81,
+    "free_gib": 8.26,
+    "swap_used_gib": 3.5
+  },
+  "load_s": 27.32,
+  "cmdline": "~/mf-bench/llama.cpp/build/bin/llama-server -m ~/mf-bench/models/mix47/ink-tablemix.gguf -c 8704 -np 1 -fa on --port 8090 --no-webui",
+  "req_8k_cold": {
+    "wall_s": 216.17,
+    "prompt_n": 8000,
+    "cached_n": 8255,
+    "prompt_tps": 41.08,
+    "prompt_s": 194.75,
+    "gen_n": 256,
+    "gen_tps": 11.99,
+    "sample": ".g. `<think>\\n</think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                                          | Parser                                                                    |\n|-----------------------------------------------|----------------"
+  },
+  "req_8k_cached": {
+    "wall_s": 24.0,
+    "prompt_n": 4,
+    "cached_n": 8255,
+    "prompt_tps": 1.96,
+    "prompt_s": 2.04,
+    "gen_n": 256,
+    "gen_tps": 11.82,
+    "sample": ".g. `<think>\\n</think>`) is discarded by the parser.\n\n#### Content Parser (`analyze_content::build_parser`)\n\n| Mode                                          | Parser                                                                    |\n|-----------------------------------------------|----------------"
+  },
+  "req_short": {
+    "wall_s": 23.1,
+    "prompt_n": 69,
+    "cached_n": 196,
+    "prompt_tps": 6.69,
+    "prompt_s": 10.32,
+    "gen_n": 128,
+    "gen_tps": 10.09,
+    "sample": "laration on Android devices.\n![Hardware acceleration](./android/hardware-acceleration.jpg)\n\n## Build Android binding using Gradle\n\nThe Android binding can also be built using Gradle.\n```bash\n./gradlew :llama.android:assembleDebug\n```\n\n## Build Android binding using Gradle with hardware acceleration\n"
+  },
+  "memory": {
+    "baseline": {
+      "wired": 2.22,
+      "compressor": 0.81,
+      "free": 8.27,
+      "swap_used": 3.5,
+      "anonymous": 2.66,
+      "file_backed": 1.52
+    },
+    "peak_proc_rss_gib": 9.28,
+    "peak_wired_gib": 13.13,
+    "peak_compressor_gib": 2.4,
+    "min_free_gib": 0.01,
+    "peak_swap_used_gib": 5.46,
+    "swapouts_gib": 8.79,
+    "pageouts_gib": 0.03,
+    "pageins_gib": 48.12,
+    "max_pressure_level": 4,
+    "pressure": {
+      "benchmark_s": 294.5,
+      "critical_s": 2.2,
+      "critical_share": 0.007,
+      "critical_longest_s": 1.6,
+      "warning_s": 266.4
+    },
+    "window_checked": true,
+    "window_ms": {
+      "n": 580,
+      "p50": 1.1,
+      "p99": 5.5,
+      "max": 84.3,
+      "microhangs": 0
+    },
+    "timer_late_ms": {
+      "n": 10919,
+      "p50": 8.4,
+      "p99": 10.1,
+      "max": 71.3,
+      "microhangs": 0
+    },
+    "spawn_ms": {
+      "n": 291,
+      "p50": 3.8,
+      "p99": 82.1,
+      "max": 159.0,
+      "microhangs": 0
+    },
+    "foreign_procs_over_1gib": {},
+    "foreign_procs_over_quarter_core": {
+      "mediaanalysisd": 0.39,
+      "appstoreagent": 0.28
+    },
+    "foreign_cores": {
+      "max": 1.14,
+      "mean": 0.3
+    }
+  },
+  "contaminated": null,
+  "aborted": null,
+  "responsive": true,
+  "gen_tps_at_8k": 11.91,
+  "usable": true,
+  "log_excerpt": [
+    "0.27.152.752 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8704, kv_unified = 'false'"
+  ],
+  "machine": {
+    "chip": "Apple M4",
+    "mem_gib": 16,
+    "macos": "26.6.2"
+  }
+}

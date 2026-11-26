@@ -1,0 +1,163 @@
+{
+ "config": "ink-tablemix-llamacpp-fit",
+ "runtime": "llamacpp",
+ "pack": {
+  "source": {
+   "repo": "thinkingmachines/Inkling-2-Mini",
+   "revision": "c9d028302cd0f035fdf8e7e91f089a4ce94d2195"
+  },
+  "prompt_set": {
+   "version": "v0-draft",
+   "sha256": "ec0e2dfcebfdf0a131bbd0f1a9060822d6e16bc19bbe3ea5b5fae217d430f3b1"
+  },
+  "k": 20,
+  "positions": 21976
+ },
+ "args": [
+  "-m",
+  "~/mf-bench/models/mix47/ink-tablemix.gguf",
+  "-c",
+  "8704",
+  "-np",
+  "1",
+  "-fa",
+  "on",
+  "-b",
+  "512"
+ ],
+ "started": "2026-11-26T12:31:02+0100",
+ "quiet_criteria": {
+  "cpu_percent_max": 20,
+  "available_gib_min": 8,
+  "hold_s": 60,
+  "foreign_cores_max": 1.5,
+  "busy_checks": 3,
+  "retries": 3
+ },
+ "runtime_version": "version: 1.0.0-dev (build 12719, commit 22b99122e)",
+ "start_gate": {
+  "waited_s": 1951.8,
+  "cpu_percent": 4.7,
+  "available_gib": 9.19,
+  "compressor_gib": 0.92,
+  "free_gib": 6.03,
+  "swap_used_gib": 2.9
+ },
+ "wall_s": 450.4,
+ "returncode": -9,
+ "memory": {
+  "baseline": {
+   "wired": 2.26,
+   "compressor": 0.92,
+   "free": 6.03,
+   "swap_used": 2.9,
+   "anonymous": 4.15,
+   "file_backed": 2.11
+  },
+  "peak_proc_rss_gib": 7.28,
+  "peak_wired_gib": 13.46,
+  "peak_compressor_gib": 2.49,
+  "min_free_gib": 0.04,
+  "peak_swap_used_gib": 5.6,
+  "swapouts_gib": 40.76,
+  "pageouts_gib": 0.04,
+  "pageins_gib": 53.08,
+  "max_pressure_level": 4,
+  "pressure": {
+   "benchmark_s": 448.9,
+   "critical_s": 5.6,
+   "critical_share": 0.012,
+   "critical_longest_s": 1.8,
+   "warning_s": 423.7
+  },
+  "window_checked": true,
+  "window_ms": {
+   "n": 884,
+   "p50": 1.2,
+   "p99": 36.7,
+   "max": 307.3,
+   "microhangs": 1
+  },
+  "timer_late_ms": {
+   "n": 16872,
+   "p50": 7.5,
+   "p99": 10.1,
+   "max": 1330.5,
+   "microhangs": 0
+  },
+  "spawn_ms": {
+   "n": 438,
+   "p50": 5.8,
+   "p99": 195.1,
+   "max": 326.9,
+   "microhangs": 3
+  },
+  "foreign_procs_over_1gib": {},
+  "foreign_procs_over_quarter_core": {
+   "corespotlightd": 0.31,
+   "tern": 0.28,
+   "0.10.1": 0.26
+  },
+  "foreign_cores": {
+   "max": 1.04,
+   "mean": 0.44
+  }
+ },
+ "contaminated": null,
+ "aborted": "timer check stuck for >= 500 ms at t=450s in phase score",
+ "responsive": false,
+ "worker": {
+  "ready": {
+   "ready": true,
+   "load_s": 28.62,
+   "n_vocab": 200058,
+   "n_ctx": 8704,
+   "n_batch": 512,
+   "n_ubatch": 512,
+   "items": 17
+  },
+  "done": null,
+  "items": [
+   {
+    "item": 0,
+    "tokens": 1080,
+    "s": 43.15,
+    "tok_s": 25.0
+   },
+   {
+    "item": 1,
+    "tokens": 1073,
+    "s": 61.65,
+    "tok_s": 17.4
+   },
+   {
+    "item": 2,
+    "tokens": 670,
+    "s": 39.8,
+    "tok_s": 16.8
+   },
+   {
+    "item": 3,
+    "tokens": 810,
+    "s": 43.85,
+    "tok_s": 18.5
+   },
+   {
+    "item": 4,
+    "tokens": 1098,
+    "s": 69.76,
+    "tok_s": 15.7
+   },
+   {
+    "item": 5,
+    "tokens": 1137,
+    "s": 83.61,
+    "tok_s": 13.6
+   }
+  ]
+ },
+ "machine": {
+  "chip": "Apple M4",
+  "mem_gib": 16
+ }
+}
