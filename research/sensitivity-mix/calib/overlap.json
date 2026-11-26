@@ -1,0 +1,21 @@
+{
+ "prompt_set": "v0-draft",
+ "calibration_prompts": 224,
+ "rule": "no identical prompt (NFKC, case and punctuation folded) and no shared 8-word run (16 characters for CJK)",
+ "prompt_set_texts": 19,
+ "overlaps": [],
+ "sources": {
+  "OpenAssistant/oasst2": {
+   "license": "apache-2.0",
+   "revision": "179dd21f"
+  },
+  "ise-uiuc/Magicoder-OSS-Instruct-75K": {
+   "license": "mit",
+   "revision": "5f839b1f"
+  },
+  "glaiveai/glaive-function-calling-v2": {
+   "license": "apache-2.0",
+   "revision": "e7f4b645"
+  }
+ }
+}
