@@ -1,0 +1,64 @@
+source: https://huggingface.co/thinkingmachines/Inkling-2-Mini/resolve/c9d028302cd0f035fdf8e7e91f089a4ce94d2195/model-00001-of-00001.safetensors
+gguf:   https://huggingface.co/unsloth/Inkling-2-Mini-GGUF/resolve/8078d149286eec7193795413b9e0643da6d11fa1/Mainline_Support/Inkling-2-Mini-UD-Q4_K_XL.gguf_file
+
+layer 0 w2 expert 0: 2304x1152, source 1492992 B -> ggml 1492992 B
+  E4M3 block scales: 165888, zero 0, subnormal 0, sign bit 0, max byte 0x7e
+  global scale amax/denominator = 0.241656/2688 = 8.99018123e-05
+  this mapping == pinned _nvfp4_pack:           True
+  this mapping == Unsloth GGUF bytes:           True
+  fp32(amax/denominator) == Unsloth .scale:     True
+  ggml C dequant x .scale vs reference:         0 values differ, 91697 are -0 in the reference and +0 here
+  gguf-py dequant x .scale vs reference:        0 values differ, 91697 are -0 in the reference and +0 here
+  fold scale into E4M3 block scales instead:    3.4% of values exact, relative RMS error 0.0571
+
+layer 0 w2 expert 77: 2304x1152, source 1492992 B -> ggml 1492992 B
+  E4M3 block scales: 165888, zero 0, subnormal 0, sign bit 0, max byte 0x7e
+  global scale amax/denominator = 0.164636/2688 = 6.12484946e-05
+  this mapping == pinned _nvfp4_pack:           True
+  this mapping == Unsloth GGUF bytes:           True
+  fp32(amax/denominator) == Unsloth .scale:     True
+  ggml C dequant x .scale vs reference:         0 values differ, 90545 are -0 in the reference and +0 here
+  gguf-py dequant x .scale vs reference:        0 values differ, 90545 are -0 in the reference and +0 here
+  fold scale into E4M3 block scales instead:    3.4% of values exact, relative RMS error 0.0648
+
+layer 0 w13 expert 0: 2304x2304, source 2985984 B -> ggml 2985984 B
+  E4M3 block scales: 331776, zero 0, subnormal 0, sign bit 0, max byte 0x7e
+  global scale amax/denominator = 0.12112/2688 = 4.50596744e-05
+  this mapping == pinned _nvfp4_pack:           True
+  this mapping == Unsloth GGUF bytes:           True
+  fp32(amax/denominator) == Unsloth .scale:     True
+  ggml C dequant x .scale vs reference:         0 values differ, 182276 are -0 in the reference and +0 here
+  gguf-py dequant x .scale vs reference:        0 values differ, 182276 are -0 in the reference and +0 here
+  fold scale into E4M3 block scales instead:    3.4% of values exact, relative RMS error 0.0769
+
+layer 0 w13 expert 77: 2304x2304, source 2985984 B -> ggml 2985984 B
+  E4M3 block scales: 331776, zero 0, subnormal 0, sign bit 0, max byte 0x7e
+  global scale amax/denominator = 0.177771/2688 = 6.61352315e-05
+  this mapping == pinned _nvfp4_pack:           True
+  this mapping == Unsloth GGUF bytes:           True
+  fp32(amax/denominator) == Unsloth .scale:     True
+  ggml C dequant x .scale vs reference:         0 values differ, 183517 are -0 in the reference and +0 here
+  gguf-py dequant x .scale vs reference:        0 values differ, 183517 are -0 in the reference and +0 here
+  fold scale into E4M3 block scales instead:    3.4% of values exact, relative RMS error 0.0788
+
+layer 19 w2 expert 5: 2304x1152, source 1492992 B -> ggml 1492992 B
+  E4M3 block scales: 165888, zero 0, subnormal 0, sign bit 0, max byte 0x7e
+  global scale amax/denominator = 0.365901/2688 = 0.000136123999
+  this mapping == pinned _nvfp4_pack:           True
+  this mapping == Unsloth GGUF bytes:           True
+  fp32(amax/denominator) == Unsloth .scale:     True
+  ggml C dequant x .scale vs reference:         0 values differ, 91937 are -0 in the reference and +0 here
+  gguf-py dequant x .scale vs reference:        0 values differ, 91937 are -0 in the reference and +0 here
+  fold scale into E4M3 block scales instead:    3.5% of values exact, relative RMS error 0.0605
+
+layer 19 w13 expert 127: 2304x2304, source 2985984 B -> ggml 2985984 B
+  E4M3 block scales: 331776, zero 0, subnormal 0, sign bit 0, max byte 0x7e
+  global scale amax/denominator = 0.256458/2688 = 9.5408519e-05
+  this mapping == pinned _nvfp4_pack:           True
+  this mapping == Unsloth GGUF bytes:           True
+  fp32(amax/denominator) == Unsloth .scale:     True
+  ggml C dequant x .scale vs reference:         0 values differ, 181377 are -0 in the reference and +0 here
+  gguf-py dequant x .scale vs reference:        0 values differ, 181377 are -0 in the reference and +0 here
+  fold scale into E4M3 block scales instead:    3.4% of values exact, relative RMS error 0.0828
+
+all 40 NVFP4 tensors (layers 0-19, down and gate_up): fp32(amax/denominator) == .scale for all 128 experts in 40/40 (UD-Q4_K_XL) and 40/40 (UD-IQ3_XXS); per-expert scale range 3.77e-05 .. 0.000317

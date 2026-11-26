@@ -1,0 +1,16 @@
+role     type     GiB     error A    error B
+down     nvfp4    3.560      20125      20125
+down     iq4_nl   3.560      29878      29878
+down     q4_0     3.560      40216      40216
+down     mxfp4    3.362      84082      84082
+down     q5_0     4.351       8680       8680
+down     q8_0     6.724        206        206
+gate_up  nvfp4    7.119      36559      36559
+gate_up  iq4_nl   7.119      30345      30345
+gate_up  iq4_xs   6.724      31015      31015
+gate_up  q4_0     7.119      39599      39599
+gate_up  mxfp4    6.724      77038      77038
+gate_up  q5_0     8.701       8491       8491
+gate_up  q8_0    13.447        197        197
+gate_up  iq3_s    5.438     112616     112616
+gate_up  iq3_xxs  4.845     190714     190714
