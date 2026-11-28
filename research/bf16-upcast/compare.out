@@ -1,0 +1,147 @@
+source https://huggingface.co/thinkingmachines/Inkling-2-Mini/resolve/c9d028302cd0f035fdf8e7e91f089a4ce94d2195/model-00001-of-00001.safetensors
+bf16   https://huggingface.co/ggml-org/Inkling-2-Mini-GGUF/resolve/0bdc580634ceac4c4d921f452777bf44228de9af/Inkling-2-Mini-BF16.gguf
+nvfp4  https://huggingface.co/ggml-org/Inkling-2-Mini-GGUF/resolve/0bdc580634ceac4c4d921f452777bf44228de9af/Inkling-2-Mini-NVFP4.gguf
+rounding self-test: 1.0 -> 0x3f80, +0 -> 0, -0 -> 0x8000
+source safetensors bytes 19526019168 header_end 148416 tensors 1244
+
+== ggml-org Inkling-2-Mini-BF16.gguf ==
+version 3 tensors 704 header_bytes 11977383 data0 11977408 file_bytes 52226509504
+  kv general.architecture = 'inkling2_loop'
+  kv general.basename = 'Inkling-2-Mini'
+  kv general.file_type = 32
+  kv general.name = 'Inkling 2 Mini'
+  kv general.quantization_version = 2
+  kv general.sampling.min_p = 0.0
+  kv general.sampling.temp = 1.0
+  kv general.sampling.top_k = 50
+  kv general.sampling.top_p = 1.0
+  kv general.size_label = '128x1.8B'
+  kv general.type = 'model'
+  kv inkling2_loop.block_count = 24
+  kv inkling2_loop.embedding_length = 2304
+  kv inkling2_loop.expert_count = 128
+  kv tokenizer.ggml.eos_token_id = 200006
+  kv tokenizer.ggml.model = 'gpt2'
+  kv tokenizer.ggml.pre = 'inkling2'
+counts {'F32': 478, 'BF16': 226}
+logical_bytes {'F32': 147523584, 'BF16': 52067008512} sum 52214532096 inter_tensor_gap 0
+data span end 52226509504 file 52226509504 tail 0
+
+== ggml-org Inkling-2-Mini-NVFP4.gguf ==
+version 3 tensors 744 header_bytes 11979869 data0 11979872 file_bytes 17627963488
+  kv general.architecture = 'inkling2_loop'
+  kv general.basename = 'Inkling-2'
+  kv general.file_type = 7
+  kv general.license = 'apache-2.0'
+  kv general.license.link = 'https://www.apache.org/licenses/LICENSE-2.0'
+  kv general.name = 'Inkling 2 Mini'
+  kv general.quantization_version = 2
+  kv general.sampling.temp = 1.0
+  kv general.size_label = 'Mini'
+  kv general.tags = <list len 4>
+  kv general.type = 'model'
+  kv inkling2_loop.block_count = 24
+  kv inkling2_loop.embedding_length = 2304
+  kv inkling2_loop.expert_count = 128
+  kv tokenizer.ggml.eos_token_id = 200006
+  kv tokenizer.ggml.model = 'gpt2'
+  kv tokenizer.ggml.pre = 'inkling2'
+counts {'Q8_0': 186, 'F32': 518, 'NVFP4': 40}
+logical_bytes {'Q8_0': 6002260992, 'F32': 147544064, 'NVFP4': 11466178560} sum 17615983616 inter_tensor_gap 0
+data span end 17627963488 file 17627963488 tail 0
+
+BF16 file logical bytes by role {'nvfp4_exps': 40768634880, 'mxfp8_exps': 8153726976, 'other_bf16': 3144646656, 'other': 147523584}
+NVFP4 file logical bytes by role {'nvfp4_exps': 11466178560, 'mxfp8_exps': 4331667456, 'other_bf16': 0, 'other': 1818137600}
+candidate sizes (bytes). f32_all doubles every BF16 payload. f32_nvfp4_experts_only doubles only the layer 0-19 expert payloads. path_i2 swaps those payloads for the published file's NVFP4 bytes plus 40 F32 scales of 512 B.
+  bf16_file: 52226509504 bytes, 52.226510 GB, 48.639727 GiB
+  f32_all: 104293518016 bytes, 104.293518 GB, 97.130908 GiB
+  f32_nvfp4_experts_only: 92995144384 bytes, 92.995144 GB, 86.608477 GiB
+  path_i2: 22924073664 bytes, 22.924074 GB, 21.349707 GiB
+  published_nvfp4_file: 17627963488 bytes, 17.627963 GB, 16.417320 GiB
+bf16 tensor logical sizes not divisible by 32: 0/704
+path_i2 with 40 scale records: record_bytes 2360, header 11977383 -> 11979743, data0 11977408 -> 11979744, file 22924076000 bytes, 22.924076 GB, 21.349709 GiB
+BF16 expert tensor types [((0, 'BF16'), 2), ((1, 'BF16'), 2), ((2, 'BF16'), 2), ((3, 'BF16'), 2), ((4, 'BF16'), 2), ((5, 'BF16'), 2), ((6, 'BF16'), 2), ((7, 'BF16'), 2)] ... [((20, 'BF16'), 2), ((21, 'BF16'), 2), ((22, 'BF16'), 2), ((23, 'BF16'), 2)]
+NVFP4-file expert tensor types [((0, 'NVFP4'), 2), ((1, 'NVFP4'), 2), ((2, 'NVFP4'), 2), ((3, 'NVFP4'), 2), ((4, 'NVFP4'), 2), ((5, 'NVFP4'), 2), ((6, 'NVFP4'), 2), ((7, 'NVFP4'), 2), ((8, 'NVFP4'), 2), ((9, 'NVFP4'), 2), ((10, 'NVFP4'), 2), ((11, 'NVFP4'), 2), ((12, 'NVFP4'), 2), ((13, 'NVFP4'), 2), ((14, 'NVFP4'), 2), ((15, 'NVFP4'), 2), ((16, 'NVFP4'), 2), ((17, 'NVFP4'), 2), ((18, 'NVFP4'), 2), ((19, 'NVFP4'), 2), ((20, 'Q8_0'), 2), ((21, 'Q8_0'), 2), ((22, 'Q8_0'), 2), ((23, 'Q8_0'), 2)]
+bf16 has ffn scale tensors 0
+nvfp4 file has ffn scale tensors 40
+
+positive control: source model.llm.embed.weight BF16 [201024, 2304] vs gguf token_embd.weight type 30 shape [2304, 201024]
+  double-read source equal: True
+  source bytes == gguf bytes (36864 B, first 8 rows): True
+
+all NVFP4 .scale tensors: fp32(amax/denominator) bit-exact vs published NVFP4 file 40/40; range 3.77341e-05 .. 0.000316986
+full nvfp4 L0 w2 e0: values 2654208 numeric_diff 2471137 rne 2654208/2654208 nvfp4_bytes_equal_published=True
+full nvfp4 L0 w13 e77: values 5308416 numeric_diff 4942266 rne 5308416/5308416 nvfp4_bytes_equal_published=True
+full nvfp4 L19 w2 e127: values 2654208 numeric_diff 2473364 rne 2654208/2654208 nvfp4_bytes_equal_published=True
+full nvfp4 L19 w13 e3: values 5308416 numeric_diff 4945925 rne 5308416/5308416 nvfp4_bytes_equal_published=True
+  mxfp8 scale bytes layer 20 w2 e0: min 113 max 117 n255 0
+full mxfp8 L20 w2 e0: values 2654208 numeric_diff 0 rne 2654208/2654208
+  mxfp8 scale bytes layer 20 w13 e127: min 113 max 116 n255 0
+full mxfp8 L20 w13 e127: values 5308416 numeric_diff 0 rne 5308416/5308416
+  mxfp8 scale bytes layer 23 w2 e50: min 113 max 117 n255 0
+full mxfp8 L23 w2 e50: values 2654208 numeric_diff 0 rne 2654208/2654208
+  mxfp8 scale bytes layer 23 w13 e1: min 113 max 117 n255 0
+full mxfp8 L23 w13 e1: values 5308416 numeric_diff 0 rne 5308416/5308416
+
+FULL nvfp4 vs BF16 GGUF: n=15925248 numeric_diff=14832692 neg0_only=0 rne_match=15925248/15925248 max_abs=0.000809133 mean_abs=2.33899e-05 max_rel=0.00343821 mean_rel=0.00126015 max_ulp=0.472458 ref_zero=1092556 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1092556, 6900069, 3945264, 3987359, 0) max_abs_pair(ref,stored)=(-0.46794087, -0.46875) max_rel_pair(ref,stored)=(-0.033332661, -0.033447266) unscaled_rne=1092556/15925248
+FULL mxfp8 vs BF16 GGUF: n=15925248 numeric_diff=0 neg0_only=0 rne_match=15925248/15925248 max_abs=0 mean_abs=0 max_rel=0 mean_rel=0 max_ulp=0 ref_zero=140 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(15925248, 0, 0, 0, 0) max_abs_pair(ref,stored)=(0, 0) max_rel_pair(ref,stored)=(0, 0)
+grid L0 w2: n=6912 numeric_diff=6413 neg0_only=0 rne_match=6912/6912 max_abs=0.000240356 mean_abs=3.45463e-05 max_rel=0.00343049 mean_rel=0.00147039 max_ulp=0.492249 ref_zero=499 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(499, 2206, 2042, 2165, 0) max_abs_pair(ref,stored)=(0.070064574, 0.069824219) max_rel_pair(ref,stored)=(-0.035032287, -0.034912109) unscaled_rne=499/6912
+grid L0 w13: n=20736 numeric_diff=19325 neg0_only=0 rne_match=20736/20736 max_abs=0.00023751 mean_abs=2.29819e-05 max_rel=0.00346173 mean_rel=0.00135928 max_ulp=0.48642 ref_zero=1411 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1411, 8356, 6718, 4251, 0) max_abs_pair(ref,stored)=(0.068610147, 0.068847656) max_rel_pair(ref,stored)=(-0.0085762683, -0.008605957) unscaled_rne=1411/20736
+grid L1 w2: n=6912 numeric_diff=6464 neg0_only=0 rne_match=6912/6912 max_abs=0.000224166 mean_abs=2.97562e-05 max_rel=0.00319833 mean_rel=0.00127006 max_ulp=0.459091 ref_zero=448 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(448, 3226, 1720, 1518, 0) max_abs_pair(ref,stored)=(0.070088334, 0.0703125) max_rel_pair(ref,stored)=(-0.017522084, -0.017578125) unscaled_rne=448/6912
+grid L1 w13: n=20736 numeric_diff=19332 neg0_only=0 rne_match=20736/20736 max_abs=0.000234328 mean_abs=2.1967e-05 max_rel=0.00370656 mean_rel=0.00131725 max_ulp=0.487366 ref_zero=1404 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1404, 7926, 6934, 4472, 0) max_abs_pair(ref,stored)=(-0.068125047, -0.068359375) max_rel_pair(ref,stored)=(0.0080253519, 0.0079956055) unscaled_rne=1404/20736
+grid L2 w2: n=6912 numeric_diff=6455 neg0_only=0 rne_match=6912/6912 max_abs=0.000372082 mean_abs=3.05158e-05 max_rel=0.00325475 mean_rel=0.00126997 max_ulp=0.491974 ref_zero=457 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(457, 2437, 2850, 1168, 0) max_abs_pair(ref,stored)=(0.12927833, 0.12890625) max_rel_pair(ref,stored)=(0.035515986, 0.035400391) unscaled_rne=457/6912
+grid L2 w13: n=20736 numeric_diff=19298 neg0_only=0 rne_match=20736/20736 max_abs=0.000197224 mean_abs=2.14051e-05 max_rel=0.00376565 mean_rel=0.00137274 max_ulp=0.483826 ref_zero=1438 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1438, 6839, 7248, 5211, 0) max_abs_pair(ref,stored)=(-0.064162068, -0.063964844) max_rel_pair(ref,stored)=(-0.0078420304, -0.0078125) unscaled_rne=1438/20736
+grid L3 w2: n=6912 numeric_diff=6394 neg0_only=0 rne_match=6912/6912 max_abs=0.000224471 mean_abs=3.36716e-05 max_rel=0.00311758 mean_rel=0.00142538 max_ulp=0.484848 ref_zero=435 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(518, 1640, 3101, 1653, 0) max_abs_pair(ref,stored)=(-0.072001815, -0.071777344) max_rel_pair(ref,stored)=(0.036000907, 0.035888672) unscaled_rne=435/6912
+grid L3 w13: n=20736 numeric_diff=19257 neg0_only=0 rne_match=20736/20736 max_abs=0.000243627 mean_abs=2.49666e-05 max_rel=0.00340576 mean_rel=0.00152818 max_ulp=0.498947 ref_zero=1479 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1479, 7137, 6750, 5370, 0) max_abs_pair(ref,stored)=(-0.071533717, -0.071777344) max_rel_pair(ref,stored)=(-0.0089417147, -0.008972168) unscaled_rne=1479/20736
+grid L4 w2: n=6912 numeric_diff=6435 neg0_only=0 rne_match=6912/6912 max_abs=0.000204653 mean_abs=3.46791e-05 max_rel=0.00311807 mean_rel=0.00147791 max_ulp=0.478531 ref_zero=477 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(477, 2691, 1135, 2609, 0) max_abs_pair(ref,stored)=(0.06563434, 0.065429688) max_rel_pair(ref,stored)=(0.03281717, 0.032714844) unscaled_rne=477/6912
+grid L4 w13: n=20736 numeric_diff=19302 neg0_only=0 rne_match=20736/20736 max_abs=0.000222348 mean_abs=2.28838e-05 max_rel=0.00313064 mean_rel=0.00137372 max_ulp=0.489426 ref_zero=1434 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1434, 8775, 3963, 6564, 0) max_abs_pair(ref,stored)=(0.071023129, 0.070800781) max_rel_pair(ref,stored)=(0.017755782, 0.017700195) unscaled_rne=1434/20736
+grid L5 w2: n=6912 numeric_diff=6395 neg0_only=0 rne_match=6912/6912 max_abs=0.000343829 mean_abs=3.3946e-05 max_rel=0.00342886 mean_rel=0.00147319 max_ulp=0.498428 ref_zero=517 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(517, 2074, 2300, 2021, 0) max_abs_pair(ref,stored)=(-0.13706258, -0.13671875) max_rel_pair(ref,stored)=(0.015814913, 0.015869141) unscaled_rne=517/6912
+grid L5 w13: n=20736 numeric_diff=19308 neg0_only=0 rne_match=20736/20736 max_abs=0.000243127 mean_abs=2.45401e-05 max_rel=0.00359507 mean_rel=0.00147168 max_ulp=0.497925 ref_zero=1428 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1428, 5992, 7457, 5859, 0) max_abs_pair(ref,stored)=(0.067627966, 0.067871094) max_rel_pair(ref,stored)=(0.033813983, 0.033935547) unscaled_rne=1428/20736
+grid L6 w2: n=6912 numeric_diff=6449 neg0_only=0 rne_match=6912/6912 max_abs=0.000226811 mean_abs=2.85268e-05 max_rel=0.00308716 mean_rel=0.00121882 max_ulp=0.478607 ref_zero=463 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(463, 2695, 2022, 1732, 0) max_abs_pair(ref,stored)=(-0.073468998, -0.073242188) max_rel_pair(ref,stored)=(-0.036734499, -0.036621094) unscaled_rne=463/6912
+grid L6 w13: n=20736 numeric_diff=19334 neg0_only=0 rne_match=20736/20736 max_abs=0.000238627 mean_abs=2.72762e-05 max_rel=0.00344288 mean_rel=0.00164012 max_ulp=0.490509 ref_zero=1402 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1402, 6097, 6497, 6740, 0) max_abs_pair(ref,stored)=(-0.085199565, -0.084960938) max_rel_pair(ref,stored)=(-0.032092914, -0.031982422) unscaled_rne=1402/20736
+grid L7 w2: n=6912 numeric_diff=6423 neg0_only=0 rne_match=6912/6912 max_abs=0.000235863 mean_abs=3.74869e-05 max_rel=0.00341417 mean_rel=0.00158346 max_ulp=0.498886 ref_zero=489 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(489, 1971, 2060, 2392, 0) max_abs_pair(ref,stored)=(0.069083519, 0.068847656) max_rel_pair(ref,stored)=(0.069083519, 0.068847656) unscaled_rne=489/6912
+grid L7 w13: n=20736 numeric_diff=19359 neg0_only=0 rne_match=20736/20736 max_abs=0.000148162 mean_abs=1.6479e-05 max_rel=0.00340486 mean_rel=0.00106066 max_ulp=0.495392 ref_zero=1377 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1377, 13579, 2424, 3356, 0) max_abs_pair(ref,stored)=(0.06557785, 0.065429688) max_rel_pair(ref,stored)=(0.017760668, 0.017700195) unscaled_rne=1377/20736
+grid L8 w2: n=6912 numeric_diff=6405 neg0_only=0 rne_match=6912/6912 max_abs=0.000243016 mean_abs=3.15135e-05 max_rel=0.00353972 mean_rel=0.00134352 max_ulp=0.497696 ref_zero=507 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(507, 2099, 3103, 1203, 0) max_abs_pair(ref,stored)=(0.085206203, 0.085449219) max_rel_pair(ref,stored)=(-0.01678304, -0.016723633) unscaled_rne=507/6912
+grid L8 w13: n=20736 numeric_diff=19304 neg0_only=0 rne_match=20736/20736 max_abs=0.00023447 mean_abs=2.26643e-05 max_rel=0.00318937 mean_rel=0.00137415 max_ulp=0.493988 ref_zero=1432 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1432, 5742, 9428, 4134, 0) max_abs_pair(ref,stored)=(-0.084707126, -0.084472656) max_rel_pair(ref,stored)=(-0.062699974, -0.0625) unscaled_rne=1432/20736
+grid L9 w2: n=6912 numeric_diff=6451 neg0_only=0 rne_match=6912/6912 max_abs=0.000239134 mean_abs=2.59187e-05 max_rel=0.00321921 mean_rel=0.00112719 max_ulp=0.489746 ref_zero=461 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(461, 3106, 2227, 1118, 0) max_abs_pair(ref,stored)=(-0.095952272, -0.096191406) max_rel_pair(ref,stored)=(-0.033583295, -0.033691406) unscaled_rne=461/6912
+grid L9 w13: n=20736 numeric_diff=19297 neg0_only=0 rne_match=20736/20736 max_abs=0.000203796 mean_abs=2.05715e-05 max_rel=0.00322502 mean_rel=0.00125699 max_ulp=0.464005 ref_zero=1439 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1439, 6230, 10233, 2834, 0) max_abs_pair(ref,stored)=(0.063192077, 0.062988281) max_rel_pair(ref,stored)=(-0.0039495048, -0.0039367676) unscaled_rne=1439/20736
+grid L10 w2: n=6912 numeric_diff=6427 neg0_only=0 rne_match=6912/6912 max_abs=0.000232778 mean_abs=2.73736e-05 max_rel=0.00306625 mean_rel=0.00121989 max_ulp=0.482162 ref_zero=485 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(485, 3470, 1295, 1662, 0) max_abs_pair(ref,stored)=(-0.075916372, -0.075683594) max_rel_pair(ref,stored)=(-0.075916372, -0.075683594) unscaled_rne=485/6912
+grid L10 w13: n=20736 numeric_diff=19331 neg0_only=0 rne_match=20736/20736 max_abs=0.000226378 mean_abs=2.28902e-05 max_rel=0.00320927 mean_rel=0.00136421 max_ulp=0.463623 ref_zero=1405 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1405, 8227, 5316, 5788, 0) max_abs_pair(ref,stored)=(-0.070538878, -0.0703125) max_rel_pair(ref,stored)=(-0.035269439, -0.03515625) unscaled_rne=1405/20736
+grid L11 w2: n=6912 numeric_diff=6416 neg0_only=0 rne_match=6912/6912 max_abs=0.000426561 mean_abs=3.39911e-05 max_rel=0.0033809 mean_rel=0.00150761 max_ulp=0.498688 ref_zero=496 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(496, 1574, 3196, 1646, 0) max_abs_pair(ref,stored)=(-0.12652656, -0.12695312) max_rel_pair(ref,stored)=(0.018005531, 0.018066406) unscaled_rne=496/6912
+grid L11 w13: n=20736 numeric_diff=19326 neg0_only=0 rne_match=20736/20736 max_abs=0.000230737 mean_abs=1.89439e-05 max_rel=0.00316145 mean_rel=0.0011342 max_ulp=0.475235 ref_zero=1410 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1410, 10715, 5813, 2798, 0) max_abs_pair(ref,stored)=(-0.072984643, -0.072753906) max_rel_pair(ref,stored)=(-0.0091230804, -0.0090942383) unscaled_rne=1410/20736
+grid L12 w2: n=6912 numeric_diff=6421 neg0_only=0 rne_match=6912/6912 max_abs=0.000396475 mean_abs=3.10969e-05 max_rel=0.00307941 mean_rel=0.00131115 max_ulp=0.485855 ref_zero=491 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(491, 2091, 3004, 1326, 0) max_abs_pair(ref,stored)=(0.1664121, 0.16601562) max_rel_pair(ref,stored)=(-0.017999765, -0.017944336) unscaled_rne=491/6912
+grid L12 w13: n=20736 numeric_diff=19302 neg0_only=0 rne_match=20736/20736 max_abs=0.000227466 mean_abs=2.11339e-05 max_rel=0.00331486 mean_rel=0.00130378 max_ulp=0.479477 ref_zero=1434 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1434, 6922, 8837, 3543, 0) max_abs_pair(ref,stored)=(0.06862019, 0.068847656) max_rel_pair(ref,stored)=(0.034310095, 0.034423828) unscaled_rne=1434/20736
+grid L13 w2: n=6912 numeric_diff=6378 neg0_only=0 rne_match=6912/6912 max_abs=0.000235029 mean_abs=2.7367e-05 max_rel=0.00303719 mean_rel=0.00117494 max_ulp=0.495377 ref_zero=534 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(534, 2908, 2121, 1349, 0) max_abs_pair(ref,stored)=(-0.077383466, -0.077148438) max_rel_pair(ref,stored)=(-0.038691733, -0.038574219) unscaled_rne=534/6912
+grid L13 w13: n=20736 numeric_diff=19424 neg0_only=0 rne_match=20736/20736 max_abs=0.00024084 mean_abs=3.12385e-05 max_rel=0.00359731 mean_rel=0.00184628 max_ulp=0.49324 ref_zero=1312 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1312, 2423, 7915, 9086, 0) max_abs_pair(ref,stored)=(-0.074947871, -0.074707031) max_rel_pair(ref,stored)=(0.031867784, 0.031982422) unscaled_rne=1312/20736
+grid L14 w2: n=6912 numeric_diff=6477 neg0_only=0 rne_match=6912/6912 max_abs=0.000244066 mean_abs=3.51882e-05 max_rel=0.00261031 mean_rel=0.0014831 max_ulp=0.499847 ref_zero=435 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(435, 2668, 1467, 2342, 0) max_abs_pair(ref,stored)=(0.10375969, 0.10351562) max_rel_pair(ref,stored)=(-0.07256449, -0.072753906) unscaled_rne=435/6912
+grid L14 w13: n=20736 numeric_diff=19286 neg0_only=0 rne_match=20736/20736 max_abs=0.000243202 mean_abs=2.32658e-05 max_rel=0.00357666 mean_rel=0.00141254 max_ulp=0.498077 ref_zero=1450 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1450, 6213, 6801, 6272, 0) max_abs_pair(ref,stored)=(-0.084717736, -0.084960938) max_rel_pair(ref,stored)=(0.01593422, 0.015991211) unscaled_rne=1450/20736
+grid L15 w2: n=6912 numeric_diff=6414 neg0_only=0 rne_match=6912/6912 max_abs=0.000233755 mean_abs=2.91621e-05 max_rel=0.00356353 mean_rel=0.00125216 max_ulp=0.478729 ref_zero=498 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(498, 2556, 2666, 1192, 0) max_abs_pair(ref,stored)=(0.072987661, 0.072753906) max_rel_pair(ref,stored)=(0.015934428, 0.015991211) unscaled_rne=498/6912
+grid L15 w13: n=20736 numeric_diff=19334 neg0_only=0 rne_match=20736/20736 max_abs=0.000208572 mean_abs=2.62615e-05 max_rel=0.00269271 mean_rel=0.00156746 max_ulp=0.479706 ref_zero=1402 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1402, 5243, 5384, 8707, 0) max_abs_pair(ref,stored)=(-0.083775803, -0.083984375) max_rel_pair(ref,stored)=(-0.015911987, -0.015869141) unscaled_rne=1402/20736
+grid L16 w2: n=6912 numeric_diff=6389 neg0_only=0 rne_match=6912/6912 max_abs=0.000392184 mean_abs=3.9003e-05 max_rel=0.00374803 mean_rel=0.00169193 max_ulp=0.492554 ref_zero=523 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(523, 1154, 3227, 2008, 0) max_abs_pair(ref,stored)=(0.12832187, 0.12792969) max_rel_pair(ref,stored)=(0.031367566, 0.03125) unscaled_rne=523/6912
+grid L16 w13: n=20736 numeric_diff=19408 neg0_only=0 rne_match=20736/20736 max_abs=0.000213273 mean_abs=2.22488e-05 max_rel=0.00289257 mean_rel=0.00134209 max_ulp=0.489319 ref_zero=1328 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1328, 6479, 7917, 5012, 0) max_abs_pair(ref,stored)=(-0.080291398, -0.080078125) max_rel_pair(ref,stored)=(-0.0044427156, -0.0044555664) unscaled_rne=1328/20736
+grid L17 w2: n=6912 numeric_diff=6412 neg0_only=0 rne_match=6912/6912 max_abs=0.000470281 mean_abs=3.88111e-05 max_rel=0.0036616 mean_rel=0.0016872 max_ulp=0.495071 ref_zero=500 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(500, 1988, 1561, 2863, 0) max_abs_pair(ref,stored)=(-0.12843597, -0.12890625) max_rel_pair(ref,stored)=(-0.016054496, -0.016113281) unscaled_rne=500/6912
+grid L17 w13: n=20736 numeric_diff=19279 neg0_only=0 rne_match=20736/20736 max_abs=0.000244096 mean_abs=2.28323e-05 max_rel=0.00349399 mean_rel=0.00140602 max_ulp=0.499939 ref_zero=1457 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1457, 4814, 9644, 4821, 0) max_abs_pair(ref,stored)=(0.10327144, 0.10302734) max_rel_pair(ref,stored)=(0.0079069436, 0.0079345703) unscaled_rne=1457/20736
+grid L18 w2: n=6912 numeric_diff=6433 neg0_only=0 rne_match=6912/6912 max_abs=0.000239037 mean_abs=3.23264e-05 max_rel=0.0035867 mean_rel=0.00138848 max_ulp=0.489548 ref_zero=479 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(479, 2830, 2033, 1570, 0) max_abs_pair(ref,stored)=(0.066645287, 0.06640625) max_rel_pair(ref,stored)=(0.066645287, 0.06640625) unscaled_rne=479/6912
+grid L18 w13: n=20736 numeric_diff=19326 neg0_only=0 rne_match=20736/20736 max_abs=0.000235252 mean_abs=2.23717e-05 max_rel=0.00287671 mean_rel=0.00135198 max_ulp=0.481796 ref_zero=1410 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1410, 7220, 7090, 5016, 0) max_abs_pair(ref,stored)=(0.081778221, 0.081542969) max_rel_pair(ref,stored)=(-0.020444555, -0.020385742) unscaled_rne=1410/20736
+grid L19 w2: n=6912 numeric_diff=6461 neg0_only=0 rne_match=6912/6912 max_abs=0.000193708 mean_abs=3.35532e-05 max_rel=0.00272293 mean_rel=0.00147506 max_ulp=0.482346 ref_zero=451 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(451, 2556, 1913, 1992, 0) max_abs_pair(ref,stored)=(-0.072947614, -0.072753906) max_rel_pair(ref,stored)=(0.031335324, 0.03125) unscaled_rne=451/6912
+grid L19 w13: n=20736 numeric_diff=19368 neg0_only=0 rne_match=20736/20736 max_abs=0.000174336 mean_abs=2.08301e-05 max_rel=0.00331457 mean_rel=0.00128514 max_ulp=0.492188 ref_zero=1368 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(1368, 8605, 5911, 4852, 0) max_abs_pair(ref,stored)=(-0.065255351, -0.065429688) max_rel_pair(ref,stored)=(-0.002265811, -0.0022583008) unscaled_rne=1368/20736
+grid L20 w2: n=6912 numeric_diff=0 neg0_only=0 rne_match=6912/6912 max_abs=0 mean_abs=0 max_rel=0 mean_rel=0 max_ulp=0 ref_zero=0 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(6912, 0, 0, 0, 0) max_abs_pair(ref,stored)=(0, 0) max_rel_pair(ref,stored)=(0, 0)
+grid L20 w13: n=20736 numeric_diff=0 neg0_only=0 rne_match=20736/20736 max_abs=0 mean_abs=0 max_rel=0 mean_rel=0 max_ulp=0 ref_zero=0 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(20736, 0, 0, 0, 0) max_abs_pair(ref,stored)=(0, 0) max_rel_pair(ref,stored)=(0, 0)
+grid L21 w2: n=6912 numeric_diff=0 neg0_only=0 rne_match=6912/6912 max_abs=0 mean_abs=0 max_rel=0 mean_rel=0 max_ulp=0 ref_zero=0 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(6912, 0, 0, 0, 0) max_abs_pair(ref,stored)=(0, 0) max_rel_pair(ref,stored)=(0, 0)
+grid L21 w13: n=20736 numeric_diff=0 neg0_only=0 rne_match=20736/20736 max_abs=0 mean_abs=0 max_rel=0 mean_rel=0 max_ulp=0 ref_zero=0 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(20736, 0, 0, 0, 0) max_abs_pair(ref,stored)=(0, 0) max_rel_pair(ref,stored)=(0, 0)
+grid L22 w2: n=6912 numeric_diff=0 neg0_only=0 rne_match=6912/6912 max_abs=0 mean_abs=0 max_rel=0 mean_rel=0 max_ulp=0 ref_zero=0 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(6912, 0, 0, 0, 0) max_abs_pair(ref,stored)=(0, 0) max_rel_pair(ref,stored)=(0, 0)
+grid L22 w13: n=20736 numeric_diff=0 neg0_only=0 rne_match=20736/20736 max_abs=0 mean_abs=0 max_rel=0 mean_rel=0 max_ulp=0 ref_zero=0 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(20736, 0, 0, 0, 0) max_abs_pair(ref,stored)=(0, 0) max_rel_pair(ref,stored)=(0, 0)
+grid L23 w2: n=6912 numeric_diff=0 neg0_only=0 rne_match=6912/6912 max_abs=0 mean_abs=0 max_rel=0 mean_rel=0 max_ulp=0 ref_zero=0 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(6912, 0, 0, 0, 0) max_abs_pair(ref,stored)=(0, 0) max_rel_pair(ref,stored)=(0, 0)
+grid L23 w13: n=20736 numeric_diff=0 neg0_only=0 rne_match=20736/20736 max_abs=0 mean_abs=0 max_rel=0 mean_rel=0 max_ulp=0 ref_zero=1 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(20736, 0, 0, 0, 0) max_abs_pair(ref,stored)=(0, 0) max_rel_pair(ref,stored)=(0, 0)
+
+GRID nvfp4 vs BF16 GGUF: n=552960 numeric_diff=515012 neg0_only=0 rne_match=552960/552960 max_abs=0.000470281 mean_abs=2.52711e-05 max_rel=0.00376565 mean_rel=0.00138947 max_ulp=0.499939 ref_zero=37865 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(37948, 191474, 183323, 140215, 0) max_abs_pair(ref,stored)=(-0.12843597, -0.12890625) max_rel_pair(ref,stored)=(-0.0078420304, -0.0078125) unscaled_rne=37865/552960
+GRID mxfp8 vs BF16 GGUF: n=110592 numeric_diff=0 neg0_only=0 rne_match=110592/110592 max_abs=0 mean_abs=0 max_rel=0 mean_rel=0 max_ulp=0 ref_zero=1 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(110592, 0, 0, 0, 0) max_abs_pair(ref,stored)=(0, 0) max_rel_pair(ref,stored)=(0, 0)
+worst grid layer rne match: (0, 'w2') 6912/6912 numeric_diff 6413
+published-file Q8_0 L20 w2 e0: numeric_diff 2654188/2654208
+published-file Q8_0 L20 w13 e127: numeric_diff 5308380/5308416
+published-file Q8_0 L23 w2 e50: numeric_diff 2654182/2654208
+published-file Q8_0 L23 w13 e1: numeric_diff 5308358/5308416
+FULL mxfp8 vs published NVFP4-file experts: n=15925248 numeric_diff=15925108 neg0_only=71 rne_match=3362248/15925248 max_abs=0.00141907 mean_abs=0.00010992 max_rel=1 mean_rel=0.0248586 max_ulp=240 ref_zero=140 stored_inf=0 ref_inf=0 buckets(exact,le2^-10,le2^-9,le2^-8,above)=(140, 1622115, 582956, 2700476, 11019561) max_abs_pair(ref,stored)=(0.0073242188, 0.0059051514) max_rel_pair(ref,stored)=(1.7166138e-05, 0)
+
+bytes read 133458320
+EXIT:0
